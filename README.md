@@ -28,4 +28,4 @@ The Reminder application is a custom built application that will allow you to in
 - [ ] Utilize a UI framework (Material UI) for the front end pages 
 
 ### Finished Tasks
-- [x] Create GitHub Repo to store all notes and project files
+- [x] ~~Create GitHub Repo to store all notes and project files~~
