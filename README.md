@@ -7,7 +7,7 @@ The Reminder application is a custom built application that will allow you to in
 - Get reminded through Email or SMS. 
 - Login with Google, Facebook, or Twitter.
 
-### Tasks
+### Unfinished Tasks
 - [ ] Create frontend and backend directories
 - [ ] Create locally hosted MongoDB database
 - [ ] Figure out database schema (id, reminder, interval, user, email, Oauth IDs, status, etc.)
@@ -26,3 +26,6 @@ The Reminder application is a custom built application that will allow you to in
 - [ ] Properly display reminder data on React components 
 - [ ] Create "settings" page for user to set their own intervals/timer for their reminder and email/sms notifications
 - [ ] Utilize a UI framework (Material UI) for the front end pages 
+
+### Finished Tasks
+- [x] Create GitHub Repo to store all notes and project files
