@@ -30,4 +30,4 @@ The Reminder application is a custom built application that will allow you to in
 - [x] ~~Figure out database schema (reminder text, intervals/frequency, status, email, SMS, etc.)~~
 - [x] ~~Create express.js server in backend directory~~
 - [x] ~~Write code to connect to MongoDB and retrieve the reminder information~~
-- [x] ~~Create GitHub Repo to store all notes and project files~~
+- [x] ~~Create API route to GET, POST, and DELETE reminders~~
