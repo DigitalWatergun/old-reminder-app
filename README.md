@@ -10,7 +10,8 @@ The Reminder application is a custom built application that will allow you to in
 
 ### Unfinished Tasks
 - [ ] Implement lodash to make the id of the reminder lowercase
-- [ ] Write code to create cronjobs to send notifications on intervals based off intervals or a timer
+- [ ] Write function to query database items and look for active reminders
+- [ ] For active reminders, write function to look at the minutes for each reminder, notify the user, and track repeat count
 - [ ] Implement SMS text functionality
 - [ ] Implement Email notification functionality
 - [ ] Create API routes to test login, logout, homepage, and settings pages for the application
