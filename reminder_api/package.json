@@ -1,0 +1,25 @@
+{
+  "name": "reminder_api",
+  "version": "1.0.0",
+  "description": "A reminder application that allows you to set reminders and will notify you periodically to remind you.",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DigitalWatergun/reminder-app.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DigitalWatergun/reminder-app/issues"
+  },
+  "homepage": "https://github.com/DigitalWatergun/reminder-app#readme",
+  "dependencies": {
+    "express": "^4.17.2",
+    "mongoose": "^6.1.5"
+  }
+}

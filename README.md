@@ -5,14 +5,11 @@ The Reminder application is a custom built application that will allow you to in
 ### Features
 - Add/remove reminders to repeatedly remind you daily, weekly or at custom intervals.
 - Get reminded through Email or SMS. 
-- Login with Google, Facebook, or Twitter.
+- Login with Google Auth.
+
 
 ### Unfinished Tasks
-- [ ] Create frontend and backend directories
-- [ ] Create locally hosted MongoDB database
-- [ ] Figure out database schema (id, reminder, interval, user, email, Oauth IDs, status, etc.)
-- [ ] Create express.js server in backend directory 
-- [ ] Write code to connect to MongoDB and retrieve the reminder information
+- [ ] Implement lodash to make the id of the reminder lowercase
 - [ ] Write code to create cronjobs to send notifications on intervals based off intervals or a timer
 - [ ] Implement SMS text functionality
 - [ ] Implement Email notification functionality
@@ -26,4 +23,10 @@ The Reminder application is a custom built application that will allow you to in
 - [ ] Utilize a UI framework (Material UI) for the front end pages 
 
 ### Finished Tasks
+- [x] ~~Create GitHub Repo to store all notes, project files and add gitignore~~
+- [x] ~~Create frontend and backend directories~~
+- [x] ~~Create locally hosted MongoDB database~~
+- [x] ~~Figure out database schema (reminder text, intervals/frequency, status, email, SMS, etc.)~~
+- [x] ~~Create express.js server in backend directory~~
+- [x] ~~Write code to connect to MongoDB and retrieve the reminder information~~
 - [x] ~~Create GitHub Repo to store all notes and project files~~
