@@ -9,8 +9,6 @@ The Reminder application is a custom built application that will allow you to in
 
 
 ### Unfinished Tasks
-- [ ] Separate mongoose code from server.js into separate "database" folder
-- [ ] Implement Express Router
 - [ ] Write function to query database items and look for active reminders
 - [ ] Write function to look at the minutes for each reminder, notify the user, and track repeat count
 - [ ] Implement SMS text functionality
@@ -34,3 +32,5 @@ The Reminder application is a custom built application that will allow you to in
 - [x] ~~Write code to connect to MongoDB and retrieve the reminder information~~
 - [x] ~~Create API route to GET, POST, and DELETE reminders~~
 - [x] ~~Implement lodash to make the id of the reminder lowercase~~
+- [x] ~~Separate mongoose code from server.js into separate "database" folder~~
+- [x] ~~Implement Express Router~~
