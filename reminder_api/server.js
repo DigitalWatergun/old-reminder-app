@@ -1,5 +1,6 @@
 import express from "express"; 
 import mongoose from "mongoose"; 
+import _ from "lodash"; 
 
 // Set up Express server 
 const app = express(); 
@@ -37,7 +38,7 @@ app.route("/reminders")
     })
     .post((req, res) => {
         const reminder = new Reminder({
-            _id: req.query.title,
+            _id: _.toLower(req.query.title),
             title: req.query.title,
             content: req.query.content,
             minutes: req.query.minutes,
@@ -56,7 +57,7 @@ app.route("/reminders")
         });
     })
     .delete((req, res) => {
-        Reminder.deleteOne({title: req.query.title}, (err, foundReminder) => {
+        Reminder.deleteOne({_id: _.toLower(req.query.title)}, (err, foundReminder) => {
             if (!err) {
                 res.send("Successfully deleted reminder");
             } else {

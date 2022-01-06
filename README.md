@@ -9,7 +9,6 @@ The Reminder application is a custom built application that will allow you to in
 
 
 ### Unfinished Tasks
-- [ ] Implement lodash to make the id of the reminder lowercase
 - [ ] Implement Express Router
 - [ ] Write function to query database items and look for active reminders
 - [ ] Write function to look at the minutes for each reminder, notify the user, and track repeat count
@@ -33,3 +32,4 @@ The Reminder application is a custom built application that will allow you to in
 - [x] ~~Create express.js server in backend directory~~
 - [x] ~~Write code to connect to MongoDB and retrieve the reminder information~~
 - [x] ~~Create API route to GET, POST, and DELETE reminders~~
+- [x] ~~Implement lodash to make the id of the reminder lowercase~~
