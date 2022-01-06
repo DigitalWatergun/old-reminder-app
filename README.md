@@ -17,6 +17,7 @@ The Reminder application is a custom built application that will allow you to in
 - [ ] Implement Email notification functionality
 - [ ] Create API routes to test login, logout, homepage, and settings pages for the application
 - [ ] Create a basic page in order to be used for testing
+- [ ] Implement local authentication
 - [ ] Implement Google OAuth
 - [ ] Utilize Reactjs for the front end pieces
 - [ ] Figure out API routing and React component hierarchy 
