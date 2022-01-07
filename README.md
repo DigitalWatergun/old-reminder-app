@@ -35,3 +35,4 @@ The Reminder application is a custom built application that will allow you to in
 - [x] ~~Implement lodash to make the id of the reminder lowercase~~
 - [x] ~~Separate mongoose code from server.js into separate "database" folder~~
 - [x] ~~Implement Express Router~~
+- [x] ~~Created models folder and separate reminder model from code into reminder.js~~

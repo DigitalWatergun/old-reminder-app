@@ -1,5 +1,15 @@
+import mongoose from "mongoose";
 import express from "express"; 
 import { reminders } from "./routes/reminders.js"
+
+// Connect to MongoDB 
+mongoose.connect("mongodb://127.0.0.1:27017/reminderDB");
+mongoose.connection.on("error", err => {
+    console.log("err", err);
+})
+mongoose.connection.on("connected", (err, res) => {
+    console.log("Connected to MongoDB.")
+})
 
 // Set up Express server 
 const app = express(); 

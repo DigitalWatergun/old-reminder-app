@@ -1,6 +1,6 @@
 import express from "express";
 import _ from "lodash"; 
-import { Reminder } from "../mongoose.js";
+import { Reminder } from "../models/reminder.js";
 
 const router = express.Router();
 
