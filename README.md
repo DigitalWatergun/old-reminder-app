@@ -9,8 +9,8 @@ The Reminder application is a custom built application that will allow you to in
 
 
 ### Unfinished Tasks
-- [ ] Implement node-cron to create cronjobs
 - [ ] Write function to look at the minutes for each reminder, notify the user, and track repeat count
+- [ ] Implement node-cron to create cronjobs
 - [ ] Implement SMS text functionality
 - [ ] Implement Email notification functionality
 - [ ] Create API routes to test login, logout, homepage, and settings pages for the application
