@@ -1,0 +1,5 @@
+function consoleLogReminder() {
+
+};
+
+export {consoleLogReminder};

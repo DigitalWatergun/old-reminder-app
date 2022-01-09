@@ -46,4 +46,4 @@ router.delete("/", (req, res) => {
     });
 });
 
-export {router as reminders};
+export { router as remindersRoute };

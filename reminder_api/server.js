@@ -1,10 +1,15 @@
+import dotenv from "dotenv";
 import mongoose from "mongoose";
 import express from "express"; 
 import cron from "node-cron";
-import { reminders } from "./routes/reminders.js"
+import { remindersRoute } from "./routes/remindersRoute.js"
+import { queryDatabase } from "./cron/queryDatabase.js"
+import { consoleLogReminder } from "./cron/consoleLogReminders.js"
+
+dotenv.config();
 
 // Connect to MongoDB 
-mongoose.connect("mongodb://127.0.0.1:27017/reminderDB");
+mongoose.connect(process.env.MONGO_DB);
 mongoose.connection.on("error", err => {
     console.log("err", err);
 })
@@ -21,7 +26,7 @@ app.get("/", (req, res) => {
     res.send("It's working.");
 });
 
-app.use("/reminders", reminders);
+app.use("/reminders", remindersRoute);
 
 
 app.listen(3000, () => {

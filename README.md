@@ -36,3 +36,4 @@ The Reminder application is a custom built application that will allow you to in
 - [x] ~~Implement Express Router~~
 - [x] ~~Created models folder and separate reminder model from code into reminder.js~~
 - [x] ~~Write function to query database items and look for active reminders~~
+- [x] ~~Refactored code to add ".env" file instead of hardcoding localhost:27017~~
