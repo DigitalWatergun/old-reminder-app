@@ -35,7 +35,9 @@ app.listen(3000, () => {
 
 
 // Cronjob code
-cron.schedule('* * * * *', () => {
+cron.schedule('* * * * *', async () => {
     console.log('Running a function every minute');
+    const results = await queryDatabase();
+    console.log(results);
 });
   

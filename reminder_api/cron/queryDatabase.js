@@ -1,24 +1,24 @@
 import mongoose from "mongoose";
 import { Reminder } from "../models/reminder.js";
 
-// // Connect to MongoDB 
-// mongoose.connect("mongodb://127.0.0.1:27017/reminderDB", err => {
-//     if (err) {
-//         console.error(err);
-//     } else {
-//         console.log("Connected to MongoDB.")
-//     }
-// });
-
-// // Create MongoDB Connection 
-// const connection = mongoose.connection;
-// connection.once("open", () => {
-//     console.log("Connected");
-// })
-
 
 // Queries all the reminders in the database 
 async function queryDatabase() {
+    // Connect to MongoDB 
+    mongoose.connect("mongodb://127.0.0.1:27017/reminderDB", err => {
+        if (err) {
+            console.error(err);
+        } else {
+            console.log("Connected to MongoDB.")
+        }
+    });
+
+    // Create MongoDB Connection 
+    const connection = mongoose.connection;
+    connection.once("open", () => {
+        console.log("Connected");
+    })
+
     let results;
 
     try {
@@ -26,7 +26,7 @@ async function queryDatabase() {
     } catch(err) {
         console.log(err);
     } finally {
-        connection.close();
+        // connection.close();
         return results;
     };
 };
