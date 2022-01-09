@@ -31,6 +31,6 @@ app.listen(3000, () => {
 
 // Cronjob code
 cron.schedule('* * * * *', () => {
-    console.log('running a function every minute');
+    console.log('Running a function every minute');
 });
   
