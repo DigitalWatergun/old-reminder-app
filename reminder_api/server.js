@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import express from "express"; 
+import cron from "node-cron";
 import { reminders } from "./routes/reminders.js"
 
 // Connect to MongoDB 
@@ -26,3 +27,10 @@ app.use("/reminders", reminders);
 app.listen(3000, () => {
     console.log("Server running on port 3000. ");
 });
+
+
+// Cronjob code
+cron.schedule('* * * * *', () => {
+    console.log('running a function every minute');
+});
+  
