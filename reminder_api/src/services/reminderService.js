@@ -6,6 +6,29 @@ const queryAllReminders = async () => {
     return reminders;
 };
 
+
+const findReminderById = async (id) => {
+    const reminder = await Reminder.findOne({_id: id});
+
+    return reminder
+}
+
+
+const filterReminders = async (filter) => {
+    const reminders = await Reminder.find(filter);
+
+    return reminders; 
+};
+
+
+const updateReminder = async (data) => {
+    console.log(data);
+    const reminder = await Reminder.findByIdAndUpdate(data._id, data.update)
+
+    return reminder; 
+};
+
+
 const createReminder = async (data) => {
     try {
         const newReminder = Reminder({
@@ -41,4 +64,11 @@ const removeReminder = async (title) => {
 };
 
 
-export { queryAllReminders, createReminder, removeReminder}; 
+export { 
+    queryAllReminders, 
+    createReminder, 
+    removeReminder,
+    findReminderById,
+    filterReminders,
+    updateReminder
+}; 

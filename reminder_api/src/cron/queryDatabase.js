@@ -1,33 +1,11 @@
-import mongoose from "mongoose";
-import { Reminder } from "../models/reminder.js";
-
+import { queryAllReminders } from "../services/reminderService.js"
 
 // Queries all the reminders in the database 
 async function queryDatabase() {
-    // Connect to MongoDB 
-    mongoose.connect("mongodb://127.0.0.1:27017/reminderDB", err => {
-        if (err) {
-            console.error(err);
-        } else {
-            console.log("Connected to MongoDB.")
-        }
-    });
-
-    // Create MongoDB Connection 
-    const connection = mongoose.connection;
-    connection.once("open", () => {
-        console.log("Connected");
-    })
-
-    let results;
-
-    try {
-        results = await Reminder.find({status:"active"});
-    } catch(err) {
-        console.log(err);
-    } finally {
-        // connection.close();
-        return results;
+    const results = await queryAllReminders();
+    
+    if (results) {
+        return results; 
     };
 };
 
