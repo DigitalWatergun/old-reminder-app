@@ -1,12 +1,13 @@
-function findActiveReminders(reminders) {
-    const activeReminders = [];
-    for (const reminder of reminders) {
-        if (reminder["status"] === "active") {
-            activeReminders.push(reminder);
-        }
-    }
+import {getActiveReminders} from "../controllers/cronController.js"
 
-    return activeReminders;
-}; 
+const findActiveReminders = async () => {
+    const activeReminders = await getActiveReminders();
+
+    if (activeReminders) {
+        return activeReminders;
+    } else {
+        return "No active reminders found."
+    };
+};
 
 export { findActiveReminders };

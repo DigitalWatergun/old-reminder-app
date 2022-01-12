@@ -10,7 +10,7 @@ import {
 
 
 const getAllReminders = async (req, res) => {
-    let reminders = await queryAllReminders();
+    const reminders = await queryAllReminders();
     
     return res.send(reminders);
 };
@@ -41,7 +41,7 @@ const getReminderByFilter = async (req, res) => {
         data[key] = value;
     }
 
-    const reminders = await filterReminders(filter);
+    const reminders = await filterReminders(data);
 
     if (reminders) {
         res.send(reminders);

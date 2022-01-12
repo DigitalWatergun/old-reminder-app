@@ -2,9 +2,10 @@ import dotenv from "dotenv";
 import mongoose from "mongoose";
 import express from "express"; 
 import cron from "node-cron";
-import { remindersRoute } from "./routes/remindersRoute.js"
-import { queryDatabase } from "./cron/queryDatabase.js"
-import { consoleLogReminder } from "./cron/consoleLogReminders.js"
+import { remindersRoute } from "./routes/remindersRoute.js";
+import { findActiveReminders } from "./cron/findActiveReminders.js";
+import { runReminders } from "./cron/runReminders.js";
+import { consoleLogReminder } from "./cron/consoleLogReminders.js";
 
 dotenv.config({path:"../.env"});
 
@@ -36,8 +37,15 @@ app.listen(3000, () => {
 
 // Cronjob code
 cron.schedule('* * * * *', async () => {
-    console.log('Running a function every minute');
-    const results = await queryDatabase();
-    consoleLogReminder(results);
+    console.log('Retrieving active reminders...');
+    const reminders = await findActiveReminders();
+    // consoleLogReminder(results);
+    runReminders(reminders);
 });
   
+
+// function convertMinToMilisecs(min) {
+//     const miliseconds = (min * 60) * 1000;
+
+//     return miliseconds;
+// };
