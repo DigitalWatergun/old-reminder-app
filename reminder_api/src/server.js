@@ -31,17 +31,26 @@ app.use("/reminders", remindersRoute);
 
 
 app.listen(3000, () => {
-    console.log("Server running on port 3000. ");
+    const currentTime = new Date().toLocaleTimeString();
+    console.log(`[${currentTime}] Server running on port 3000.`)
+    
 });
 
 
 // Cronjob code
+const remindersList = [];
 cron.schedule('* * * * *', async () => {
-    console.log('Retrieving active reminders...');
+    const currentTime = new Date().toLocaleTimeString();
+    console.log(`[${currentTime}] Retrieving active reminders...`)
     const reminders = await findActiveReminders();
-    // consoleLogReminder(results);
-    runReminders(reminders);
+    
+    reminders.map(async reminder => {
+        if (!remindersList.includes(reminder.id)) {
+            remindersList.push(reminder);
+        }
+    });
 });
+runReminders(remindersList);
   
 
 // function convertMinToMilisecs(min) {

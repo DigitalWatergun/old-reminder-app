@@ -9,8 +9,9 @@ The Reminder application is a custom built application that will allow you to in
 
 
 ### Unfinished Tasks
-- [ ] Write function to look at the minutes for each reminder, notify the user, and track repeat count
-- [ ] Implement node-cron to create cronjobs
+- [ ] Might need to implement event emitters in order to kick off cronjob properly
+- [ ] Write function to look at the minutes for each reminder, log reminder, and decrease repeat count
+- [ ] Kick off reminder function properly using some sort of event emitter
 - [ ] Implement SMS text functionality
 - [ ] Implement Email notification functionality
 - [ ] Create API routes to test login, logout, homepage, and settings pages for the application
@@ -39,4 +40,6 @@ The Reminder application is a custom built application that will allow you to in
 - [x] ~~Refactor code to add ".env" file instead of hardcoding localhost:27017~~
 - [x] ~~Refactor code to use MVC design model~~
 - [x] ~~Add getReminderById, getReminderByFilter, and changeReminder routes, controllers, and services~~
+- [x] ~~Implement node-cron to create cronjobs~~
 - [x] ~~Retrieve all active reminders in the database to use for the cronjob~~ 
+- [x] ~~Write function to asynchronously look through reminders and log them after their listed minutes~~ 
