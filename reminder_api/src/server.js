@@ -3,9 +3,7 @@ import mongoose from "mongoose";
 import express from "express"; 
 import cron from "node-cron";
 import { remindersRoute } from "./routes/remindersRoute.js";
-import { findActiveReminders } from "./cron/findActiveReminders.js";
 import { runReminders } from "./cron/runReminders.js";
-import { consoleLogReminder } from "./cron/consoleLogReminders.js";
 
 dotenv.config({path:"../.env"});
 
@@ -38,19 +36,12 @@ app.listen(3000, () => {
 
 
 // Cronjob code
-const remindersList = [];
 cron.schedule('* * * * *', async () => {
     const currentTime = new Date().toLocaleTimeString();
     console.log(`[${currentTime}] Retrieving active reminders...`)
-    const reminders = await findActiveReminders();
-    
-    reminders.map(async reminder => {
-        if (!remindersList.includes(reminder.id)) {
-            remindersList.push(reminder);
-        }
-    });
+    runReminders();
 });
-runReminders(remindersList);
+
   
 
 // function convertMinToMilisecs(min) {

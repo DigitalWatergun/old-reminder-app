@@ -2,26 +2,26 @@ import { filterReminders, updateReminder } from "../services/reminderService.js"
 
 
 const getActiveReminders = async () => {
-    const reminders = await filterReminders({status: "active"})
+    const reminders = await filterReminders({status: "ACTIVE"});
 
-    if (reminders) {
-        return reminders
+    return reminders;
+};
+
+
+const changeReminderStatus = async (reminder, status) => {
+    const data = {_id: reminder._id, update: {status: status}}
+
+    const result = await updateReminder(data);
+
+    if (result) {
+        return `Updated ${reminder.title} status to ${status}.`
     } else {
-        return "No active reminders found."
+        return "Failed to change reminder status."   
     };
 };
 
 
-const changeReminderStatus = async () => {
-
-};
-
-
-const changeReminderRepeat = async () => {
-
-};
-
-
 export {
-    getActiveReminders
+    getActiveReminders,
+    changeReminderStatus
 }

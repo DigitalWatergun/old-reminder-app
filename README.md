@@ -10,7 +10,6 @@ The Reminder application is a custom built application that will allow you to in
 
 ### Unfinished Tasks
 - [ ] Might need to implement event emitters in order to kick off cronjob properly
-- [ ] Write function to look at the minutes for each reminder, log reminder, and decrease repeat count
 - [ ] Kick off reminder function properly using some sort of event emitter
 - [ ] Implement SMS text functionality
 - [ ] Implement Email notification functionality
@@ -43,3 +42,4 @@ The Reminder application is a custom built application that will allow you to in
 - [x] ~~Implement node-cron to create cronjobs~~
 - [x] ~~Retrieve all active reminders in the database to use for the cronjob~~ 
 - [x] ~~Write function to asynchronously look through reminders and log them after their listed minutes~~ 
+- [x] ~~Write function to look at the minutes for each reminder, log reminder, and decrease repeat count~~
