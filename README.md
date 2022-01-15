@@ -9,10 +9,9 @@ The Reminder application is a custom built application that will allow you to in
 
 
 ### Unfinished Tasks
-- [ ] Might need to implement event emitters in order to kick off cronjob properly
-- [ ] Kick off reminder function properly using some sort of event emitter
-- [ ] Implement SMS text functionality
 - [ ] Implement Email notification functionality
+- [ ] Implement SMS text functionality
+- [ ] Refactor cronjob code to use event emitters each time a new reminder has been added
 - [ ] Create API routes to test login, logout, homepage, and settings pages for the application
 - [ ] Create a basic page in order to be used for testing
 - [ ] Implement local authentication
