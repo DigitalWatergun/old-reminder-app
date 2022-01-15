@@ -11,6 +11,8 @@ The Reminder application is a custom built application that will allow you to in
 ### Unfinished Tasks
 - [ ] Implement Email notification functionality
 - [ ] Implement SMS text functionality
+- [ ] Modify Mongo Schema to account for "date" reminders, not just repeat reminders
+- [ ] Refactor code to check the type of reminder it is (repeat vs date, Email vs SMS)
 - [ ] Refactor cronjob code to use event emitters each time a new reminder has been added
 - [ ] Create API routes to test login, logout, homepage, and settings pages for the application
 - [ ] Create a basic page in order to be used for testing
