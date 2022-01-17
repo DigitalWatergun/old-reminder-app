@@ -1,13 +1,16 @@
 import EventEmitter from "events";
 import { changeReminderStatus } from "../controllers/emitterController.js";
 import { sendEmailReminder } from "../mailer/mailer.js"
+import { sendTextReminder } from "../texter/texter.js";
 
 const eventEmitter = new EventEmitter(); 
+
 
 eventEmitter.on("test", () => {
     const currentTime = new Date().toLocaleTimeString();
     console.log(`[${currentTime}]: Testing EventEmitter using GET Request`);
 });
+
 
 eventEmitter.on("RUN", reminder => {
     let count = reminder.repeat; 
@@ -17,6 +20,7 @@ eventEmitter.on("RUN", reminder => {
         const currentTime = new Date().toLocaleTimeString();
         console.log(`[${currentTime}] REMINDER: ${reminder.title} - ${reminder.content}. ${reminder.minutes}`)
         eventEmitter.emit("EMAIL", reminder);
+        eventEmitter.emit("TEXT", reminder);
 
         count = count - 1; 
 
@@ -30,7 +34,12 @@ eventEmitter.on("RUN", reminder => {
 
 eventEmitter.on("EMAIL", reminder => {
     sendEmailReminder(reminder);
-})
+});
+
+
+eventEmitter.on("TEXT", reminder => {
+    sendTextReminder(reminder);
+});
 
 
 export { eventEmitter };
