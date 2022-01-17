@@ -13,7 +13,6 @@ The Reminder application is a custom built application that will allow you to in
 - [ ] Implement SMS text functionality
 - [ ] Modify Mongo Schema to account for "date" reminders, not just repeat reminders
 - [ ] Refactor code to check the type of reminder it is (repeat vs date, Email vs SMS)
-- [ ] Refactor cronjob code to use event emitters each time a new reminder has been added
 - [ ] Create API routes to test login, logout, homepage, and settings pages for the application
 - [ ] Create a basic page in order to be used for testing
 - [ ] Implement local authentication
@@ -44,3 +43,4 @@ The Reminder application is a custom built application that will allow you to in
 - [x] ~~Retrieve all active reminders in the database to use for the cronjob~~ 
 - [x] ~~Write function to asynchronously look through reminders and log them after their listed minutes~~ 
 - [x] ~~Write function to look at the minutes for each reminder, log reminder, and decrease repeat count~~
+- [x] ~~Refactor cronjob code to use event emitters each time a new reminder has been added~~

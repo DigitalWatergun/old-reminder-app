@@ -7,10 +7,12 @@ import {
     filterReminders,
     updateReminder
 } from "../services/reminderService.js";
+import { eventEmitter } from "../emitter/reminderEmitter.js";
 
 
 const getAllReminders = async (req, res) => {
     const reminders = await queryAllReminders();
+    eventEmitter.emit("test");
     
     return res.send(reminders);
 };
@@ -74,6 +76,9 @@ const changeReminder = async (req, res) => {
 
     if (reminder) {
         res.send(`Updated ${reminder.title}`);
+        if (reminder.status === "ACTIVE") {
+            eventEmitter.emit("RUN", reminder);
+        };
     } else {
         res.send("Failed to update reminder.")
     }
@@ -94,7 +99,9 @@ const postReminder = async (req, res) => {
     const result = await createReminder(data);
 
     res.send(result);
+    eventEmitter.emit("RUN", data)
 };
+
 
 const deleteReminder = async (req, res) => {
     const title = _.toLower(req.query.title);

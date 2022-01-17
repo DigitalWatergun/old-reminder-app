@@ -36,11 +36,11 @@ app.listen(3000, () => {
 
 
 // Cronjob code
-cron.schedule('* * * * *', async () => {
-    const currentTime = new Date().toLocaleTimeString();
-    console.log(`[${currentTime}] Retrieving active reminders...`)
-    runReminders();
-});
+// cron.schedule('* * * * *', async () => {
+//     const currentTime = new Date().toLocaleTimeString();
+//     console.log(`[${currentTime}] Retrieving active reminders...`)
+//     runReminders();
+// });
 
   
 
