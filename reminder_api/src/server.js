@@ -41,11 +41,3 @@ app.listen(3000, () => {
 //     console.log(`[${currentTime}] Retrieving active reminders...`)
 //     runReminders();
 // });
-
-  
-
-// function convertMinToMilisecs(min) {
-//     const miliseconds = (min * 60) * 1000;
-
-//     return miliseconds;
-// };

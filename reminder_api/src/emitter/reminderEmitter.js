@@ -1,6 +1,6 @@
 import EventEmitter from "events";
-import { getActiveReminders, 
-    changeReminderStatus } from "../controllers/cronController.js";
+import { changeReminderStatus } from "../controllers/emitterController.js";
+import { sendEmailReminder } from "../mailer/mailer.js"
 
 const eventEmitter = new EventEmitter(); 
 
@@ -16,6 +16,8 @@ eventEmitter.on("RUN", reminder => {
     const reminderInterval = setInterval(() => {
         const currentTime = new Date().toLocaleTimeString();
         console.log(`[${currentTime}] REMINDER: ${reminder.title} - ${reminder.content}. ${reminder.minutes}`)
+        eventEmitter.emit("EMAIL", reminder);
+
         count = count - 1; 
 
         if (count === 0) {
@@ -27,7 +29,7 @@ eventEmitter.on("RUN", reminder => {
 
 
 eventEmitter.on("EMAIL", reminder => {
-    
+    sendEmailReminder(reminder);
 })
 
 

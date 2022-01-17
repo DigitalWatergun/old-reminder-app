@@ -1,5 +1,5 @@
 import { getActiveReminders, 
-    changeReminderStatus } from "../controllers/cronController.js";
+    changeReminderStatus } from "../controllers/emitterController.js";
 
 const runReminders = async () => {
     const reminders = await getActiveReminders();
