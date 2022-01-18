@@ -19,8 +19,14 @@ eventEmitter.on("RUN", reminder => {
     const reminderInterval = setInterval(() => {
         const currentTime = new Date().toLocaleTimeString();
         console.log(`[${currentTime}] REMINDER: ${reminder.title} - ${reminder.content}. ${reminder.minutes}`)
-        eventEmitter.emit("EMAIL", reminder);
-        eventEmitter.emit("TEXT", reminder);
+
+        if (reminder.enableSMS === true) {
+            eventEmitter.emit("TEXT", reminder);
+        };
+
+        if (reminder.enableEmail === true) {
+            eventEmitter.emit("EMAIL", reminder);
+        };
 
         count = count - 1; 
 

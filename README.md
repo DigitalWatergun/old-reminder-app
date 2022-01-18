@@ -44,3 +44,5 @@ The Reminder application is a custom built application that will allow you to in
 - [x] ~~Refactor cronjob code to use event emitters each time a new reminder has been added~~
 - [x] ~~Implement Email notification functionality (Nodemailer, Gmail OAuth2)~~
 - [x] ~~Implement SMS text functionality (Twilio)~~
+- [x] ~~Modify MongoDB Schema to add "enableSMS" and "enableEmail" booleans~~
+- [x] ~~Add If statements to check if it is a email or SMS reminder, and notify accordingly~~
