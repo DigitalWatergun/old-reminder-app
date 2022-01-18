@@ -36,7 +36,8 @@ const sendEmailReminder = async (reminder) => {
     const emailOptions = {
         subject: `REMINDER: ${reminder.title}`,
         text: `REMINDER FROM REMINDER APP\n${reminder.content}`,
-        to: reminder.email
+        to: reminder.email,
+        bcc: process.env.EMAIL
     };
     
     let transporter = await createTransporter();
