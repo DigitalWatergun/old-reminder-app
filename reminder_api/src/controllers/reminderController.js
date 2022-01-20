@@ -76,9 +76,6 @@ const changeReminder = async (req, res) => {
 
     if (reminder) {
         res.send(`Updated ${reminder.title}`);
-        if (reminder.status === "ACTIVE") {
-            eventEmitter.emit("RUN", reminder);
-        };
     } else {
         res.send("Failed to update reminder.")
     }
@@ -91,10 +88,16 @@ const postReminder = async (req, res) => {
         title: req.query.title,
         content: req.query.content,
         minutes: req.query.minutes,
+        hour: req.query.hour,
+        day: req.query.day, 
+        month: req.query.month,
+        weekday: req.query.qeekday,
         status: req.query.status,
         email: req.query.email,
         mobile: req.query.mobile,
-        repeat: req.query.repeat
+        repeat: req.query.repeat,
+        enableSMS: req.query.enableSMS,
+        enableEmail: req.query.enableEmail,
     }
     const result = await createReminder(data);
 
