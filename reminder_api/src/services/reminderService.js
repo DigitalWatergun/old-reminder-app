@@ -35,10 +35,16 @@ const createReminder = async (data) => {
             title: data.title,
             content: data.content,
             minutes: data.minutes,
+            hour: data.hour, 
+            day: data.day,
+            month: data.month,
+            weekday: data.weekday,
             status: data.status, 
             email: data.email, 
             mobile: data.mobile, 
-            repeat: data.repeat
+            repeat: data.repeat,
+            enableSMS: data.enableSMS,
+            enableEmail: data.enableEmail
         });
 
         await newReminder.save()

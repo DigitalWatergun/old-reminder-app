@@ -14,6 +14,7 @@ eventEmitter.on("test", () => {
 
 
 eventEmitter.on("RUN", reminder => {
+    changeReminderStatus(reminder, "ACTIVE");
     console.log(`[${new Date().toLocaleTimeString()}] Emitted RUN event.`)
     let count = reminder.repeat; 
     const cronSchedule = `${reminder.minutes} ${reminder.hour} ${reminder.day} ${reminder.month} ${reminder.weekday}`;

@@ -102,7 +102,7 @@ const postReminder = async (req, res) => {
     const result = await createReminder(data);
 
     res.send(result);
-    eventEmitter.emit("RUN", data)
+    // eventEmitter.emit("RUN", data)
 };
 
 

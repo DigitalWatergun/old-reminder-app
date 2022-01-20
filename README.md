@@ -9,14 +9,11 @@ The Reminder application is a custom built application that will allow you to in
 
 
 ### Unfinished Tasks
-- [ ] Fix bug where you can have duplicate events of one reminder running
-- [ ] Modify Mongo Schema to account for "date" reminders, not just repeat reminders
-- [ ] Refactor code to check the type of reminder it is (repeat vs date, Email vs SMS)
+- [ ] Implement Reactjs for frontend
 - [ ] Create API routes to test login, logout, homepage, and settings pages for the application
 - [ ] Create a basic page in order to be used for testing
 - [ ] Implement local authentication
 - [ ] Implement Google OAuth
-- [ ] Utilize Reactjs for the front end pieces
 - [ ] Figure out API routing and React component hierarchy 
 - [ ] Properly display reminder data on React components 
 - [ ] Create "settings" page for user to set their own intervals/timer for their reminder and email/sms notifications
@@ -48,3 +45,5 @@ The Reminder application is a custom built application that will allow you to in
 - [x] ~~Modify MongoDB Schema to add "enableSMS" and "enableEmail" booleans~~
 - [x] ~~Add If statements to check if it is a email or SMS reminder, and notify accordingly~~
 - [x] ~~Replace setInterval() with node-schedule in emitter functions~~
+- [x] ~~Fix bug where you can have duplicate events of one reminder running~~
+- [x] ~~Modify Mongo Schema to account for "date" reminders, not just repeat reminders~~
