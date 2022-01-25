@@ -52,3 +52,4 @@ The Reminder application is a custom built application that will allow you to in
 - [x] ~~Refactor runReminder and emitter code to clean up files. Combined with remindersRoute.js~~
 - [x] ~~Implement route to stop running reminders that have been started previously~~
 - [x] ~~Implement ability to set dates/times to be reminded on~~
+- [x] ~~Added React Router and Test/Reminder pages to make sure Router is working~~
