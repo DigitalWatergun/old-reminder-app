@@ -9,7 +9,6 @@ The Reminder application is a custom built application that will allow you to in
 
 
 ### Unfinished Tasks
-- [ ] Implement route to cancel running reminders that have been started previously
 - [ ] Create API routes to test login, logout, homepage, and settings pages for the application
 - [ ] Create a basic page in order to be used for testing
 - [ ] Implement local authentication
@@ -48,3 +47,5 @@ The Reminder application is a custom built application that will allow you to in
 - [x] ~~Fix bug where you can have duplicate events of one reminder running~~
 - [x] ~~Modify Mongo Schema to account for "date" reminders, not just repeat reminders~~
 - [x] ~~Start implementing Reactjs for frontend~~
+- [x] ~~Refactor runReminder and emitter code to clean up files. Combined with remindersRoute.js~~
+- [x] ~~Implement route to stop running reminders that have been started previously~~

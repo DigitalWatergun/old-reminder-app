@@ -53,6 +53,26 @@ const getReminderByFilter = async (req, res) => {
 };
 
 
+const getActiveReminders = async () => {
+    const reminders = await filterReminders({status: "ACTIVE"});
+
+    return reminders;
+};
+
+
+const changeReminderStatus = async (reminder, status) => {
+    const data = {_id: reminder._id, update: {status: status}}
+
+    const result = await updateReminder(data);
+
+    if (result) {
+        return `Updated ${reminder.title} status to ${status}.`
+    } else {
+        return "Failed to change reminder status."   
+    };
+};
+
+
 const changeReminder = async (req, res) => {
     const data = {
         "update": {}
@@ -113,11 +133,46 @@ const deleteReminder = async (req, res) => {
     res.send(result);
 };
 
+
+const runReminder = async (req, res) => {
+    const _id = _.toLower(req.query.title);
+    const reminder = await findReminderById(_id);
+
+    if (reminder) {
+        if (reminder.status === "INACTIVE") {
+            eventEmitter.emit("RUN", reminder)
+            return res.send(`Reminder ${reminder.title} has started running.`);
+        } else {
+            return res.send("Reminder is already running.");
+        }
+    } else {
+        return res.send("No reminders found with that title.");
+    };
+};
+
+
+const stopReminder = async (req, res) => {
+    const _id = _.toLower(req.query.title);
+    const reminder = await findReminderById(_id);
+
+    if (reminder) {
+        eventEmitter.emit("STOP", reminder)
+        return res.send(`Reminder ${reminder.title} has stopped.`)
+    } else {
+        return res.send("No reminders found with that title.")
+    };
+};
+
+
 export {
     getAllReminders, 
     postReminder, 
     deleteReminder,
     getReminderById,
     getReminderByFilter,
-    changeReminder
+    changeReminder,
+    getActiveReminders,
+    changeReminderStatus,
+    runReminder,
+    stopReminder
 };

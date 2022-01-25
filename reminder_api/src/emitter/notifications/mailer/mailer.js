@@ -1,8 +1,8 @@
 import dotenv from "dotenv";
-dotenv.config({path: "../.env"});
-
+dotenv.config({path:"../.env"});
 import nodemailer from "nodemailer"; 
 import { google } from "googleapis";
+
 const OAuth2 = google.auth.OAuth2;
 
 const sendEmailReminder = async (reminder) => {

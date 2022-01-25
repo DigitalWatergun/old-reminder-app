@@ -1,9 +1,10 @@
 import EventEmitter from "events";
 import schedule from "node-schedule";
-import { changeReminderStatus } from "../controllers/emitterController.js";
-import { sendEmailReminder } from "../mailer/mailer.js"
-import { sendTextReminder } from "../texter/texter.js";
+import { changeReminderStatus } from "../controllers/reminderController.js";
+import { sendEmailReminder } from "./notifications/mailer/mailer.js"
+import { sendTextReminder } from "./notifications/texter/texter.js";
 
+const runningReminders = {};
 const eventEmitter = new EventEmitter(); 
 
 
@@ -35,11 +36,12 @@ eventEmitter.on("RUN", reminder => {
         count = count - 1;
         console.log(`Count: ${count}`)
         if (count === 0) {
-            console.log("It's 0")
-            changeReminderStatus(reminder, "INACTIVE");
-            cronTask.cancel();
+            console.log("Reminder count has reached 0")
+            eventEmitter.emit("STOP", reminder);
         };    
     });
+
+    runningReminders[reminder._id] = cronTask;
 });
 
 
@@ -51,6 +53,13 @@ eventEmitter.on("EMAIL", reminder => {
 eventEmitter.on("TEXT", reminder => {
     sendTextReminder(reminder);
 });
+
+
+eventEmitter.on("STOP", reminder => {
+    changeReminderStatus(reminder, "INACTIVE");
+    runningReminders[reminder._id].cancel();
+    console.log(`${reminder.title} has stopped running.`)
+})
 
 
 export { eventEmitter };

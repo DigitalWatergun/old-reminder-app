@@ -2,9 +2,8 @@ import dotenv from "dotenv";
 import mongoose from "mongoose";
 import express from "express"; 
 import { remindersRoute } from "./routes/remindersRoute.js";
-import { runReminderRoute } from "./routes/runReminderRoute.js"
+dotenv.config();
 
-dotenv.config({path:"../.env"});
 
 // Connect to MongoDB 
 mongoose.connect(process.env.MONGO_URI);
@@ -25,7 +24,6 @@ app.get("/", (req, res) => {
 });
 
 app.use("/reminders", remindersRoute);
-app.use("/runReminder", runReminderRoute);
 
 
 app.listen(3000, () => {

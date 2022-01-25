@@ -1,5 +1,5 @@
 import dotenv from "dotenv";
-dotenv.config({path: "../.env"});
+dotenv.config({path:"../.env"});
 import twilio from "twilio";
 
 const accountSid = process.env.TWILIO_ACCOUNT_SID;
@@ -14,7 +14,7 @@ const sendTextReminder = async (reminder) => {
         to: reminder.mobile
     })
     .then(message => {
-        console.log(message);
+        console.log(message.body);
     });
 };
 
