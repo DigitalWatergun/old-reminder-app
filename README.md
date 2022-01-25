@@ -9,6 +9,7 @@ The Reminder application is a custom built application that will allow you to in
 
 
 ### Unfinished Tasks
+- [ ] Implement dates into reminder (remind on this date and time)
 - [ ] Create API routes to test login, logout, homepage, and settings pages for the application
 - [ ] Create a basic page in order to be used for testing
 - [ ] Implement local authentication
