@@ -20,6 +20,7 @@ const app = express();
 
 // Routes for the web server 
 app.get("/", (req, res) => {
+    console.log(req.query)
     res.send("It's working.");
 });
 

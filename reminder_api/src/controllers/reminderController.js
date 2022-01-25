@@ -111,8 +111,8 @@ const postReminder = async (req, res) => {
         hour: req.query.hour,
         day: req.query.day, 
         month: req.query.month,
-        weekday: req.query.qeekday,
-        status: req.query.status,
+        weekday: req.query.weekday,
+        status: "INACTIVE",
         email: req.query.email,
         mobile: req.query.mobile,
         repeat: req.query.repeat,
@@ -122,7 +122,6 @@ const postReminder = async (req, res) => {
     const result = await createReminder(data);
 
     res.send(result);
-    // eventEmitter.emit("RUN", data)
 };
 
 
