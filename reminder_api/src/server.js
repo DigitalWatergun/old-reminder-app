@@ -1,6 +1,7 @@
 import dotenv from "dotenv";
 import mongoose from "mongoose";
 import express from "express"; 
+import cors from "cors";
 import { remindersRoute } from "./routes/remindersRoute.js";
 dotenv.config();
 
@@ -16,6 +17,7 @@ mongoose.connection.on("connected", (err, res) => {
 
 // Set up Express server 
 const app = express(); 
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -28,7 +30,7 @@ app.get("/", (req, res) => {
 app.use("/reminders", remindersRoute);
 
 
-app.listen(3000, () => {
+app.listen(3001, () => {
     const currentTime = new Date().toLocaleTimeString();
     console.log(`[${currentTime}] Server running on port 3000.`)
 });

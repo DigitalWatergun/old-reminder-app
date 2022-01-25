@@ -1,5 +1,5 @@
 import dotenv from "dotenv";
-dotenv.config({path:"../.env"});
+dotenv.config();
 import nodemailer from "nodemailer"; 
 import { google } from "googleapis";
 

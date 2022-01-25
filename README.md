@@ -9,7 +9,7 @@ The Reminder application is a custom built application that will allow you to in
 
 
 ### Unfinished Tasks
-- [ ] Create React Component for List Reminders page and properly query API route
+- [ ] Create React Component for Reminders and properly query API route
 - [ ] Create React Component for Create Reminders page and properly query API route
 - [ ] Create React Component for Run Reminders page and properly query API route
 - [ ] Create React Component for Delete reminders and properly query API route 
@@ -53,3 +53,4 @@ The Reminder application is a custom built application that will allow you to in
 - [x] ~~Implement route to stop running reminders that have been started previously~~
 - [x] ~~Implement ability to set dates/times to be reminded on~~
 - [x] ~~Added React Router and Test/Reminder pages to make sure Router is working~~
+- [x] ~~Set up React to display all reminders as JSON strings on Reminder page~~
