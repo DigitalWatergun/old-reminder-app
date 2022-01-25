@@ -103,25 +103,64 @@ const changeReminder = async (req, res) => {
 
 
 const postReminder = async (req, res) => {
-    const data = {
-        _id: _.toLower(req.query.title),
-        title: req.query.title,
-        content: req.query.content,
-        minutes: req.query.minutes,
-        hour: req.query.hour,
-        day: req.query.day, 
-        month: req.query.month,
-        weekday: req.query.weekday,
-        status: "INACTIVE",
-        email: req.query.email,
-        mobile: req.query.mobile,
-        repeat: req.query.repeat,
-        enableSMS: req.query.enableSMS,
-        enableEmail: req.query.enableEmail,
-    }
+    console.log(req.body)
+
+    const data = {};
+    for (const [key, value] of Object.entries(req.body)) {
+        if (key === "date") {
+            const dateValue = value.split("-")
+            data["month"] = dateValue[1]
+            data["day"] = dateValue[2]
+        };
+
+        if (key === "time") {
+            const timeValue = value.split(":")
+            data["hour"] = timeValue[0]
+            data["minutes"] = timeValue[1]
+        };
+
+        if (key === "enableEmail") {
+            data["enableEmail"] = true;
+        } else {
+            data["enableEmail"] = false;
+        };
+
+        if (key === "enableSMS") {
+            data["enableSMS"] = true; 
+        } else {
+            data["enableSMS"] = false;
+        };
+    };
+
+    data["_id"] = _.toLower(req.body.title);
+    data["title"] = req.body.title;
+    data["content"] = req.body.content; 
+    data["weekday"] = "*"
+    data["status"] = "INACTIVE"
+    data["email"] = req.body.email; 
+    data["mobile"] = req.body.mobile;
+    data["repeat"] = 3;
+
+    // const data = {
+    //     _id: _.toLower(req.query.title),
+    //     title: req.query.title,
+    //     content: req.query.content,
+    //     minutes: req.query.minutes,
+    //     hour: req.query.hour,
+    //     day: req.query.day, 
+    //     month: req.query.month,
+    //     weekday: req.query.weekday,
+    //     status: "INACTIVE",
+    //     email: req.query.email,
+    //     mobile: req.query.mobile,
+    //     repeat: req.query.repeat,
+    //     enableSMS: req.query.enableSMS,
+    //     enableEmail: req.query.enableEmail,
+    // }
     const result = await createReminder(data);
 
     res.send(result);
+    // res.send(data)
 };
 
 

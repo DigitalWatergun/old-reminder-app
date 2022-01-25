@@ -16,11 +16,12 @@ mongoose.connection.on("connected", (err, res) => {
 
 // Set up Express server 
 const app = express(); 
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 
 // Routes for the web server 
 app.get("/", (req, res) => {
-    console.log(req.query)
     res.send("It's working.");
 });
 

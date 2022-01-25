@@ -6,7 +6,7 @@
 </head>
 <body>
     <h1>Create Reminder</h1>
-    <form action="http://127.0.0.1:3000">
+    <form action="http://127.0.0.1:3000/reminders" method="post">
         <label>title</label>
         <input name="title" type=text> 
         <br>
@@ -26,7 +26,7 @@
         <input name="email"  type="email"><input name="enableEmail" type="checkbox">
         <br>
         <label>sms</label>
-        <input name="mobileNumber" type="tel"><input name="enableSMS" type="checkbox">
+        <input name="mobile" type="tel"><input name="enableSMS" type="checkbox">
         <br>
         <input type="submit">
     </form>
