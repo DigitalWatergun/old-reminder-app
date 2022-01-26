@@ -1,12 +1,24 @@
 import React, {useState} from "react";
+import { ReminderDetails } from "./ReminderDetails";
 
 export const Reminder = (props) => {
-    const [expand, setExpand] = useState(false);
+    const [expandState, setExpandState] = useState(false);
+    const [expand, setExpand] = useState();
+
+    const handleClick = () => {
+        if (expandState) {
+            setExpandState(false)
+            setExpand();
+        } else {
+            setExpandState(true);
+            setExpand(<ReminderDetails data={props.data}/>)
+        }
+    }
 
     return (
-        <div className="reminder">
+        <div className="reminder" onClick={handleClick}>
             <h3>{props.data.title}</h3>
-            <p>{props.data.content}</p>
+            {expand}
         </div>
     )
 }

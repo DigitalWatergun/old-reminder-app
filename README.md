@@ -9,10 +9,12 @@ The Reminder application is a custom built application that will allow you to in
 
 
 ### Unfinished Tasks
-- [ ] Create React Component for Reminders and properly query API route
 - [ ] Create React Component for Create Reminders page and properly query API route
-- [ ] Create React Component for Run Reminders page and properly query API route
+- [ ] Create React button to Run Reminders and properly query API route
 - [ ] Create React Component for Delete reminders and properly query API route 
+- [ ] Create React Component and page to edit reminders already created
+- [ ] Create Home page 
+- [ ] Add Headers and Footers and make all pages consistent
 - [ ] Implement local authentication
 - [ ] Implement Google OAuth
 - [ ] Figure out API routing and React component hierarchy 
@@ -54,4 +56,4 @@ The Reminder application is a custom built application that will allow you to in
 - [x] ~~Implement ability to set dates/times to be reminded on~~
 - [x] ~~Added React Router and Test/Reminder pages to make sure Router is working~~
 - [x] ~~Set up React to display all reminders as JSON strings on Reminder page~~
-- [x] ~~Add "Reminder" component to be rendered for each reminder on the Reminders page~~
+- [x] Create React Component for Reminders page and properly query API route

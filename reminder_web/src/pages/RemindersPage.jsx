@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react"; 
+import { Link } from "react-router-dom";
 import { Reminder } from "../components/Reminder";
 
-export const Reminders = () => {
+export const RemindersPage = () => {
     const [reminders, setReminders] = useState([]);
     const [error, setError] = useState();
 
@@ -28,6 +29,11 @@ export const Reminders = () => {
         })
     };
 
+    const handleCreateReminderClick = () => {
+        return (
+            <Link to="/reminders/create"/>
+        )
+    }
 
     useEffect(callBackendAPI, []);
 
@@ -43,6 +49,9 @@ export const Reminders = () => {
                 {reminders.map((reminders, index) => {
                     return <Reminder key={index} data={reminders} />
                 })}
+                <Link to="/reminders/create">
+                    <button onClick={handleCreateReminderClick}>Create Reminder</button>
+                </Link>
             </div>
         )
     }
