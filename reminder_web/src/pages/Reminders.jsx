@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react"; 
+import { Reminder } from "../components/Reminder";
 
 export const Reminders = () => {
     const [reminders, setReminders] = useState([]);
@@ -38,10 +39,10 @@ export const Reminders = () => {
     } else {
         return (
             <div>
-                <h1>Reminders Page</h1>
-                <div>
-                    {JSON.stringify(reminders)}
-                </div>
+                <h1 className="title">Reminders Page</h1>
+                {reminders.map((reminders, index) => {
+                    return <Reminder key={index} data={reminders} />
+                })}
             </div>
         )
     }

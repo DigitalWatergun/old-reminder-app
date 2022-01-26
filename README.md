@@ -54,3 +54,4 @@ The Reminder application is a custom built application that will allow you to in
 - [x] ~~Implement ability to set dates/times to be reminded on~~
 - [x] ~~Added React Router and Test/Reminder pages to make sure Router is working~~
 - [x] ~~Set up React to display all reminders as JSON strings on Reminder page~~
+- [x] ~~Add "Reminder" component to be rendered for each reminder on the Reminders page~~
