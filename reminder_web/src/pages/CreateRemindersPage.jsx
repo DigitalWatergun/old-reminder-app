@@ -5,6 +5,7 @@ export const CreateRemindersPage = () => {
 
     return (
         <div>
+            <h1 className="title">Create Reminder</h1>
             <CreateReminder/>
         </div>
     )

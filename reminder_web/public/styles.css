@@ -10,3 +10,8 @@ body {
     width: 400px;
     margin: 10px auto;
   }
+
+.createReminderForm {
+    margin: auto;
+    text-align: left;
+}
