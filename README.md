@@ -9,9 +9,10 @@ The Reminder application is a custom built application that will allow you to in
 
 
 ### Unfinished Tasks
-- [ ] Create React button to Run Reminders and properly query API route
-- [ ] Create React Component for Delete reminders and properly query API route 
-- [ ] Create React Component and page to edit reminders already created
+- [ ] Create React component to Delete reminders from database
+- [ ] Create React button to Run Reminders 
+- [ ] Create React component to stop currently running reminders 
+- [ ] Create React component and page to edit reminders already created
 - [ ] Create Home page 
 - [ ] Add Headers and Footers and make all pages consistent
 - [ ] Implement local authentication
