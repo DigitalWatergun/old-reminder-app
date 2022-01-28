@@ -119,15 +119,12 @@ const postReminder = async (req, res) => {
             data["minutes"] = timeValue[1]
         };
 
-
-
         if (key === "repeatEnable") {
             if (req.body.minutes === "1") {
                 data["minutes"] = "*";
             } else {
                 data["minutes"] = req.body.minutes
             }
-            
 
             data["hour"] = "*";
             data["day"] = "*";
@@ -146,26 +143,9 @@ const postReminder = async (req, res) => {
     data["enableEmail"] = req.body.enableEmail;
     data["enableSMS"] = req.body.enableSMS;
 
-    // const data = {
-    //     _id: _.toLower(req.query.title),
-    //     title: req.query.title,
-    //     content: req.query.content,
-    //     minutes: req.query.minutes,
-    //     hour: req.query.hour,
-    //     day: req.query.day, 
-    //     month: req.query.month,
-    //     weekday: req.query.weekday,
-    //     status: "INACTIVE",
-    //     email: req.query.email,
-    //     mobile: req.query.mobile,
-    //     repeat: req.query.repeat,
-    //     enableSMS: req.query.enableSMS,
-    //     enableEmail: req.query.enableEmail,
-    // }
     const result = await createReminder(data);
 
     res.send(result);
-    // res.send(data)'
     console.log(data);
 };
 
