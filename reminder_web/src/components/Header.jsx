@@ -1,14 +1,7 @@
 import React from "react"; 
 
-export const Header = (props) => {
-    const {content} = props
+export const Header = () => {
     return (
-        <div>
-            <div className="headerFooter"></div>
-                <div>
-                    {content}
-                </div>
-            <div className="headerFooter"></div>
-        </div>
+        <div className="header">Header</div>
     )
 }

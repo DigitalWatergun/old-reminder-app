@@ -14,7 +14,6 @@ The Reminder application is a custom built application that will allow you to in
 - [ ] Create React component to stop currently running reminders 
 - [ ] Create React component and page to edit reminders already created
 - [ ] Create Home page 
-- [ ] Add Headers and Footers and make all pages consistent
 - [ ] Implement local authentication
 - [ ] Implement Google OAuth
 - [ ] Figure out API routing and React component hierarchy 
@@ -60,3 +59,4 @@ The Reminder application is a custom built application that will allow you to in
 - [x] ~~Create React Component for Create Reminders page~~
 - [x] ~~Implement a "Timer" option on the Create Reminders page to have repeated reminders every x minutes~~
 - [x] ~~Implement CreateReminders page to call backend api and store in database with proper mongo schema~~
+- [x] ~~Add Headers and Footers components to make all pages consistent~~

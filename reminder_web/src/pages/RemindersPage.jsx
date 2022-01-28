@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react"; 
 import { Link } from "react-router-dom";
 import { Reminder } from "../components/Reminder";
+import { HeaderFooter } from "../components/HeaderFooter";
 
 export const RemindersPage = () => {
     const [reminders, setReminders] = useState([]);
@@ -39,7 +40,7 @@ export const RemindersPage = () => {
         </div>
     } else {
         return (
-            <div>
+            <HeaderFooter>
                 <h1 className="title">Reminders Page</h1>
                 {reminders.map((reminders, index) => {
                     return <Reminder key={index} data={reminders} />
@@ -47,7 +48,7 @@ export const RemindersPage = () => {
                 <Link to="/reminders/create">
                     <button>Create Reminder</button>
                 </Link>
-            </div>
+            </HeaderFooter>
         )
     }
 }
