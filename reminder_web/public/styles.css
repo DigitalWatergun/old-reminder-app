@@ -11,7 +11,7 @@ body {
 }
 
 .content {
-    background-color: lightskyblue;
+    background-color: lightgray;
     min-height: 100vh;
     width: auto;
 }
@@ -42,3 +42,7 @@ body {
     margin: 10px auto;
   }
 
+.reminderTitle {
+    margin: 0;
+    padding: 20px;
+}

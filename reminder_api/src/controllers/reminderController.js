@@ -151,7 +151,7 @@ const postReminder = async (req, res) => {
 
 
 const deleteReminder = async (req, res) => {
-    const id = _.snakeCase(req.query.title);
+    const id = req.body._id;
     const result = await removeReminder(id);
 
     res.send(result);

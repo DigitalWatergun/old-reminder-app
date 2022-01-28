@@ -105,13 +105,13 @@ export const CreateReminder = () => {
                 if (!response.ok) {
                     console.log("Response code is not okay.")
                     throw Error()
+                } else {
+                    navigate("/reminders")
                 }
             })
             .catch(err => {
                 console.log(err)
-            })
-
-            navigate("/reminders")
+            })              
         } else {
             alert("You need to enable either SMS or Email")
         }
