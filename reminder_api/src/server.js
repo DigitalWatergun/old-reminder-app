@@ -32,5 +32,5 @@ app.use("/reminders", remindersRoute);
 
 app.listen(3001, () => {
     const currentTime = new Date().toLocaleTimeString();
-    console.log(`[${currentTime}] Server running on port 3000.`)
+    console.log(`[${currentTime}] Server running on port 3001.`)
 });

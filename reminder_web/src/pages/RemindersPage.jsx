@@ -29,11 +29,6 @@ export const RemindersPage = () => {
         })
     };
 
-    const handleCreateReminderClick = () => {
-        return (
-            <Link to="/reminders/create"/>
-        )
-    }
 
     useEffect(callBackendAPI, []);
 
@@ -50,7 +45,7 @@ export const RemindersPage = () => {
                     return <Reminder key={index} data={reminders} />
                 })}
                 <Link to="/reminders/create">
-                    <button onClick={handleCreateReminderClick}>Create Reminder</button>
+                    <button>Create Reminder</button>
                 </Link>
             </div>
         )

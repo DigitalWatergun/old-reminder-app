@@ -1,8 +1,6 @@
 import React from "react";
 
 export const ReminderDetails = (props) => {
-
-
     return (
         <div>
             <p>Content: {props.data.content}</p>

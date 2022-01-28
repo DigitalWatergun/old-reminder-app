@@ -1,4 +1,5 @@
 import React, { useState } from "react"; 
+import { Link, useNavigate } from "react-router-dom";
 
 
 const TimeInput = (props) => {
@@ -11,24 +12,76 @@ const TimeInput = (props) => {
 }
 
 
+const RepeatInput = (props) => {
+    const dateCheckBox = document.getElementsByName("dateEnable")[0]
+    const timeCheckBox = document.getElementsByName("timeEnable")[0]
+    dateCheckBox.checked = false
+    timeCheckBox.checked = false
+
+    return (
+        <div>
+            <div>
+            <label>Repeat Every # Minutes: </label>
+            <input name="minutes" type="number" onChange={props.onInputChange}/>
+            </div>
+            <div>
+            <label>Repeat # Many Times: </label>
+            <input name="repeat" type="number" onChange={props.onInputChange}/>
+            </div>
+        </div>
+    )
+}
+
+
 export const CreateReminder = () => {
     const [formData, setFormData] = useState({})
+    const navigate = useNavigate();
+
+
+    const removeData = (item) => {
+        const items = {...formData};
+        for (const i of item) {
+            delete items[i]
+        }
+        setFormData(items)
+    }
+
 
     const handleChange = (event) => {
         const name = event.target.name;
-        let value; 
+        let value = event.target.value;
 
         if (name === "dateEnable") {
             value = event.target.checked;
-        } else {
-            value = event.target.value;
+            if (!event.target.checked) {
+                removeData(["date"])
+            }
         }
 
         if (name === "timeEnable") {
             value = event.target.checked
-            setFormData(items => {
-                return {...items, ["dateEnable"]: true}
-            })
+            if (event.target.checked) {
+                setFormData(items => {
+                    return {...items, ["dateEnable"]: true}
+                })
+            } else {
+                removeData(["time"])
+            }
+        }
+
+        if (name === "repeatEnable") {
+            value = event.target.checked;
+            if (event.target.checked) {
+                setFormData(items => {
+                    return {...items, ["dateEnable"]: false, ["timeEnable"]: false};
+                })
+            } else {
+                removeData(["repeatMinutes","repeat"])
+            }
+        }
+
+        if (name === "enableEmail" || name === "enableSMS") {
+            value = event.target.checked;
         }
 
         setFormData(items => {
@@ -40,6 +93,28 @@ export const CreateReminder = () => {
     const handleSubmit = (event) => {
         event.preventDefault();
         console.log(formData);
+
+        if (formData.enableSMS || formData.enableEmail) {
+            const requestOptions = {
+                method: "POST", 
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(formData)
+            }
+            fetch("http://localhost:3001/reminders", requestOptions)
+            .then(response => {
+                if (!response.ok) {
+                    console.log("Response code is not okay.")
+                    throw Error()
+                }
+            })
+            .catch(err => {
+                console.log(err)
+            })
+
+            navigate("/reminders")
+        } else {
+            alert("You need to enable either SMS or Email")
+        }
     }
 
     return (
@@ -69,15 +144,31 @@ export const CreateReminder = () => {
                         </td>
                     </tr>
                     <tr>
+                        <td>Timer:</td>
+                        <td>
+                            <input name="repeatEnable" type="checkbox" onChange={handleChange}/>
+                            {formData.repeatEnable ? <RepeatInput onInputChange={handleChange}/> : null}
+                        </td>
+                    </tr>
+                    <tr>
                         <td>Email:</td>
-                        <td><input name="email" type="email" value={formData.email || ''} onChange={handleChange}/></td>
+                        <td>
+                            <input name="enableEmail" type="checkbox" onChange={handleChange}/>
+                            {formData.enableEmail ? <input name="email" type="email" onChange={handleChange}/> : null}
+                        </td>
                     </tr>
                     <tr>
                         <td>SMS:</td>
-                        <td><input name="mobile" type="tel" value={formData.mobile || ""} onChange={handleChange}/></td>
+                        <td>
+                            <input name="enableSMS" type="checkbox" onChange={handleChange}/>
+                            {formData.enableSMS ? <input name="mobile" type="tel" value={formData.mobile || ""} onChange={handleChange}/>: null}
+                        </td>
                     </tr>
                 </tbody>
             </table>
+            <Link to="/reminders">
+                <button>Cancel</button>
+            </Link>
             <button onClick={handleSubmit}>Submit</button>
         </div>
     )

@@ -119,27 +119,32 @@ const postReminder = async (req, res) => {
             data["minutes"] = timeValue[1]
         };
 
-        if (key === "enableEmail") {
-            data["enableEmail"] = true;
-        } else {
-            data["enableEmail"] = false;
-        };
 
-        if (key === "enableSMS") {
-            data["enableSMS"] = true; 
-        } else {
-            data["enableSMS"] = false;
-        };
+
+        if (key === "repeatEnable") {
+            if (req.body.minutes === "1") {
+                data["minutes"] = "*";
+            } else {
+                data["minutes"] = req.body.minutes
+            }
+            
+
+            data["hour"] = "*";
+            data["day"] = "*";
+            data["month"] ="*";
+        }
     };
 
-    data["_id"] = _.toLower(req.body.title);
+    data["_id"] = _.snakeCase(req.body.title);
     data["title"] = req.body.title;
     data["content"] = req.body.content; 
     data["weekday"] = "*"
     data["status"] = "INACTIVE"
     data["email"] = req.body.email; 
     data["mobile"] = req.body.mobile;
-    data["repeat"] = 3;
+    data["repeat"] = req.body.repeat;
+    data["enableEmail"] = req.body.enableEmail;
+    data["enableSMS"] = req.body.enableSMS;
 
     // const data = {
     //     _id: _.toLower(req.query.title),
@@ -160,13 +165,14 @@ const postReminder = async (req, res) => {
     const result = await createReminder(data);
 
     res.send(result);
-    // res.send(data)
+    // res.send(data)'
+    console.log(data);
 };
 
 
 const deleteReminder = async (req, res) => {
-    const title = _.toLower(req.query.title);
-    const result = await removeReminder(title);
+    const id = _.snakeCase(req.query.title);
+    const result = await removeReminder(id);
 
     res.send(result);
 };

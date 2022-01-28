@@ -57,9 +57,10 @@ const createReminder = async (data) => {
 };
 
 
-const removeReminder = async (title) => {
+const removeReminder = async (id) => {
     try {
-        await Reminder.deleteOne({_id: title})
+        console.log(id)
+        await Reminder.deleteOne({_id: id})
 
         return "Successfully deleted reminder.";
     } catch(err) {

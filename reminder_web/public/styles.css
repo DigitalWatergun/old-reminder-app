@@ -2,6 +2,26 @@ body {
     text-align: center;
 }
 
+footer {
+    position:absolute;
+    left:0;
+    bottom:0;
+    right:0;
+}
+
+.createReminderForm {
+    margin: auto;
+    text-align: left;
+}
+
+.headerFooter {
+    display:flex;
+    flex: 1;
+    background-color: darkgray;
+    width: 100%;
+    height: 40px;
+}
+
 .reminder {
     background: #fff;
     border-radius: 7px;
@@ -11,7 +31,3 @@ body {
     margin: 10px auto;
   }
 
-.createReminderForm {
-    margin: auto;
-    text-align: left;
-}
