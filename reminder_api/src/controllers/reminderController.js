@@ -103,15 +103,18 @@ const changeReminder = async (req, res) => {
 
 
 const postReminder = async (req, res) => {
+    console.log(req.body)
     const data = {};
     for (const [key, value] of Object.entries(req.body)) {
         if (key === "date") {
+            data["date"] = value
             const dateValue = value.split("-")
             data["month"] = dateValue[1]
             data["day"] = dateValue[2]
         };
 
         if (key === "time") {
+            data["time"] = value
             const timeValue = value.split(":")
             data["hour"] = timeValue[0]
             data["minutes"] = timeValue[1]
@@ -133,10 +136,13 @@ const postReminder = async (req, res) => {
     data["_id"] = _.snakeCase(req.body.title);
     data["title"] = req.body.title;
     data["content"] = req.body.content; 
-    data["weekday"] = "*"
-    data["status"] = "INACTIVE"
+    data["dateEnable"] = req.body.dateEnable;
+    data["timeEnable"] = req.body.timeEnable;
+    data["weekday"] = "*";
+    data["status"] = "INACTIVE";
     data["email"] = req.body.email; 
     data["mobile"] = req.body.mobile;
+    data["repeatEnable"] = req.body.repeatEnable;
     data["repeat"] = req.body.repeat;
     data["enableEmail"] = req.body.enableEmail;
     data["enableSMS"] = req.body.enableSMS;

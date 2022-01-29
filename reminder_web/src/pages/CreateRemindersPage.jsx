@@ -1,5 +1,5 @@
 import React from "react";
-import { CreateReminder } from "../components/CreateReminder";
+import { ReminderForm } from "../components/ReminderForm";
 import { HeaderFooter } from "../components/HeaderFooter";
 
 export const CreateRemindersPage = () => {
@@ -7,7 +7,7 @@ export const CreateRemindersPage = () => {
     return (
         <HeaderFooter>
             <h1 className="title">Create Reminder</h1>
-            <CreateReminder/>
+            <ReminderForm/>
         </HeaderFooter>
     )
 }

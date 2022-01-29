@@ -52,10 +52,11 @@ The Reminder application is a custom built application that will allow you to in
 - [x] ~~Implement ability to set dates/times to be reminded on~~
 - [x] ~~Added React Router and Test/Reminder pages to make sure Router is working~~
 - [x] ~~Set up React to display all reminders as JSON strings on Reminder page~~
-- [x] ~~Create React Component for Reminders page and properly query API route~~
-- [x] ~~Create React Component for Create Reminders page~~
+- [x] ~~Create React component for Reminders page and properly query API route~~
+- [x] ~~Create React component for Create Reminders page~~
 - [x] ~~Implement a "Timer" option on the Create Reminders page to have repeated reminders every x minutes~~
 - [x] ~~Implement CreateReminders page to call backend api and store in database with proper mongo schema~~
 - [x] ~~Add Headers and Footers components to make all pages consistent~~
 - [x] ~~Create React component to Delete reminders from database~~
 - [x] ~~Refactor all API code in React Components into src/api/api.js~~
+- [x] ~~Create React component to render popup box for Edit Reminders~~

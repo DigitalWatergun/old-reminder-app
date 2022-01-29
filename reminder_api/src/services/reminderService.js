@@ -34,6 +34,10 @@ const createReminder = async (data) => {
             _id: data._id,
             title: data.title,
             content: data.content,
+            dateEnable: data.dateEnable,
+            date: data.date,
+            timeEnable: data.timeEnable,
+            time: data.time,
             minutes: data.minutes,
             hour: data.hour, 
             day: data.day,
@@ -42,6 +46,7 @@ const createReminder = async (data) => {
             status: data.status, 
             email: data.email, 
             mobile: data.mobile, 
+            repeatEnable: data.repeatEnable,
             repeat: data.repeat,
             enableSMS: data.enableSMS,
             enableEmail: data.enableEmail

@@ -3,6 +3,13 @@ import { Link, useNavigate } from "react-router-dom";
 import { api } from "../api/api"
 
 
+const DateInput = (props) => {
+    return (
+        <input name="date" type="date" value={props.date || ""} onChange={props.onInputChange}/> 
+    )
+}
+
+
 const TimeInput = (props) => {
     const dateCheckBox = document.getElementsByName("dateEnable")[0]
     dateCheckBox.checked = true
@@ -34,8 +41,14 @@ const RepeatInput = (props) => {
 }
 
 
-export const CreateReminder = () => {
-    const [formData, setFormData] = useState({})
+export const ReminderForm = (props) => {
+    const [formData, setFormData] = useState(() => {
+        if (props.data) {
+            return props.data
+        } else {
+            return {}
+        }
+    })
     const navigate = useNavigate();
 
 
@@ -120,21 +133,21 @@ export const CreateReminder = () => {
                     <tr>
                         <td>Date:</td>
                         <td>
-                            <input name="dateEnable" type="checkbox" onChange={handleChange}/>
-                            {formData.dateEnable | formData.timeEnable ? <input name="date" type="date" onChange={handleChange}/> : null}
+                            <input name="dateEnable" type="checkbox" checked={formData.dateEnable || ""} onChange={handleChange} disabled={formData.repeatEnable}/>
+                            {formData.dateEnable || (formData.dateEnable && formData.timeEnable) ? <DateInput  date={formData.date} onInputChange={handleChange}/>: null}
                         </td>
                     </tr>
                     <tr>
                         <td>Time:</td>
                         <td>
-                            <input name="timeEnable" type="checkbox" onChange={handleChange}/>
-                            {formData.timeEnable ? <TimeInput onInputChange={handleChange}/> : null}
+                            <input name="timeEnable" type="checkbox" checked={formData.timeEnable || ""} onChange={handleChange} disabled={!formData.dateEnable}/>
+                            {formData.timeEnable && formData.dateEnable ? <TimeInput onInputChange={handleChange}/> : null}
                         </td>
                     </tr>
                     <tr>
                         <td>Timer:</td>
                         <td>
-                            <input name="repeatEnable" type="checkbox" onChange={handleChange}/>
+                            <input name="repeatEnable" type="checkbox" onChange={handleChange} disabled={formData.dateEnable | formData.timeEnable}/>
                             {formData.repeatEnable ? <RepeatInput onInputChange={handleChange}/> : null}
                         </td>
                     </tr>
