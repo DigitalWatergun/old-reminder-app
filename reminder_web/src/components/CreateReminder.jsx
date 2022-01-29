@@ -1,5 +1,6 @@
 import React, { useState } from "react"; 
 import { Link, useNavigate } from "react-router-dom";
+import { api } from "../api/api"
 
 
 const TimeInput = (props) => {
@@ -90,28 +91,15 @@ export const CreateReminder = () => {
     }
 
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
         console.log(formData);
 
         if (formData.enableSMS || formData.enableEmail) {
-            const requestOptions = {
-                method: "POST", 
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(formData)
+            const response = await api.createReminder(formData);
+            if (response.ok) {
+                navigate("/reminders")
             }
-            fetch("http://localhost:3001/reminders", requestOptions)
-            .then(response => {
-                if (!response.ok) {
-                    console.log("Response code is not okay.")
-                    throw Error()
-                } else {
-                    navigate("/reminders")
-                }
-            })
-            .catch(err => {
-                console.log(err)
-            })              
         } else {
             alert("You need to enable either SMS or Email")
         }

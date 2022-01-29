@@ -103,8 +103,6 @@ const changeReminder = async (req, res) => {
 
 
 const postReminder = async (req, res) => {
-    console.log(req.body)
-
     const data = {};
     for (const [key, value] of Object.entries(req.body)) {
         if (key === "date") {
