@@ -20,7 +20,7 @@ export const RemindersPage = () => {
 
     return (
         <HeaderFooter>
-            <h1 className="title">Reminders Page</h1>
+            <h1 className="title">My Reminders</h1>
             {reminders.map((reminders, index) => {
                 return <Reminder key={index} data={reminders} />
             })}

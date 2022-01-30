@@ -78,7 +78,7 @@ const changeReminder = async (req, res) => {
         "update": {}
     };
 
-    for (let [key, value] of Object.entries(req.query)) {
+    for (let [key, value] of Object.entries(req.body)) {
         if (key.includes("id")) {
             if (key.includes("id") && key !== "_id") {
                 key = "_id";
@@ -91,6 +91,8 @@ const changeReminder = async (req, res) => {
             data["update"][key] = value;
         };
     };
+
+    console.log(data);
 
     const reminder = await updateReminder(data);
 
