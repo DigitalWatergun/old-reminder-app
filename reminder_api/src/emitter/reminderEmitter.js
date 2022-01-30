@@ -57,8 +57,13 @@ eventEmitter.on("TEXT", reminder => {
 
 eventEmitter.on("STOP", reminder => {
     changeReminderStatus(reminder, "INACTIVE");
-    runningReminders[reminder._id].cancel();
-    console.log(`${reminder.title} has stopped running.`)
+    // runningReminders[reminder._id].cancel();
+    if (runningReminders[reminder._id]) {
+        runningReminders[reminder._id].cancel();
+        console.log(`${reminder.title} has stopped running.`)
+    } else {
+        console.log("No running reminders found with that title.")
+    }
 })
 
 

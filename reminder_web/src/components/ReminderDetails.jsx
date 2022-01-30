@@ -5,13 +5,21 @@ import { api } from "../api/api"
 export const ReminderDetails = (props) => {
     const [editPopup, setEditPopup] = useState(false)
 
+    
+    const handleRunClick = async () => {
+        await api.runReminder(props.data);
+    }
+
+
     const handleEditClick = () => {
         setEditPopup(!editPopup)
     }
 
+
     const handleDeleteClick = async () => {
        await api.deleteReminder(props.data)
     }
+
 
     return (
         <div>
@@ -27,7 +35,7 @@ export const ReminderDetails = (props) => {
                     </tr>
                 </tbody>
             </table>
-            <button>RUN</button>
+            <button onClick={handleRunClick}>RUN</button>
             <button>STOP</button>
             <button onClick={handleEditClick}>EDIT</button>
             <button onClick={handleDeleteClick}>DELETE</button>

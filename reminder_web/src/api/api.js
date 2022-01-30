@@ -70,9 +70,23 @@ const editReminder = async (data) => {
 }
 
 
+const runReminder = async (data) =>{
+    // const fetchOptions = {
+    //     method: "GET", 
+    //     headers: { "Content-Type": "application/json"},
+    //     body: JSON.stringify(data)
+    // }
+    const query = `?_id=${data._id}`
+
+    const response = await fetch(BASEURL + "/run" + query)
+    console.log(response);
+}
+
+
 export const api = {
     getAllReminders,
     createReminder,
     deleteReminder,
-    editReminder
+    editReminder,
+    runReminder
 }

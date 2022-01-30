@@ -9,8 +9,8 @@ The Reminder application is a custom built application that will allow you to in
 
 
 ### Unfinished Tasks
-- [ ] Create React button to Run Reminders 
-- [ ] Create React component to stop currently running reminders 
+- [ ] Fix EventEmitter for "Date" reminders compared to repeat reminders
+- [ ] Create React button to stop currently running reminders 
 - [ ] Create Home page 
 - [ ] Implement local authentication
 - [ ] Implement Google OAuth
@@ -61,3 +61,4 @@ The Reminder application is a custom built application that will allow you to in
 - [x] ~~Create React component to render popup box for Edit Reminders~~
 - [x] ~~Create React component to edit reminders already created~~
 - [x] ~~Modified ReminderForm to work for both creating and editing reminders~~
+- [x] ~~Create React button to Run Reminders~~ 

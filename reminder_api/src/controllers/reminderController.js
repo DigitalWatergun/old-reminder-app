@@ -165,7 +165,8 @@ const deleteReminder = async (req, res) => {
 
 
 const runReminder = async (req, res) => {
-    const _id = _.toLower(req.query.title);
+    // const _id = _.toLower(req.query.title);
+    const _id = req.query._id;
     const reminder = await findReminderById(_id);
 
     if (reminder) {
@@ -182,7 +183,8 @@ const runReminder = async (req, res) => {
 
 
 const stopReminder = async (req, res) => {
-    const _id = _.toLower(req.query.title);
+    // const _id = _.toLower(req.query.title);
+    const _id = req.query._id;
     const reminder = await findReminderById(_id);
 
     if (reminder) {
