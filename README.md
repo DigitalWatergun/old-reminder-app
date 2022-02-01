@@ -9,7 +9,7 @@ The Reminder application is a custom built application that will allow you to in
 
 
 ### Unfinished Tasks
-- [ ] Create Home page 
+- [ ] Create Home page with login fields
 - [ ] Implement local authentication
 - [ ] Implement Google OAuth
 - [ ] Create "settings" page for user to update their email and sms numbers
