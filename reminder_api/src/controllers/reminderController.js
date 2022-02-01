@@ -10,6 +10,59 @@ import {
 import { eventEmitter } from "../emitter/reminderEmitter.js";
 
 
+const parseReqBody = async (body) => {
+    const data = {};
+    for (const [key, value] of Object.entries(body)) {
+        if (key === "date") {
+            data["date"] = value
+            const dateValue = value.split("-")
+            data["month"] = dateValue[1]
+            data["day"] = dateValue[2]
+        };
+
+        if (key === "time") {
+            data["time"] = value
+            const timeValue = value.split(":")
+            data["hour"] = timeValue[0]
+            data["minutes"] = timeValue[1]
+        };
+
+        if (key === "repeatEnable") {
+            if (body.minutes === "1") {
+                data["minutes"] = "*";
+            } else {
+                data["minutes"] = body.minutes
+            }
+
+            data["hour"] = "*";
+            data["day"] = "*";
+            data["month"] ="*";
+        }
+
+        if (key === "dateEnable" && value === true) {
+            data["repeat"] = 1
+        } else {
+            data["repeat"] = body.repeat
+        }
+    };
+
+    data["_id"] = _.snakeCase(body.title);
+    data["title"] = body.title;
+    data["content"] = body.content; 
+    data["dateEnable"] = body.dateEnable;
+    data["timeEnable"] = body.timeEnable;
+    data["weekday"] = "*";
+    data["status"] = "INACTIVE";
+    data["email"] = body.email; 
+    data["mobile"] = body.mobile;
+    data["repeatEnable"] = body.repeatEnable;
+    data["enableEmail"] = body.enableEmail;
+    data["enableSMS"] = body.enableSMS;
+
+    return data;
+};
+
+
 const getAllReminders = async (req, res) => {
     const reminders = await queryAllReminders();
     eventEmitter.emit("test");
@@ -61,8 +114,8 @@ const getActiveReminders = async () => {
 
 
 const changeReminderStatus = async (reminder, status) => {
-    const data = {_id: reminder._id, update: {status: status}}
-
+    const data = reminder
+    data["status"] = status
     const result = await updateReminder(data);
 
     if (result) {
@@ -74,26 +127,7 @@ const changeReminderStatus = async (reminder, status) => {
 
 
 const changeReminder = async (req, res) => {
-    const data = {
-        "update": {}
-    };
-
-    for (let [key, value] of Object.entries(req.body)) {
-        if (key.includes("id")) {
-            if (key.includes("id") && key !== "_id") {
-                key = "_id";
-                value = _.toLower(value);
-            } else  {
-                value = _.toLower(value);
-            };
-            data[key] = value;
-        } else {
-            data["update"][key] = value;
-        };
-    };
-
-    console.log(data);
-
+    const data = await parseReqBody(req.body)
     const reminder = await updateReminder(data);
 
     if (reminder) {
@@ -105,50 +139,7 @@ const changeReminder = async (req, res) => {
 
 
 const postReminder = async (req, res) => {
-    console.log(req.body)
-    const data = {};
-    for (const [key, value] of Object.entries(req.body)) {
-        if (key === "date") {
-            data["date"] = value
-            const dateValue = value.split("-")
-            data["month"] = dateValue[1]
-            data["day"] = dateValue[2]
-        };
-
-        if (key === "time") {
-            data["time"] = value
-            const timeValue = value.split(":")
-            data["hour"] = timeValue[0]
-            data["minutes"] = timeValue[1]
-        };
-
-        if (key === "repeatEnable") {
-            if (req.body.minutes === "1") {
-                data["minutes"] = "*";
-            } else {
-                data["minutes"] = req.body.minutes
-            }
-
-            data["hour"] = "*";
-            data["day"] = "*";
-            data["month"] ="*";
-        }
-    };
-
-    data["_id"] = _.snakeCase(req.body.title);
-    data["title"] = req.body.title;
-    data["content"] = req.body.content; 
-    data["dateEnable"] = req.body.dateEnable;
-    data["timeEnable"] = req.body.timeEnable;
-    data["weekday"] = "*";
-    data["status"] = "INACTIVE";
-    data["email"] = req.body.email; 
-    data["mobile"] = req.body.mobile;
-    data["repeatEnable"] = req.body.repeatEnable;
-    data["repeat"] = req.body.repeat;
-    data["enableEmail"] = req.body.enableEmail;
-    data["enableSMS"] = req.body.enableSMS;
-
+    const data = await parseReqBody(req.body)
     const result = await createReminder(data);
 
     res.send(result);
@@ -165,7 +156,6 @@ const deleteReminder = async (req, res) => {
 
 
 const runReminder = async (req, res) => {
-    // const _id = _.toLower(req.query.title);
     const _id = req.query._id;
     const reminder = await findReminderById(_id);
 
@@ -183,7 +173,6 @@ const runReminder = async (req, res) => {
 
 
 const stopReminder = async (req, res) => {
-    // const _id = _.toLower(req.query.title);
     const _id = req.query._id;
     const reminder = await findReminderById(_id);
 

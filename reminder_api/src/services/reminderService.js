@@ -22,7 +22,7 @@ const filterReminders = async (filter) => {
 
 
 const updateReminder = async (data) => {
-    const reminder = await Reminder.findByIdAndUpdate(data._id, data.update)
+    const reminder = await Reminder.findByIdAndUpdate(data._id, data)
 
     return reminder; 
 };
