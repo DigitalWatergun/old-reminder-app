@@ -178,11 +178,19 @@ const stopReminder = async (req, res) => {
 
     if (reminder) {
         eventEmitter.emit("STOP", reminder)
+        console.log(`Reminder ${reminder.title} has stopped.`)
         return res.send(`Reminder ${reminder.title} has stopped.`)
     } else {
+        console.log("No reminders found with that title")
         return res.send("No reminders found with that title.")
     };
 };
+
+
+const listRunningReminders = async (req, res) => {
+    const runningReminders = eventEmitter.emit("LIST")
+    return res.send(runningReminders)
+}
 
 
 export {
@@ -195,5 +203,6 @@ export {
     getActiveReminders,
     changeReminderStatus,
     runReminder,
-    stopReminder
+    stopReminder,
+    listRunningReminders
 };

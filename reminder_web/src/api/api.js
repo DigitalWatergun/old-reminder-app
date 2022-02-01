@@ -84,10 +84,27 @@ const runReminder = async (data) =>{
 }
 
 
+const stopReminder = async (data) => {
+    const query = `?_id=${data._id}`
+
+    const response = await fetch(BASEURL + "/stop" + query)
+    console.log(response);
+    if (response.ok){
+        window.location.reload();
+        console.log("Response is ok")
+        return "Response is okay"
+    } else {
+        console.log("Response codei s not okay.")
+        throw Error();
+    }
+}
+
+
 export const api = {
     getAllReminders,
     createReminder,
     deleteReminder,
     editReminder,
-    runReminder
+    runReminder,
+    stopReminder
 }

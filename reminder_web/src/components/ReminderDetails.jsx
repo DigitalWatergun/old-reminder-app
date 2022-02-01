@@ -11,6 +11,12 @@ export const ReminderDetails = (props) => {
     }
 
 
+    const handleStopClick = async () => {
+        const result = await api.stopReminder(props.data);
+        console.log(result);
+    }
+
+
     const handleEditClick = () => {
         setEditPopup(!editPopup)
     }
@@ -35,8 +41,8 @@ export const ReminderDetails = (props) => {
                     </tr>
                 </tbody>
             </table>
-            <button onClick={handleRunClick}>RUN</button>
-            <button>STOP</button>
+            <button onClick={handleRunClick} disabled={props.data.status === "ACTIVE"}>RUN</button>
+            <button onClick={handleStopClick} disabled={props.data.status === "INACTIVE"}>STOP</button>
             <button onClick={handleEditClick}>EDIT</button>
             <button onClick={handleDeleteClick}>DELETE</button>
             {editPopup && <EditReminderPopup content={props.data} handleClose={handleEditClick}/>}
