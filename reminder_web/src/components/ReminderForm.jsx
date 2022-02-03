@@ -111,20 +111,28 @@ export const ReminderForm = (props) => {
     const handleSubmit = async (event) => {
         event.preventDefault();
 
-        if (formData.enableSMS || formData.enableEmail) {
-            if (!editState) {
-                const response = await api.createReminder(formData);
-                if (response.ok) {
-                    navigate("/reminders")
+        if (formData.title) {
+            if (formData.enableSMS || formData.enableEmail) {
+                if (formData.email || formData.mobile) {
+                    if (!editState) {
+                        const response = await api.createReminder(formData);
+                        if (response.ok) {
+                            navigate("/reminders")
+                        }
+                    } else {
+                        const response = await api.editReminder(formData);
+                        if (response.ok) {
+                            window.location.reload();
+                        }
+                    }
+                } else {
+                    alert("Email or SMS can not be blank.")
                 }
             } else {
-                const response = await api.editReminder(formData);
-                if (response.ok) {
-                    window.location.reload();
-                }
+                alert("You need to enable either SMS or Email")
             }
         } else {
-            alert("You need to enable either SMS or Email")
+            alert("Title of reminder can not be blank.")
         }
     }
 

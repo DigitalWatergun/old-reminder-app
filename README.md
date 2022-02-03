@@ -65,5 +65,4 @@ The Reminder application is a custom built application that will allow you to in
 - [x] ~~Add function to validate the req.body before creating/editing reminders~~
 
 ### Current Research Items
-- [ ] Is it better to have backend API written using req.query or req.body? Req.query can test with postmon easier but req.body seems more programmatic
-- [ ] How do you return the runningReminders object as a response to the /list call? 
+- [ ] Is it better to have backend API written using req.query or req.body?

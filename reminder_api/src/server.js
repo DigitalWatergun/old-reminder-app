@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 import express from "express"; 
 import cors from "cors";
 import { remindersRoute } from "./routes/remindersRoute.js";
+import { runActiveReminders } from "./startup/runActiveReminders.js"
 dotenv.config();
 
 
@@ -31,6 +32,7 @@ app.use("/reminders", remindersRoute);
 
 
 app.listen(3001, () => {
+    runActiveReminders();
     const currentTime = new Date().toLocaleTimeString();
-    console.log(`[${currentTime}] Server running on port 3001.`)
+    console.log(`[${currentTime}] Server running on port 3001.`);
 });
