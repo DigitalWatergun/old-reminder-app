@@ -1,11 +1,11 @@
-import React, {useState} from "react";
+import React, {useState, useCallback} from "react";
 import { ReminderDetails } from "./ReminderDetails";
 
 export const Reminder = (props) => {
     const [expandState, setExpandState] = useState(false);
     const [expand, setExpand] = useState();
 
-    const handleClick = () => {
+    const handleClick = useCallback(() => {
         if (expandState) {
             setExpandState(false)
             setExpand();
@@ -13,7 +13,7 @@ export const Reminder = (props) => {
             setExpandState(true);
             setExpand(<ReminderDetails data={props.data}/>)
         }
-    }
+    }, [expandState, expand])
 
     return (
         <div className="reminder" >

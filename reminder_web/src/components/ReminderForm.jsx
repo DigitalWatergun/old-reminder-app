@@ -27,11 +27,11 @@ const RepeatInput = (props) => {
         <div>
             <div>
             <label>Repeat Every # Minutes: </label>
-            <input name="minutes" type="number" value={minutes || ""} onChange={props.onInputChange}/>
+            <input name="minutes" type="number" min="1" value={minutes || ""} onChange={props.onInputChange}/>
             </div>
             <div>
             <label>Repeat # Many Times: </label>
-            <input name="repeat" type="number" value={props.repeat || ""} onChange={props.onInputChange}/>
+            <input name="repeat" type="number" min="1" value={props.repeat || ""} onChange={props.onInputChange}/>
             </div>
         </div>
     )
@@ -125,14 +125,6 @@ export const ReminderForm = (props) => {
             }
         } else {
             alert("You need to enable either SMS or Email")
-        }
-    }
-
-    const handleCancel = () => {
-        if (editState) {
-            props.close()
-        } else {
-            <Link to="/reminders"></Link>
         }
     }
 

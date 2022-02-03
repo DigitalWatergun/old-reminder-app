@@ -7,10 +7,11 @@ import {
     filterReminders,
     updateReminder
 } from "../services/reminderService.js";
+import { bodyValidator } from "../validator/validator.js";
 import { eventEmitter } from "../emitter/reminderEmitter.js";
 
 
-const parseReqBody = async (body) => {
+const parseReqBody = body => {
     const data = {};
     for (const [key, value] of Object.entries(body)) {
         if (key === "date") {
@@ -27,7 +28,7 @@ const parseReqBody = async (body) => {
             data["minutes"] = timeValue[1]
         };
 
-        if (key === "repeatEnable") {
+        if (key === "repeatEnable" && value === true) {
             if (body.minutes === "1") {
                 data["minutes"] = "*";
             } else {
@@ -37,12 +38,11 @@ const parseReqBody = async (body) => {
             data["hour"] = "*";
             data["day"] = "*";
             data["month"] ="*";
+            data["repeat"] = body.repeat
         }
 
         if (key === "dateEnable" && value === true) {
             data["repeat"] = 1
-        } else {
-            data["repeat"] = body.repeat
         }
     };
 
@@ -127,23 +127,34 @@ const changeReminderStatus = async (reminder, status) => {
 
 
 const changeReminder = async (req, res) => {
-    const data = await parseReqBody(req.body)
-    const reminder = await updateReminder(data);
-
-    if (reminder) {
-        res.send(`Updated ${reminder.title}`);
+    if (bodyValidator(req.body)) {
+        const data = parseReqBody(req.body)
+        const reminder = await updateReminder(data);
+    
+        if (reminder) {
+            res.send(`Updated ${reminder.title}`);
+        } else {
+            res.send("Failed to update reminder.")
+        }
     } else {
-        res.send("Failed to update reminder.")
+        res.status(500)
+        res.statusMessage = "There is an issue with your values for your reminder."
+        res.send("There is an issue with your values for your reminder.")
     }
 };
 
 
 const postReminder = async (req, res) => {
-    const data = await parseReqBody(req.body)
-    const result = await createReminder(data);
-
-    res.send(result);
-    console.log(data);
+    if (bodyValidator(req.body)) {
+        const data = parseReqBody(req.body)
+        const result = await createReminder(data);
+    
+        res.send(result);
+    } else {
+        res.status(500)
+        res.statusMessage = "There is an issue with your values for your reminder."
+        res.send("There is an issue with your values for your reminder.")
+    }
 };
 
 

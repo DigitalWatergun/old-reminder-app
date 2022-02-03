@@ -62,6 +62,7 @@ The Reminder application is a custom built application that will allow you to in
 - [x] ~~Create React button to Run Reminders~~ 
 - [x] ~~Fix EventEmitter for "Date" reminders and refactored reminderController.js~~
 - [x] ~~Create React button to stop currently running reminders~~
+- [x] ~~Add function to validate the req.body before creating/editing reminders~~
 
 ### Current Research Items
 - [ ] Is it better to have backend API written using req.query or req.body? Req.query can test with postmon easier but req.body seems more programmatic
