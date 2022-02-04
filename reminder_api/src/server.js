@@ -2,6 +2,7 @@ import dotenv from "dotenv";
 import mongoose from "mongoose";
 import express from "express"; 
 import cors from "cors";
+import { usersRoute } from "./routes/usersRoute.js";
 import { remindersRoute } from "./routes/remindersRoute.js";
 import { runActiveReminders } from "./startup/runActiveReminders.js"
 dotenv.config();
@@ -28,6 +29,7 @@ app.get("/", (req, res) => {
     res.send("It's working.");
 });
 
+app.use("/users", usersRoute);
 app.use("/reminders", remindersRoute);
 
 

@@ -63,6 +63,7 @@ The Reminder application is a custom built application that will allow you to in
 - [x] ~~Fix EventEmitter for "Date" reminders and refactored reminderController.js~~
 - [x] ~~Create React button to stop currently running reminders~~
 - [x] ~~Add function to validate the req.body before creating/editing reminders~~
+- [x] ~~Add User model, service, controller, route, and code to create/login/retrieve users~~
 
 ### Current Research Items
 - [ ] Is it better to have backend API written using req.query or req.body?
