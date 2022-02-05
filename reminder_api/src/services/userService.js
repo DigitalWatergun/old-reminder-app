@@ -20,7 +20,8 @@ const createUser = async (data) => {
         const newUser = User({
             _id: data._id,
             username: data.username, 
-            password: data.password
+            password: data.password,
+            refreshToken: data.refreshToken
         })
 
         await newUser.save();
@@ -32,9 +33,16 @@ const createUser = async (data) => {
 };
 
 
+const updateUser = async (data) => {
+    const user = await User.findByIdAndUpdate(data._id, data)
+
+    return user;
+}
+
 
 export {
     queryAllUsers, 
     queryUserById,
-    createUser
+    createUser,
+    updateUser
 }

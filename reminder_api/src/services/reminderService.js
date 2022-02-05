@@ -7,6 +7,13 @@ const queryAllReminders = async () => {
 };
 
 
+const queryAllRemindersByUserId = async (id) => {
+    const reminders = await Reminder.find({userId: id});
+
+    return reminders;
+};
+
+
 const findReminderById = async (id) => {
     const reminder = await Reminder.findOne({_id: id});
 
@@ -77,6 +84,7 @@ const removeReminder = async (id) => {
 
 export { 
     queryAllReminders, 
+    queryAllRemindersByUserId,
     createReminder, 
     removeReminder,
     findReminderById,

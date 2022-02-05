@@ -1,6 +1,7 @@
 import _ from "lodash"; 
 import { 
     queryAllReminders, 
+    queryAllRemindersByUserId,
     createReminder, 
     removeReminder,
     findReminderById,
@@ -63,9 +64,11 @@ const parseReqBody = body => {
 };
 
 
-const getAllReminders = async (req, res) => {
-    const reminders = await queryAllReminders();
-    eventEmitter.emit("test");
+const getAllRemindersForUser = async (req, res) => {
+    console.log(req.user)
+    console.log(req.user._id)
+    const id = req.user._id
+    const reminders = await queryAllRemindersByUserId(id);
     
     return res.send(reminders);
 };
@@ -205,7 +208,7 @@ const listRunningReminders = async (req, res) => {
 
 
 export {
-    getAllReminders, 
+    getAllRemindersForUser, 
     postReminder, 
     deleteReminder,
     getReminderById,

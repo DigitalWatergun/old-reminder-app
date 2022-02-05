@@ -19,7 +19,8 @@ const reminderSchema = new mongoose.Schema({
     repeatEnable: Boolean,
     repeat: Number,
     enableSMS: Boolean,
-    enableEmail: Boolean
+    enableEmail: Boolean,
+    userId: String,
 });
 
 const Reminder = mongoose.model("Reminder", reminderSchema);

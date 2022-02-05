@@ -64,6 +64,7 @@ The Reminder application is a custom built application that will allow you to in
 - [x] ~~Create React button to stop currently running reminders~~
 - [x] ~~Add function to validate the req.body before creating/editing reminders~~
 - [x] ~~Add User model, service, controller, route, and code to create/login/retrieve users~~
+- [x] ~~Add JWT functions to create access/refresh tokens and refresh access tokens~~ 
 
 ### Current Research Items
 - [ ] Is it better to have backend API written using req.query or req.body?

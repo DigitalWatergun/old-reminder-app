@@ -1,6 +1,7 @@
 import express from "express";
+import { authenticateToken } from "../middleware/authenticateToken.js";
 import {
-    getAllReminders, 
+    getAllRemindersForUser, 
     postReminder, 
     deleteReminder,
     getReminderById,
@@ -13,7 +14,9 @@ import {
 
 const router = express.Router();
 
-router.get("/", getAllReminders);
+router.use(authenticateToken)
+
+router.get("/", getAllRemindersForUser);
 router.get("/title", getReminderById);
 router.get("/filter", getReminderByFilter);
 router.get("/run", runReminder)
