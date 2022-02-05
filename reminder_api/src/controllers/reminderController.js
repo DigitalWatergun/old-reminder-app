@@ -65,8 +65,6 @@ const parseReqBody = body => {
 
 
 const getAllRemindersForUser = async (req, res) => {
-    console.log(req.user)
-    console.log(req.user._id)
     const id = req.user._id
     const reminders = await queryAllRemindersByUserId(id);
     

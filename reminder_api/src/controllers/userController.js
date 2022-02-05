@@ -61,6 +61,14 @@ const loginUser = async (req, res) => {
 }
 
 
+const logoutUser = async (req, res) => {
+    const user = (await queryUserById(req.body.userId))[0];
+    user["refreshToken"] = ""
+    await updateUser(user)
+    res.send("User has been logged out.")
+}
+
+
 const refreshUserToken =  async (req, res) => {
     const user = (await queryUserById(req.body.userId))[0];
     const refreshToken = req.body.token;
@@ -82,5 +90,6 @@ export {
     getAllUsers,
     addUser,
     loginUser,
+    logoutUser,
     refreshUserToken
 }
