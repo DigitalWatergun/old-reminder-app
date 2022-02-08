@@ -2,8 +2,35 @@
 const BASEURL = "http://localhost:3001"
 
 
-const getAllReminders = async () => {
-    const response = await fetch(BASEURL + "/reminders")
+const loginUser = async (data) => {
+    const fetchOptions = {
+        method: "POST",
+        headers: { "Content-Type": "application/json"},
+        body: JSON.stringify(data)
+    }
+
+    const response = await fetch(BASEURL + "/users/login", fetchOptions)
+    if (response.ok) {
+        const tokens = await response.json();
+        return tokens
+    } else {
+        console.log("RESPONSE CODE IS NOT OKAY")
+        console.log(response.status)
+        console.log(response.statusText)
+        alert(response.statusText)
+    }
+}
+
+
+const getAllReminders = async (data) => {
+    const fetchOptions = {
+        method: 'GET',
+        headers: {
+            "Authorization": "Bearer " + data.accessToken,
+            "Content-Type": "application/json"
+        }
+    }
+    const response = await fetch(BASEURL + "/reminders", fetchOptions)
     if (response.ok) {
         return response.json();
     } else {
@@ -103,6 +130,7 @@ const stopReminder = async (data) => {
 
 
 export const api = {
+    loginUser,
     getAllReminders,
     createReminder,
     deleteReminder,

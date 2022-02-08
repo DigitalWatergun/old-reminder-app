@@ -5,13 +5,11 @@ The Reminder application is a custom built application that will allow you to in
 ### Features
 - Add/remove reminders to repeatedly remind you daily, weekly or at custom intervals.
 - Get reminded through Email or SMS. 
-- Login with Google Auth.
 
 
 ### Unfinished Tasks
-- [ ] Create Home page with login fields
-- [ ] Implement local authentication
-- [ ] Implement Google OAuth
+- [ ] Implement local authentication using JWT 
+- [ ] Implement "Logout" button to remove refreshTokens from user's profile and sessionStorage
 - [ ] Create "settings" page for user to update their email and sms numbers
 - [ ] Utilize a UI framework (Material UI) for the front end pages 
 
@@ -65,6 +63,8 @@ The Reminder application is a custom built application that will allow you to in
 - [x] ~~Add function to validate the req.body before creating/editing reminders~~
 - [x] ~~Add User model, service, controller, route, and code to create/login/retrieve users~~
 - [x] ~~Add JWT functions to create access/refresh tokens and refresh access tokens~~ 
+- [x] ~~Create Login page with login fields and submit request to login and save tokens in sessionStorage~~
+- [x] ~~Added LoginUser API call in front end and modified getAllReminders to use accessToken~~ 
 
 ### Current Research Items
 - [ ] Is it better to have backend API written using req.query or req.body?

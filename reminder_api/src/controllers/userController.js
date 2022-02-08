@@ -44,8 +44,8 @@ const loginUser = async (req, res) => {
     const id = _.snakeCase(req.body.username)
     const user = (await queryUserById(id))[0];
 
-    if (user === null) {
-        res.status(400).send("Unable to find user")
+    if (user === undefined) {
+        res.status(400).json("Unable to find user")
     } else {
         if (!await bcrypt.compare(req.body.password, user.password)) {
             res.send("The password is not correct.")

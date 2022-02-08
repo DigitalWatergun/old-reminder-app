@@ -6,12 +6,14 @@ import { api } from "../api/api"
 
 export const RemindersPage = () => {
     const [reminders, setReminders] = useState([]);
+    const [user, setUser] = useState(JSON.parse(sessionStorage.getItem('user')))
 
-
+    
     const callBackendAPI = async () => {
         console.log("Calling backend Reminders API...");
+        // console.log(JSON.parse(user))
 
-        const response = await api.getAllReminders()
+        const response = await api.getAllReminders(user)
         setReminders(response);
     };
 

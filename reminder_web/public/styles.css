@@ -33,6 +33,11 @@ body {
     height: 40px;
 }
 
+.loginForm {
+    margin: 5em auto auto;
+    text-align: left;
+}
+
 .popup-box {
     position: fixed;
     background: #00000050;
