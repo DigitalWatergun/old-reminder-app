@@ -56,7 +56,8 @@ const createReminder = async (data) => {
             repeatEnable: data.repeatEnable,
             repeat: data.repeat,
             enableSMS: data.enableSMS,
-            enableEmail: data.enableEmail
+            enableEmail: data.enableEmail,
+            userId: data.userId
         });
 
         await newReminder.save()

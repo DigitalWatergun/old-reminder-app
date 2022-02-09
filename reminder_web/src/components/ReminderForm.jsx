@@ -50,7 +50,7 @@ export const ReminderForm = (props) => {
         if (props.data) {
             return props.data
         } else {
-            return {}
+            return { userId: JSON.parse(sessionStorage.getItem("user")).userId}
         }
     })
     const navigate = useNavigate();
@@ -116,12 +116,13 @@ export const ReminderForm = (props) => {
                 if (formData.email || formData.mobile) {
                     if (!editState) {
                         const response = await api.createReminder(formData);
-                        if (response.ok) {
+                        console.log(response);
+                        if (response.status === 200) {
                             navigate("/reminders")
                         }
                     } else {
                         const response = await api.editReminder(formData);
-                        if (response.ok) {
+                        if (response.status === 200) {
                             window.location.reload();
                         }
                     }

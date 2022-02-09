@@ -59,6 +59,7 @@ const parseReqBody = body => {
     data["repeatEnable"] = body.repeatEnable;
     data["enableEmail"] = body.enableEmail;
     data["enableSMS"] = body.enableSMS;
+    data["userId"] = body.userId
 
     return data;
 };

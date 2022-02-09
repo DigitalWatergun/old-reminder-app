@@ -18,6 +18,19 @@ const generateRefreshToken = (user) => {
 }
 
 
+const verifyAccessToken = (token) => {
+    const result = jwt.verify(token, process.env.JWT_ACCESS_TOKEN_SECRET, (err, user) => {
+        if (err) {
+            return false;
+        } else {
+            return true
+        }
+    })
+
+    return result
+}
+
+
 const refreshAccessToken = (token) => {
     const accessToken = jwt.verify(token, process.env.JWT_REFRESH_TOKEN_SECRET, (err, user) => {
         if (err) {
@@ -35,5 +48,6 @@ const refreshAccessToken = (token) => {
 export { 
     generateAccessToken,
     generateRefreshToken,
+    verifyAccessToken,
     refreshAccessToken
  }

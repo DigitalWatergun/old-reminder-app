@@ -1,11 +1,15 @@
-import React from "react"; 
+import React, { useState } from "react"; 
 import { Header } from "./Header";
 import { Footer } from "./Footer"
 
 export const HeaderFooter = (props) => {
+    const [userState, setUserState] = useState(props.userState)
+    const [user, setUser] = useState(props.user)
+
+
     return (
         <div className="container">
-            <Header/>
+            <Header userState={userState} user={user}/>
             <div className="content">
                 {props.children}
             </div>

@@ -11,7 +11,6 @@ export const RemindersPage = () => {
     
     const callBackendAPI = async () => {
         console.log("Calling backend Reminders API...");
-        // console.log(JSON.parse(user))
 
         const response = await api.getAllReminders(user)
         setReminders(response);
@@ -21,7 +20,7 @@ export const RemindersPage = () => {
     useEffect(callBackendAPI, []);
 
     return (
-        <HeaderFooter>
+        <HeaderFooter userState={true} user={user}>
             <h1 className="title">My Reminders</h1>
             {reminders.map((reminders, index) => {
                 return <Reminder key={index} data={reminders} />

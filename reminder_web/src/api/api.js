@@ -1,18 +1,65 @@
+import axios from "axios"
 
-const BASEURL = "http://localhost:3001"
+
+const BASEURL = "http://localhost:3001";
+let currentUserAccessToken = undefined
+if (sessionStorage.getItem("user")) {
+    currentUserAccessToken = JSON.parse(sessionStorage.getItem("user")).refreshToken
+} else {
+    currentUserAccessToken = undefined
+}
+
+
+const axiosAuth = axios.create();
+const axiosReminders = axios.create({
+    baseURL: BASEURL,
+    headers: { 
+        "Authorization": "Bearer " + currentUserAccessToken,
+        "Content-Type": "application/json"
+    }
+});
+
+
+axiosReminders.interceptors.request.use( async (config) => {
+    const axiosConfig = {
+        headers: { 
+            "Authorization": config.headers.Authorization,
+            "Content-Type": "application/json"
+        },
+    }
+    const result = await axios.get(BASEURL + "/users/verify", axiosConfig)
+    if (!result.data) {
+        const user = JSON.parse(sessionStorage.getItem("user"))
+        const userId = user.userId
+        const userRefreshToken = user.refreshToken
+
+        const axiosConfig = {headers: { "Content-Type": "application/json" }}
+        const axiosBody = { userId: userId, token: userRefreshToken }
+        const response = await axios.post(BASEURL + "/users/refresh", axiosBody, axiosConfig)
+
+        config.headers.Authorization = "Bearer " + response.data.accessToken
+        const sessionItems = {
+            accessToken: response.data.accessToken,
+            refreshToken: userRefreshToken,
+            userId: userId,
+            username: user.username
+        }
+        sessionStorage.setItem("user", JSON.stringify(sessionItems))
+    }
+
+    return config
+}, (error) => {
+    return Promise.reject(error)
+})
 
 
 const loginUser = async (data) => {
-    const fetchOptions = {
-        method: "POST",
+    const axiosConfig = {
         headers: { "Content-Type": "application/json"},
-        body: JSON.stringify(data)
     }
-
-    const response = await fetch(BASEURL + "/users/login", fetchOptions)
-    if (response.ok) {
-        const tokens = await response.json();
-        return tokens
+    const response = await axiosAuth.post(BASEURL + "/users/login", JSON.stringify(data), axiosConfig)
+    if (response.status === 200) {
+        return response.data
     } else {
         console.log("RESPONSE CODE IS NOT OKAY")
         console.log(response.status)
@@ -23,16 +70,9 @@ const loginUser = async (data) => {
 
 
 const getAllReminders = async (data) => {
-    const fetchOptions = {
-        method: 'GET',
-        headers: {
-            "Authorization": "Bearer " + data.accessToken,
-            "Content-Type": "application/json"
-        }
-    }
-    const response = await fetch(BASEURL + "/reminders", fetchOptions)
-    if (response.ok) {
-        return response.json();
+    const response = await axiosReminders.get("/reminders")
+    if (response.status === 200) {
+        return response.data;
     } else {
         console.log("RESPONSE CODE IS NOT OKAY")
         console.log(response.status)
@@ -43,14 +83,8 @@ const getAllReminders = async (data) => {
 
 
 const createReminder = async (data) => {
-    const fetchOptions = {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data)
-    }
-
-    const response = await fetch(BASEURL + "/reminders", fetchOptions)
-    if (response.ok) {
+    const response = await axiosReminders.post("/reminders", JSON.stringify(data))
+    if (response.status === 200) {
         return response
     } else {
         console.log("RESPONSE CODE IS NOT OKAY")
@@ -62,14 +96,8 @@ const createReminder = async (data) => {
 
 
 const deleteReminder = async (data) => {
-    const fetchOptions = {
-        method: "DELETE",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data)
-    }
-
-    const response = await fetch(BASEURL + "/reminders", fetchOptions)
-    if (response.ok) {
+    const response = await axiosReminders.delete(BASEURL + "/reminders", {data: JSON.stringify(data)})
+    if (response.status === 200) {
         console.log("Response is okay.")
         window.location.reload();
     } else {
@@ -80,14 +108,8 @@ const deleteReminder = async (data) => {
 
 
 const editReminder = async (data) => {
-    const fetchOptions = {
-        method: "PATCH", 
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data)
-    }
-
-    const response = await fetch(BASEURL + "/reminders/update", fetchOptions)
-    if (response.ok) {
+    const response = await axiosReminders.patch(BASEURL + "/reminders/update", JSON.stringify(data))
+    if (response.status === 200) {
         console.log("Response is ok. Successfully updated the reminder.")
         return response
     } else {
@@ -102,8 +124,8 @@ const editReminder = async (data) => {
 const runReminder = async (data) =>{
     const query = `?_id=${data._id}`
 
-    const response = await fetch(BASEURL + "/reminders/run" + query)
-    if (response.ok) {
+    const response = await axiosReminders.get("/reminders/run" + query)
+    if (response.status === 200) {
         console.log("Response is okay.")
         window.location.reload();
     } else {
@@ -116,9 +138,9 @@ const runReminder = async (data) =>{
 const stopReminder = async (data) => {
     const query = `?_id=${data._id}`
 
-    const response = await fetch(BASEURL + "/reminders/stop" + query)
+    const response = await axiosReminders.get("/reminders/stop" + query)
     console.log(response);
-    if (response.ok){
+    if (response.status = 200){
         window.location.reload();
         console.log("Response is ok")
         return "Response is okay"

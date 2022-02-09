@@ -8,9 +8,8 @@ The Reminder application is a custom built application that will allow you to in
 
 
 ### Unfinished Tasks
-- [ ] Implement local authentication using JWT 
 - [ ] Implement "Logout" button to remove refreshTokens from user's profile and sessionStorage
-- [ ] Create "settings" page for user to update their email and sms numbers
+- [ ] Create "settings" page for user to change their passwords
 - [ ] Utilize a UI framework (Material UI) for the front end pages 
 
 ### Finished Tasks
@@ -65,6 +64,10 @@ The Reminder application is a custom built application that will allow you to in
 - [x] ~~Add JWT functions to create access/refresh tokens and refresh access tokens~~ 
 - [x] ~~Create Login page with login fields and submit request to login and save tokens in sessionStorage~~
 - [x] ~~Added LoginUser API call in front end and modified getAllReminders to use accessToken~~ 
+- [x] ~~Added accessToken verify route for users to verify if their access tokens are valid~~
+- [x] ~~Implemented Axios Interceptor to automatically refresh accessTokens~~
+- [x] ~~Converted all fetch request to use Axios instances~~
+- [x] ~~Modified Header and HeaderFooter component to add Profile component~~
 
 ### Current Research Items
 - [ ] Is it better to have backend API written using req.query or req.body?

@@ -1,6 +1,6 @@
 import _ from "lodash";
 import bcrypt from "bcrypt";
-import { generateAccessToken, generateRefreshToken, refreshAccessToken } from "../auth.js";
+import { generateAccessToken, generateRefreshToken, verifyAccessToken, refreshAccessToken } from "../auth.js";
 import {
     queryAllUsers, 
     queryUserById,
@@ -55,7 +55,7 @@ const loginUser = async (req, res) => {
             const refreshToken = generateRefreshToken(user);
             user["refreshToken"] = refreshToken
             await updateUser(user)
-            res.json({ accessToken: accessToken, refreshToken: refreshToken });
+            res.json({ userId: user._id, username: user.username, accessToken: accessToken, refreshToken: refreshToken });
         }
     }    
 }
@@ -69,16 +69,28 @@ const logoutUser = async (req, res) => {
 }
 
 
+const verifyUserToken = async (req, res) => {
+    const authHeader = req.headers["authorization"]
+    const token = authHeader && authHeader.split(" ")[1]
+
+    if (verifyAccessToken(token)) {
+        res.send(true);
+    } else {
+        res.send(false);
+    }
+}
+
+
 const refreshUserToken =  async (req, res) => {
     const user = (await queryUserById(req.body.userId))[0];
     const refreshToken = req.body.token;
 
     if (refreshToken === null) {
-        res.sendStatus(401).send("No token found.")
+        res.sendStatus(401).json("No token found.")
     } 
     
     if (user['refreshToken'] !== refreshToken) {
-        res.sendStatus(403).send("User tokens do not match.")
+        res.sendStatus(403).json("User tokens do not match.")
     }
 
     const accessToken = refreshAccessToken(refreshToken)
@@ -91,5 +103,6 @@ export {
     addUser,
     loginUser,
     logoutUser,
+    verifyUserToken,
     refreshUserToken
 }
