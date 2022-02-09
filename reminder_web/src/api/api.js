@@ -10,7 +10,9 @@ if (sessionStorage.getItem("user")) {
 }
 
 
-const axiosAuth = axios.create();
+const axiosAuth = axios.create({
+    headers: { "Content-Type": "application/json"}
+});
 const axiosReminders = axios.create({
     baseURL: BASEURL,
     headers: { 
@@ -21,17 +23,15 @@ const axiosReminders = axios.create({
 
 
 axiosReminders.interceptors.request.use( async (config) => {
-    const axiosConfig = {
-        headers: { 
-            "Authorization": config.headers.Authorization,
-            "Content-Type": "application/json"
-        },
-    }
-    const result = await axios.get(BASEURL + "/users/verify", axiosConfig)
+    const user = JSON.parse(sessionStorage.getItem("user"))
+    const accessToken = user.accessToken
+    const userId = user.userId
+    const userRefreshToken = user.refreshToken
+
+    const result = await axios.post(BASEURL + "/users/verify", {token: accessToken}, {headers: { "Content-Type": "application/json" }})
+    console.log(result.data);
     if (!result.data) {
-        const user = JSON.parse(sessionStorage.getItem("user"))
-        const userId = user.userId
-        const userRefreshToken = user.refreshToken
+        console.log("Refreshing access token...")
 
         const axiosConfig = {headers: { "Content-Type": "application/json" }}
         const axiosBody = { userId: userId, token: userRefreshToken }
@@ -45,8 +45,10 @@ axiosReminders.interceptors.request.use( async (config) => {
             username: user.username
         }
         sessionStorage.setItem("user", JSON.stringify(sessionItems))
+    } else {
+        config.headers.Authorization = "Bearer " + accessToken
     }
-
+    
     return config
 }, (error) => {
     return Promise.reject(error)
@@ -54,10 +56,20 @@ axiosReminders.interceptors.request.use( async (config) => {
 
 
 const loginUser = async (data) => {
-    const axiosConfig = {
-        headers: { "Content-Type": "application/json"},
+    const response = await axiosAuth.post(BASEURL + "/users/login", JSON.stringify(data))
+    if (response.status === 200) {
+        return response.data
+    } else {
+        console.log("RESPONSE CODE IS NOT OKAY")
+        console.log(response.status)
+        console.log(response.statusText)
+        alert(response.statusText)
     }
-    const response = await axiosAuth.post(BASEURL + "/users/login", JSON.stringify(data), axiosConfig)
+}
+
+
+const logoutUser = async (data) => {
+    const response = await axiosAuth.post(BASEURL + "/users/logout", JSON.stringify(data))
     if (response.status === 200) {
         return response.data
     } else {
@@ -153,6 +165,7 @@ const stopReminder = async (data) => {
 
 export const api = {
     loginUser,
+    logoutUser,
     getAllReminders,
     createReminder,
     deleteReminder,

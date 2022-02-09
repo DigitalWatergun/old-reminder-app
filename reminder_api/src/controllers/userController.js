@@ -70,8 +70,7 @@ const logoutUser = async (req, res) => {
 
 
 const verifyUserToken = async (req, res) => {
-    const authHeader = req.headers["authorization"]
-    const token = authHeader && authHeader.split(" ")[1]
+    const token = req.body.token;
 
     if (verifyAccessToken(token)) {
         res.send(true);

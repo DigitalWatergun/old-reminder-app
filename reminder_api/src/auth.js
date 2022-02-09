@@ -5,7 +5,7 @@ dotenv.config();
 
 const generateAccessToken = (user) => {
     const authUser = { _id: user._id, username: user.username}
-    const accessToken = jwt.sign(authUser, process.env.JWT_ACCESS_TOKEN_SECRET, { expiresIn: "15s"})
+    const accessToken = jwt.sign(authUser, process.env.JWT_ACCESS_TOKEN_SECRET, { expiresIn: "10m"})
 
     return accessToken
 }
@@ -32,6 +32,7 @@ const verifyAccessToken = (token) => {
 
 
 const refreshAccessToken = (token) => {
+    console.log("Refreshing access token...")
     const accessToken = jwt.verify(token, process.env.JWT_REFRESH_TOKEN_SECRET, (err, user) => {
         if (err) {
             console.log(err)

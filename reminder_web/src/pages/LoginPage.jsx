@@ -23,8 +23,6 @@ export const Login = () => {
         const data = {"username": username, "password": password}
         const response = await api.loginUser(data)
         if (response) {
-            console.log(response)
-            console.log(JSON.stringify(response))
             const stringResponse = JSON.stringify(response);
             sessionStorage.setItem("user", stringResponse)
             navigate("/reminders")

@@ -33,14 +33,6 @@ body {
     height: 50px;
 }
 
-.profile {
-    float: right;
-    text-align: right;
-    padding-left: 10px;
-    padding-right: 10px;
-    background-color: white;
-}
-
 .loginForm {
     margin: 5em auto auto;
     text-align: left;
@@ -67,6 +59,40 @@ body {
     padding: 20px;
     border: 1px solid #999;
     overflow: auto;
+}
+
+.profile {
+    float: right;
+    text-align: right;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.profilePopup {
+    position: fixed;
+    width: 100%;
+    height: 100vh;
+    top: 0;
+    left: 0; 
+}
+
+.profileBox{
+    float: right;
+    position: relative;
+    width: 100px;
+    max-height: 70vh;
+    margin-top: 50px;
+    background: #fff;
+    border-radius: 4px;
+    padding-left: 10px;
+    padding-right: 10px;
+    text-align: left;
+}
+
+.profileBoxItems {
+    margin: 0px;
+    padding-top: 10px;
+    padding-bottom: 10px;
 }
 
 .reminder {

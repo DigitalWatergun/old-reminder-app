@@ -1,16 +1,28 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
+import { ProfileDetails } from "./ProfileDetails";
+
 
 export const Profile = (props) => {
-    console.log(props)
+    const [expandState, setExpandState] = useState(false);
+    const [expand, setExpand] = useState();
+    const user = props.user
 
-    const handleClick = async (event) => {
-        console.log("Clicked!")
-    }
+    const handleClick = useCallback(() => {
+        console.log(expandState)
+        if (expandState) {
+            setExpandState(false)
+            setExpand();
+        } else {
+            setExpandState(true);
+            setExpand(<ProfileDetails user={user}/>)
+        }
+    }, [expandState, expand])
 
     return (
         <div>
             <div className="profile" onClick={handleClick}>
-                <p>{props.user.userId}</p>
+                <p>{user.username}</p>
+                {expand}
             </div>            
         </div>
     )

@@ -14,7 +14,7 @@ router.get("/", getAllUsers);
 router.post("/", addUser);
 router.post("/login", loginUser);
 router.post("/logout", logoutUser);
-router.get("/verify", verifyUserToken);
+router.post("/verify", verifyUserToken);
 router.post("/refresh", refreshUserToken)
 
 export { router as usersRoute };
