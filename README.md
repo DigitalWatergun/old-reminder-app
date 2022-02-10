@@ -71,3 +71,4 @@ The Reminder application is a custom built application that will allow you to in
 - [x] ~~Create "settings" page for users to change password / delete account~~
 - [x] ~~Create "Change Password" page and added API call to update user with new hashed password~~
 - [x] ~~Create "Delete" button for users to delete their account from the application~~
+- [x] ~~Added sticky note icon to home page~~

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom"
 import { HeaderFooter } from "../components/HeaderFooter";
 import { api } from "../api/api"
+import image from "../static/sticky.png"
 
 export const Login = () => {
     const [username, setUsername] = useState("");
@@ -32,8 +33,8 @@ export const Login = () => {
 
     return (
         <HeaderFooter userState={false} user={undefined}>
-            Login
             <div>
+                <img style={{marginTop: 15}} width="120" height="100" src={image}></img>
                 <table className="loginForm">
                     <tbody>
                         <tr>
@@ -46,6 +47,7 @@ export const Login = () => {
                         </tr>
                     </tbody>
                 </table>
+                <button>Register</button>
                 <button onClick={handleSubmit}>Sign In</button>
             </div>
         </HeaderFooter>
