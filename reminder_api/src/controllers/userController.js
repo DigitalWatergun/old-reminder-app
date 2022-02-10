@@ -61,6 +61,27 @@ const loginUser = async (req, res) => {
 }
 
 
+const changeUserPassword = async (req, res) => {
+    console.log(req.body);
+    const id = req.body.userId; 
+    const user = (await queryUserById(id))[0];
+
+    if (user === undefined) {
+        res.status(400).json("Unable to find user")
+    } else {
+        if (!await bcrypt.compare(req.body.currentPassword, user.password)) {
+            res.send("The password is not correct.")
+        } else {
+            console.log("The password is correct.");
+            const newPassword = await bcrypt.hash(req.body.newPassword, 15)
+            user["password"] = newPassword;
+            await updateUser(user)
+            res.sendStatus(200);
+        }
+    }
+}
+
+
 const logoutUser = async (req, res) => {
     const user = (await queryUserById(req.body.userId))[0];
     user["refreshToken"] = ""
@@ -101,6 +122,7 @@ export {
     getAllUsers,
     addUser,
     loginUser,
+    changeUserPassword,
     logoutUser,
     verifyUserToken,
     refreshUserToken

@@ -4,6 +4,12 @@ body {
 }
 
 
+.changePasswordTable {
+    margin: auto;
+    text-align: left;
+}
+
+
 .container {
     display: flex;
     flex-direction: column;

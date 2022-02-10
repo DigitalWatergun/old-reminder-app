@@ -81,6 +81,19 @@ const logoutUser = async (data) => {
 }
 
 
+const changeUserPassword = async (data) => {
+    const response = await axiosAuth.post(BASEURL + "/users/update", JSON.stringify(data))
+    if (response.status === 200) {
+        return response.data
+    } else {
+        console.log("RESPONSE CODE IS NOT OKAY")
+        console.log(response.status)
+        console.log(response.statusText)
+        alert(response.statusText)
+    }
+}
+
+
 const getAllReminders = async (data) => {
     const response = await axiosReminders.get("/reminders")
     if (response.status === 200) {
@@ -166,6 +179,7 @@ const stopReminder = async (data) => {
 export const api = {
     loginUser,
     logoutUser,
+    changeUserPassword,
     getAllReminders,
     createReminder,
     deleteReminder,

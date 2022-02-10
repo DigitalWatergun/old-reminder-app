@@ -8,7 +8,6 @@ export const Profile = (props) => {
     const user = props.user
 
     const handleClick = useCallback(() => {
-        console.log(expandState)
         if (expandState) {
             setExpandState(false)
             setExpand();

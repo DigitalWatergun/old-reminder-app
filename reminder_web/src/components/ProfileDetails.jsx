@@ -6,6 +6,12 @@ export const ProfileDetails = (props) => {
     const user = props.user
     const navigate = useNavigate();
 
+
+    const handleSettingsClick = () => {
+        navigate("/settings")
+    }
+
+
     const handleLogoutClick = async () => {
         const data = { userId: user.userId}
         const response = await api.logoutUser(data);
@@ -17,7 +23,7 @@ export const ProfileDetails = (props) => {
     return (
         <div className="profilePopup">
             <div className="profileBox">
-                <p className="profileBoxItems">Settings</p>
+                <p className="profileBoxItems" onClick={handleSettingsClick}>Settings</p>
                 <p className="profileBoxItems" onClick={handleLogoutClick}>Logout</p>
             </div>
         </div>
