@@ -8,7 +8,6 @@ The Reminder application is a custom built application that will allow you to in
 
 
 ### Unfinished Tasks
-
 - [ ] Create "Register" page for users to create an account 
 - [ ] Utilize a UI framework (Material UI) for the front end pages 
 
@@ -71,6 +70,4 @@ The Reminder application is a custom built application that will allow you to in
 - [x] ~~Added ProfileDetails component and Logout feature to remove refreshToken from sessionStorage/mongodb~~
 - [x] ~~Create "settings" page for users to change password / delete account~~
 - [x] ~~Create "Change Password" page and added API call to update user with new hashed password~~
-
-### Current Research Items
-- [ ] Is it better to have backend API written using req.query or req.body?
+- [x] ~~Create "Delete" button for users to delete their account from the application~~

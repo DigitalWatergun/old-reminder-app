@@ -1,6 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom"
 import { HeaderFooter } from "../components/HeaderFooter";
+import { api } from "../api/api"
 
 export const Settings = () => {
     const navigate = useNavigate();
@@ -11,6 +12,15 @@ export const Settings = () => {
     }
 
 
+    const handleDeleteClick = async () => {
+        const userId = JSON.parse(sessionStorage.getItem("user"))["userId"]
+        const data = { userId: userId}
+        const response = await api.deleteUser(data)
+        sessionStorage.clear();
+        navigate("/")
+    }
+
+
     return (
         <HeaderFooter>
             <h2>Settings</h2>
@@ -18,7 +28,7 @@ export const Settings = () => {
                 <button onClick={handleChangePasswordClick}>Change Password</button>    
             </div>
             <div>
-                <button>Delete Account</button>
+                <button onClick={handleDeleteClick}>Delete Account</button>
             </div>
         </HeaderFooter>
     )

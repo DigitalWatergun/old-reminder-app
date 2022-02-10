@@ -40,9 +40,17 @@ const updateUser = async (data) => {
 }
 
 
+const deleteUser = async (userId) => {
+    const result = await User.deleteOne({_id: userId})
+
+    return result
+}
+
+
 export {
     queryAllUsers, 
     queryUserById,
     createUser,
-    updateUser
+    updateUser,
+    deleteUser
 }

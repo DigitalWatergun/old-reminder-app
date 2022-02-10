@@ -5,7 +5,8 @@ import {
     queryAllUsers, 
     queryUserById,
     createUser,
-    updateUser
+    updateUser,
+    deleteUser
 } from "../services/userService.js";
 
 
@@ -25,6 +26,7 @@ const addUser = async (req, res) => {
         _id: _.snakeCase(req.body.username),
         username: req.body.username,
         password: await bcrypt.hash(req.body.password, 15),
+        email: req.body.email
     }
     const result = await createUser(user);
     
@@ -90,6 +92,17 @@ const logoutUser = async (req, res) => {
 }
 
 
+const deleteAccount = async (req, res) => {
+    console.log(req.body.userId)
+    const result = await deleteUser(req.body.userId)
+    if (result.deletedCount === 1) {
+        res.send(result);
+    } else {
+        res.status(500).json("Unable to delete user.")
+    }
+}
+
+
 const verifyUserToken = async (req, res) => {
     const token = req.body.token;
 
@@ -124,6 +137,7 @@ export {
     loginUser,
     changeUserPassword,
     logoutUser,
+    deleteAccount,
     verifyUserToken,
     refreshUserToken
 }

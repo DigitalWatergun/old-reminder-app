@@ -29,7 +29,6 @@ axiosReminders.interceptors.request.use( async (config) => {
     const userRefreshToken = user.refreshToken
 
     const result = await axios.post(BASEURL + "/users/verify", {token: accessToken}, {headers: { "Content-Type": "application/json" }})
-    console.log(result.data);
     if (!result.data) {
         console.log("Refreshing access token...")
 
@@ -91,6 +90,18 @@ const changeUserPassword = async (data) => {
         console.log(response.statusText)
         alert(response.statusText)
     }
+}
+
+
+const deleteUser = async (data) => {
+    const response = await axiosAuth.delete(BASEURL + "/users/", {data: JSON.stringify(data)})
+    console.log(response);
+    if (response.status === 200) {
+        return response
+    } else {
+        console.log(`RESPONSE CODE: ${response.status}. ${response.statusText}`)
+        alert(`RESPONSE CODE: ${response.status}. ${response.statusText}`)
+    } 
 }
 
 
@@ -180,6 +191,7 @@ export const api = {
     loginUser,
     logoutUser,
     changeUserPassword,
+    deleteUser,
     getAllReminders,
     createReminder,
     deleteReminder,
