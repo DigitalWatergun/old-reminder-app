@@ -8,7 +8,7 @@ The Reminder application is a custom built application that will allow you to in
 
 
 ### Unfinished Tasks
-- [ ] Create "settings" page for user to change their passwords
+
 - [ ] Create "Register" page for users to create an account 
 - [ ] Utilize a UI framework (Material UI) for the front end pages 
 
@@ -69,6 +69,8 @@ The Reminder application is a custom built application that will allow you to in
 - [x] ~~Converted all fetch request to use Axios instances~~
 - [x] ~~Modified Header and HeaderFooter component to add Profile component~~
 - [x] ~~Added ProfileDetails component and Logout feature to remove refreshToken from sessionStorage/mongodb~~
+- [x] ~~Create "settings" page for users to change password / delete account~~
+- [x] ~~Create "Change Password" page and added API call to update user with new hashed password~~
 
 ### Current Research Items
 - [ ] Is it better to have backend API written using req.query or req.body?
