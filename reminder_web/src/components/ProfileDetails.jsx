@@ -15,7 +15,7 @@ export const ProfileDetails = (props) => {
     const handleLogoutClick = async () => {
         const data = { userId: user.userId}
         const response = await api.logoutUser(data);
-        console.log(response);
+        console.log(`${response.data}`)
         sessionStorage.clear();
         navigate("/")
     }

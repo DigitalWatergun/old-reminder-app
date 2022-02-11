@@ -12,9 +12,13 @@ export const RemindersPage = () => {
     const callBackendAPI = async () => {
         console.log("Calling backend Reminders API...");
 
-        const response = await api.getAllReminders(user)
-        setReminders(response);
-    };
+        const response = await api.getAllReminders()
+        if (response.status === 200) {
+            setReminders(response.data)
+        } else {
+            console.log("No reminders found")
+        }
+    }
 
 
     useEffect(callBackendAPI, []);

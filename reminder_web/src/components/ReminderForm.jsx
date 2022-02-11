@@ -116,7 +116,6 @@ export const ReminderForm = (props) => {
                 if (formData.email || formData.mobile) {
                     if (!editState) {
                         const response = await api.createReminder(formData);
-                        console.log(response);
                         if (response.status === 200) {
                             navigate("/reminders")
                         }

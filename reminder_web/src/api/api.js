@@ -55,104 +55,103 @@ axiosReminders.interceptors.request.use( async (config) => {
 
 
 const loginUser = async (data) => {
-    const response = await axiosAuth.post(BASEURL + "/users/login", JSON.stringify(data))
-    if (response.status === 200) {
-        return response.data
-    } else {
-        console.log("RESPONSE CODE IS NOT OKAY")
-        console.log(response.status)
-        console.log(response.statusText)
-        alert(response.statusText)
+    try {
+        const response = await axiosAuth.post(BASEURL + "/users/login", JSON.stringify(data))
+        if (response) {
+            return response
+        }
+    } catch (err) {
+        return err
     }
 }
 
 
 const logoutUser = async (data) => {
-    const response = await axiosAuth.post(BASEURL + "/users/logout", JSON.stringify(data))
-    if (response.status === 200) {
-        return response.data
-    } else {
-        console.log("RESPONSE CODE IS NOT OKAY")
-        console.log(response.status)
-        console.log(response.statusText)
-        alert(response.statusText)
+    try {
+        const response = await axiosAuth.post(BASEURL + "/users/logout", JSON.stringify(data))
+        if (response) {
+            return response
+        }
+    } catch (err) {
+        return err
     }
 }
 
 
 const changeUserPassword = async (data) => {
-    const response = await axiosAuth.post(BASEURL + "/users/update", JSON.stringify(data))
-    if (response.status === 200) {
-        return response.data
-    } else {
-        console.log("RESPONSE CODE IS NOT OKAY")
-        console.log(response.status)
-        console.log(response.statusText)
-        alert(response.statusText)
+    try {
+        const response = await axiosAuth.post(BASEURL + "/users/update", JSON.stringify(data))
+        if (response) {
+            return response
+        }
+    } catch (err) {
+        return err
     }
 }
 
 
 const deleteUser = async (data) => {
-    const response = await axiosAuth.delete(BASEURL + "/users/", {data: JSON.stringify(data)})
-    console.log(response);
-    if (response.status === 200) {
-        return response
-    } else {
-        console.log(`RESPONSE CODE: ${response.status}. ${response.statusText}`)
-        alert(`RESPONSE CODE: ${response.status}. ${response.statusText}`)
-    } 
+    try {
+        const response = await axiosAuth.delete(BASEURL + "/users/", {data: JSON.stringify(data)})
+        if (response) {
+            return response
+        }
+    } catch(err) {
+        console.log(err)
+        return err
+    }
 }
 
 
-const getAllReminders = async (data) => {
-    const response = await axiosReminders.get("/reminders")
-    if (response.status === 200) {
-        return response.data;
-    } else {
-        console.log("RESPONSE CODE IS NOT OKAY")
-        console.log(response.status)
-        console.log(response.statusText)
-        throw Error()
+const getAllReminders = async () => {
+    try {
+        const response = await axiosReminders.get("/reminders")
+        if (response) {
+            return response
+        }
+    } catch (err) {
+        console.log(err)
+        return err
     }
 }
 
 
 const createReminder = async (data) => {
-    const response = await axiosReminders.post("/reminders", JSON.stringify(data))
-    if (response.status === 200) {
-        return response
-    } else {
-        console.log("RESPONSE CODE IS NOT OKAY")
-        console.log(response.status)
-        console.log(response.statusText)
-        alert(response.statusText)
+    try {
+        const response = await axiosReminders.post("/reminders", JSON.stringify(data))
+        if (response) {
+            return response
+        }
+    } catch (err) {
+        console.log(err)
+        return err
     }
 }
 
 
 const deleteReminder = async (data) => {
-    const response = await axiosReminders.delete(BASEURL + "/reminders", {data: JSON.stringify(data)})
-    if (response.status === 200) {
-        console.log("Response is okay.")
-        window.location.reload();
-    } else {
-        console.log("Response code is not okay.")
-        throw Error()
+    try {
+        const response = await axiosReminders.delete(BASEURL + "/reminders", {data: JSON.stringify(data)})
+        if (response) {
+            window.location.reload();
+            return response
+        }
+    } catch (err) {
+        console.log(err)
+        return err
     }
 }
 
 
 const editReminder = async (data) => {
-    const response = await axiosReminders.patch(BASEURL + "/reminders/update", JSON.stringify(data))
-    if (response.status === 200) {
-        console.log("Response is ok. Successfully updated the reminder.")
-        return response
-    } else {
-        console.log("Response code is not okay.")
-        console.log(response.status)
-        console.log(response.statusText)
-        alert(response.statusText)
+    try {
+        const response = await axiosReminders.patch(BASEURL + "/reminders/update", JSON.stringify(data))
+        if (response) {
+            return response
+        }
+    } catch (err) {
+        console.log(err)
+        return err
     }
 }
 
@@ -160,13 +159,15 @@ const editReminder = async (data) => {
 const runReminder = async (data) =>{
     const query = `?_id=${data._id}`
 
-    const response = await axiosReminders.get("/reminders/run" + query)
-    if (response.status === 200) {
-        console.log("Response is okay.")
-        window.location.reload();
-    } else {
-        console.log("Response code is not okay.")
-        throw Error()
+    try {
+        const response = await axiosReminders.get("/reminders/run" + query)
+        if (response) {
+            window.location.reload();
+            return response
+        }
+    } catch (err) {
+        console.log(err)
+        return err
     }
 }
 
@@ -174,15 +175,15 @@ const runReminder = async (data) =>{
 const stopReminder = async (data) => {
     const query = `?_id=${data._id}`
 
-    const response = await axiosReminders.get("/reminders/stop" + query)
-    console.log(response);
-    if (response.status = 200){
-        window.location.reload();
-        console.log("Response is ok")
-        return "Response is okay"
-    } else {
-        console.log("Response codei s not okay.")
-        throw Error();
+    try {
+        const response = await axiosReminders.get("/reminders/stop" + query)
+        if (response) {
+            window.location.reload();
+            return response
+        }
+    } catch (err) {
+        console.log(err)
+        return err
     }
 }
 

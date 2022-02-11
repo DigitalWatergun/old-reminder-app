@@ -139,9 +139,7 @@ const changeReminder = async (req, res) => {
             res.send("Failed to update reminder.")
         }
     } else {
-        res.status(500)
-        res.statusMessage = "There is an issue with your values for your reminder."
-        res.send("There is an issue with your values for your reminder.")
+        res.status(500).send("There is an issue with your values for your reminder.")
     }
 };
 
@@ -153,9 +151,7 @@ const postReminder = async (req, res) => {
     
         res.send(result);
     } else {
-        res.status(500)
-        res.statusMessage = "There is an issue with your values for your reminder."
-        res.send("There is an issue with your values for your reminder.")
+        res.status(500).send("There is an issue with your values for your reminder.")
     }
 };
 

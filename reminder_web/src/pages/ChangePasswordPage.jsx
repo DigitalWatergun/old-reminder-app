@@ -10,10 +10,12 @@ export const ChangePassword = () => {
             return {userId: user.userId}
         }
     })
+    const [error, setError] = useState(undefined);
     const navigate = useNavigate();
 
 
     const handleChange = (event) => {
+        setError(undefined)
         const name = event.target.name;
         const value = event.target.value;
 
@@ -28,10 +30,15 @@ export const ChangePassword = () => {
 
         if (formData.newPassword === formData.confirmNewPassword) {
             const response = await api.changeUserPassword(formData);
-            console.log(response);
-            navigate("/reminders")
+            if (response.status === 200) {
+                console.log(response.data)
+                navigate("/reminders")
+            } else {
+                console.log(response)
+                setError(response.response.data)
+            }
         } else {
-            alert("New passwords do not match!")
+            setError("New passwords do not match!")
         }
     }
 
@@ -55,6 +62,7 @@ export const ChangePassword = () => {
                     </tr>
                 </tbody>
             </table>
+            <div className="errorText">{error}</div>
             <Link to="/reminders"><button>Cancel</button></Link>
             <button onClick={handleUpdateClick}>Update</button>
         </HeaderFooter>

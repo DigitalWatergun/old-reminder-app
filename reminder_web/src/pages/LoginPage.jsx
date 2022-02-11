@@ -7,26 +7,34 @@ import image from "../static/sticky.png"
 export const Login = () => {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
+    const [error, setError] = useState(undefined);
     const navigate = useNavigate();
 
 
-    const handleUsernameChange = event => {
-        setUsername(event.target.value);
-    }
+    const handleChange = event => {
+        setError(undefined)
+        const name = event.target.name; 
+        const value = event.target.value;
 
+        if (name === "username") {
+            setUsername(value)
+        }
 
-    const handlePasswordChange = event => {
-        setPassword(event.target.value);
+        if (name === "password") {
+            setPassword(value)
+        }
     }
 
 
     const handleSubmit = async event => {
         const data = {"username": username, "password": password}
         const response = await api.loginUser(data)
-        if (response) {
-            const stringResponse = JSON.stringify(response);
+        if (response.status === 200) {
+            const stringResponse = JSON.stringify(response.data);
             sessionStorage.setItem("user", stringResponse)
             navigate("/reminders")
+        } else {
+            setError(response.response.data)
         }
     }
 
@@ -39,14 +47,15 @@ export const Login = () => {
                     <tbody>
                         <tr>
                             <td>Username:</td>
-                            <td><input name="username" type="text" onChange={handleUsernameChange}/></td>
+                            <td><input name="username" type="text" onChange={handleChange}/></td>
                         </tr>
                         <tr>
                             <td>Password:</td>
-                            <td><input name="password" type="password" onChange={handlePasswordChange}/></td>
+                            <td><input name="password" type="password" onChange={handleChange}/></td>
                         </tr>
                     </tbody>
                 </table>
+                <div className="errorText">{error}</div>
                 <button>Register</button>
                 <button onClick={handleSubmit}>Sign In</button>
             </div>

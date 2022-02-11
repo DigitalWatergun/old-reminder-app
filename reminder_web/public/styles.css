@@ -27,6 +27,10 @@ body {
     text-align: left;
 }
 
+.errorText {
+    color: red;
+}
+
 .footer {
     background-color: darkgray;
     width: 100%;

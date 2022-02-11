@@ -15,7 +15,7 @@ export const Settings = () => {
     const handleDeleteClick = async () => {
         const userId = JSON.parse(sessionStorage.getItem("user"))["userId"]
         const data = { userId: userId}
-        const response = await api.deleteUser(data)
+        await api.deleteUser(data)
         sessionStorage.clear();
         navigate("/")
     }

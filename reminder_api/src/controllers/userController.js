@@ -50,7 +50,8 @@ const loginUser = async (req, res) => {
         res.status(400).json("Unable to find user")
     } else {
         if (!await bcrypt.compare(req.body.password, user.password)) {
-            res.send("The password is not correct.")
+            console.log("The username or password is not correct.")
+            res.status(403).send("The username or password is incorrect.")
         } else {
             console.log("The password is correct.");
             const accessToken = generateAccessToken(user);
@@ -69,10 +70,10 @@ const changeUserPassword = async (req, res) => {
     const user = (await queryUserById(id))[0];
 
     if (user === undefined) {
-        res.status(400).json("Unable to find user")
+        res.status(400).send("Unable to find user")
     } else {
         if (!await bcrypt.compare(req.body.currentPassword, user.password)) {
-            res.send("The password is not correct.")
+            res.status(403).send("The current password is incorrect.")
         } else {
             console.log("The password is correct.");
             const newPassword = await bcrypt.hash(req.body.newPassword, 15)
@@ -98,7 +99,7 @@ const deleteAccount = async (req, res) => {
     if (result.deletedCount === 1) {
         res.send(result);
     } else {
-        res.status(500).json("Unable to delete user.")
+        res.status(500).send("Unable to delete user.")
     }
 }
 
@@ -119,11 +120,11 @@ const refreshUserToken =  async (req, res) => {
     const refreshToken = req.body.token;
 
     if (refreshToken === null) {
-        res.sendStatus(401).json("No token found.")
+        res.sendStatus(401).send("No token found.")
     } 
     
     if (user['refreshToken'] !== refreshToken) {
-        res.sendStatus(403).json("User tokens do not match.")
+        res.sendStatus(403).send("User tokens do not match.")
     }
 
     const accessToken = refreshAccessToken(refreshToken)
