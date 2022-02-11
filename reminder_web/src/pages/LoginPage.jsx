@@ -26,7 +26,7 @@ export const Login = () => {
     }
 
 
-    const handleSubmit = async event => {
+    const handleSubmit = async () => {
         const data = {"username": username, "password": password}
         const response = await api.loginUser(data)
         if (response.status === 200) {
@@ -39,11 +39,16 @@ export const Login = () => {
     }
 
 
+    const handleRegisterClick = () => {
+        navigate("/register")
+    }
+
+
     return (
         <HeaderFooter userState={false} user={undefined}>
             <div>
                 <img style={{marginTop: 15}} width="120" height="100" src={image}></img>
-                <table className="loginForm">
+                <table className="userForm">
                     <tbody>
                         <tr>
                             <td>Username:</td>
@@ -56,7 +61,7 @@ export const Login = () => {
                     </tbody>
                 </table>
                 <div className="errorText">{error}</div>
-                <button>Register</button>
+                <button onClick={handleRegisterClick}>Register</button>
                 <button onClick={handleSubmit}>Sign In</button>
             </div>
         </HeaderFooter>

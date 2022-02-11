@@ -6,6 +6,7 @@ import { RemindersPage } from "./pages/RemindersPage"
 import { CreateRemindersPage } from "./pages/CreateRemindersPage"
 import { Settings } from "./pages/SettingsPage"
 import { ChangePassword } from "./pages/ChangePasswordPage"
+import { Register } from "./pages/RegisterPage"
 
 export const Router = () => {
     return (
@@ -13,6 +14,7 @@ export const Router = () => {
             <Routes>
                 <Route path="/" element={<Login/>}/>
                 <Route path="/test" element={<Test/>}/>
+                <Route path="/register" element={<Register/>}/>
                 <Route path="/reminders/" element={<RemindersPage/>}/>
                 <Route path="/reminders/create" element={<CreateRemindersPage/>}/>
                 <Route path="/settings" element={<Settings/>}/>

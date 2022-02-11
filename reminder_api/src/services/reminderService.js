@@ -72,7 +72,6 @@ const createReminder = async (data) => {
 
 const removeReminder = async (id) => {
     try {
-        console.log(id)
         await Reminder.deleteOne({_id: id})
 
         return "Successfully deleted reminder.";

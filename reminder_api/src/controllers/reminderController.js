@@ -47,7 +47,7 @@ const parseReqBody = body => {
         }
     };
 
-    data["_id"] = _.snakeCase(body.title);
+    data["_id"] = _.snakeCase(body.title + body.userId);
     data["title"] = body.title;
     data["content"] = body.content; 
     data["dateEnable"] = body.dateEnable;

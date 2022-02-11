@@ -54,6 +54,18 @@ axiosReminders.interceptors.request.use( async (config) => {
 })
 
 
+const registerUser = async (data) => {
+    try {
+        const response = await axiosAuth.post(BASEURL + "/users", JSON.stringify(data))
+        if (response) {
+            return response 
+        }
+    } catch(err) {
+        return err
+    }
+}
+
+
 const loginUser = async (data) => {
     try {
         const response = await axiosAuth.post(BASEURL + "/users/login", JSON.stringify(data))
@@ -189,6 +201,7 @@ const stopReminder = async (data) => {
 
 
 export const api = {
+    registerUser,
     loginUser,
     logoutUser,
     changeUserPassword,
