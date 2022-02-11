@@ -8,7 +8,7 @@ The Reminder application is a custom built application that will allow you to in
 
 
 ### Unfinished Tasks
-- [ ] Create "Register" page for users to create an account 
+- [ ] Add email/user confirmation when creating accounts
 - [ ] Utilize a UI framework (Material UI) for the front end pages 
 
 ### Finished Tasks
