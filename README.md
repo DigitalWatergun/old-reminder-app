@@ -73,3 +73,4 @@ The Reminder application is a custom built application that will allow you to in
 - [x] ~~Create "Delete" button for users to delete their account from the application~~
 - [x] ~~Added sticky note icon to home page~~
 - [x] ~~Refactor api.js to use try/catch blocks and have errors be handled on react components~~
+- [x] ~~Remove all reminders for a user whenever the user deletes their account~~

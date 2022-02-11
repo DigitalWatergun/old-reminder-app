@@ -83,6 +83,17 @@ const removeReminder = async (id) => {
 };
 
 
+const removeReminderByUserId = async (userId) => {
+    try {
+        await Reminder.deleteMany({userId: userId})
+
+        return `Successfully deleted all reminders for ${userId}`
+    } catch (err) {
+        return err;
+    }
+}
+
+
 export { 
     queryAllReminders, 
     queryAllRemindersByUserId,
@@ -90,5 +101,6 @@ export {
     removeReminder,
     findReminderById,
     filterReminders,
-    updateReminder
+    updateReminder,
+    removeReminderByUserId
 }; 

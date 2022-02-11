@@ -8,6 +8,7 @@ import {
     updateUser,
     deleteUser
 } from "../services/userService.js";
+import { removeReminderByUserId } from "../services/reminderService.js"
 
 
 const getAllUsers = async (req, res) => {
@@ -94,12 +95,16 @@ const logoutUser = async (req, res) => {
 
 
 const deleteAccount = async (req, res) => {
-    console.log(req.body.userId)
-    const result = await deleteUser(req.body.userId)
-    if (result.deletedCount === 1) {
-        res.send(result);
-    } else {
-        res.status(500).send("Unable to delete user.")
+    try {
+        await removeReminderByUserId(req.body.userId)
+        const result = await deleteUser(req.body.userId)
+        if (result.deletedCount === 1) {
+            res.send(result);
+        } else {
+            res.status(500).send("Unable to delete user.")
+        }
+    } catch (err) {
+        res.send(err);
     }
 }
 
