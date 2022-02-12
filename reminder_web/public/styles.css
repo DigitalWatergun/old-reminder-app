@@ -14,12 +14,15 @@ body {
     display: flex;
     flex-direction: column;
     height: 100%;
+    width: 100%;
 }
 
 .content {
+    display: flex;
+    flex-direction: column;
     background-color: lightgray;
     min-height: 100vh;
-    width: auto;
+    width: 100%;
 }
 
 .createReminderForm {
@@ -43,10 +46,6 @@ body {
     height: 50px;
 }
 
-.userForm {
-    margin: 10px auto auto;
-    text-align: left;
-}
 
 .popup-box {
     position: fixed;
@@ -122,4 +121,9 @@ body {
 .reminderTitle {
     margin: 0;
     padding: 20px;
+}
+
+.userForm {
+    margin: 10px auto auto;
+    text-align: left;
 }

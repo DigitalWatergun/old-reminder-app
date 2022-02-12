@@ -8,8 +8,8 @@ The Reminder application is a custom built application that will allow you to in
 
 
 ### Unfinished Tasks
-- [ ] Add loading state for buttons when registering, creating, and changing passwords
 - [ ] Utilize a UI framework (Material UI) for the front end pages 
+- [ ] Add expiration date for the activation code 
 - [ ] Add password requirements 
 - [ ] Add error handling for MongoDB errors 
 - [ ] Add error handling for Nodemailer errors (retries and if email doesn't exist)
@@ -81,3 +81,4 @@ The Reminder application is a custom built application that will allow you to in
 - [x] ~~Add Register page and added api call to create user~~
 - [x] ~~Add Route Protection to make sure user is authenticated for certain pages~~
 - [x] ~~Add email verification when registering a user~~
+- [x] ~~Add loading state for buttons when registering, creating, and changing passwords~~

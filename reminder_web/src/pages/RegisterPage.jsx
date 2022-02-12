@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom"
 import { HeaderFooter } from "../components/HeaderFooter";
+import { Loading } from "../components/Loading"
 import { api } from "../api/api"
 
 export const Register = () => {
     const [submitted, setSubmitted] = useState(false);
     const [formData, setFormData] = useState({})
+    const [loadingState, setLoadingState] = useState(false)
     const [error, setError] = useState(undefined);
     const navigate = useNavigate();
 
@@ -27,14 +29,17 @@ export const Register = () => {
 
 
     const handleRegisterClick = async () => {
+        setLoadingState(true)
         if (formData.password === formData.confirmPassword) {
             const response = await api.registerUser(formData);
             if (response.status === 201) {
                 setSubmitted(true)
             } else {
+                setLoadingState(false)
                 setError(response.response.data)
             }
         } else {
+            setLoadingState(false)
             setError("Passwords do not match!")
         }
     }
@@ -51,32 +56,33 @@ export const Register = () => {
     } else {
         return (
             <HeaderFooter>
-                <h3>Register</h3>
-                <div>
-                    <table className="userForm">
-                        <tbody>
-                            <tr>
-                                <td>Username:</td>
-                                <td><input name="username" type="text" onChange={handleChange}></input></td>
-                            </tr>
-                            <tr>
-                                <td>Password:</td>
-                                <td><input name="password" type="password" onChange={handleChange}></input></td>
-                            </tr>
-                            <tr>
-                                <td>Confirm Password:</td>
-                                <td><input name="confirmPassword" type="password" onChange={handleChange}></input></td>
-                            </tr>
-                            <tr>
-                                <td>Email:</td>
-                                <td><input name="email" type="email" onChange={handleChange}></input></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <div className="errorText">{error}</div>
-                    <button onClick={handleCancelClick}>Cancel</button>
-                    <button onClick={handleRegisterClick}>Register</button>
-                </div>
+                {loadingState ? <Loading/> : 
+                    <div>
+                        <h3>Register</h3>
+                        <table className="userForm">
+                            <tbody>
+                                <tr>
+                                    <td>Username:</td>
+                                    <td><input name="username" type="text" onChange={handleChange}></input></td>
+                                </tr>
+                                <tr>
+                                    <td>Password:</td>
+                                    <td><input name="password" type="password" onChange={handleChange}></input></td>
+                                </tr>
+                                <tr>
+                                    <td>Confirm Password:</td>
+                                    <td><input name="confirmPassword" type="password" onChange={handleChange}></input></td>
+                                </tr>
+                                <tr>
+                                    <td>Email:</td>
+                                    <td><input name="email" type="email" onChange={handleChange}></input></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div className="errorText">{error}</div>
+                        <button onClick={handleCancelClick}>Cancel</button>
+                        <button onClick={handleRegisterClick}>Register</button>
+                    </div>}
             </HeaderFooter>
         )
     }

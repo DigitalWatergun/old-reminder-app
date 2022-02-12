@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom"
 import { HeaderFooter } from "../components/HeaderFooter";
+import { Loading } from "../components/Loading"
 import { api } from "../api/api"
 
 export const ChangePassword = () => {
@@ -10,6 +11,7 @@ export const ChangePassword = () => {
             return {userId: user.userId}
         }
     })
+    const [loadingState, setLoadingState] = useState(false)
     const [error, setError] = useState(undefined);
     const navigate = useNavigate();
 
@@ -27,6 +29,7 @@ export const ChangePassword = () => {
 
     const handleUpdateClick = async (event) => {
         event.preventDefault();
+        setLoadingState(true)
 
         if (formData.newPassword === formData.confirmNewPassword) {
             const response = await api.changeUserPassword(formData);
@@ -35,9 +38,11 @@ export const ChangePassword = () => {
                 navigate("/reminders")
             } else {
                 console.log(response)
+                setLoadingState(false)
                 setError(response.response.data)
             }
         } else {
+            setLoadingState(false)
             setError("New passwords do not match!")
         }
     }
@@ -45,26 +50,29 @@ export const ChangePassword = () => {
 
     return (
         <HeaderFooter>
-            <h2>Change Password</h2>
-            <table className="changePasswordTable">
-                <tbody>
-                    <tr>
-                        <td>Current Password:</td>
-                        <td><input name="currentPassword" type="password" onChange={handleChange}></input></td>
-                    </tr>
-                    <tr>
-                        <td>New Password:</td>
-                        <td><input name="newPassword" type="password" onChange={handleChange}></input></td>
-                    </tr>
-                    <tr>
-                        <td>Confirm New Password:</td>
-                        <td><input name="confirmNewPassword" type="password" onChange={handleChange}></input></td>
-                    </tr>
-                </tbody>
-            </table>
-            <div className="errorText">{error}</div>
-            <Link to="/reminders"><button>Cancel</button></Link>
-            <button onClick={handleUpdateClick}>Update</button>
+            {loadingState? <Loading/> : 
+                <div>
+                    <h2>Change Password</h2>
+                    <table className="changePasswordTable">
+                        <tbody>
+                            <tr>
+                                <td>Current Password:</td>
+                                <td><input name="currentPassword" type="password" onChange={handleChange}></input></td>
+                            </tr>
+                            <tr>
+                                <td>New Password:</td>
+                                <td><input name="newPassword" type="password" onChange={handleChange}></input></td>
+                            </tr>
+                            <tr>
+                                <td>Confirm New Password:</td>
+                                <td><input name="confirmNewPassword" type="password" onChange={handleChange}></input></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div className="errorText">{error}</div>
+                    <Link to="/reminders"><button>Cancel</button></Link>
+                    <button onClick={handleUpdateClick}>Update</button>
+                </div>}
         </HeaderFooter>
     )
 }
