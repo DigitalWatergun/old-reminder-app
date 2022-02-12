@@ -83,3 +83,4 @@ The Reminder application is a custom built application that will allow you to in
 - [x] ~~Add Route Protection to make sure user is authenticated for certain pages~~
 - [x] ~~Add email verification when registering a user~~
 - [x] ~~Add loading state for buttons when registering, creating, and changing passwords~~
+- [x] ~~Remove registerHash from db after user has been activated~~

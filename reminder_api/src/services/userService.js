@@ -43,6 +43,12 @@ const updateUser = async (data) => {
 }
 
 
+const removeRegisterHash = async (data) => {
+    const user = await User.findByIdAndUpdate(data._id, {$unset: {registerHash: ""}})
+    return user
+}
+
+
 const deleteUser = async (userId) => {
     const result = await User.deleteOne({_id: userId})
 
@@ -55,5 +61,6 @@ export {
     queryUserById,
     createUser,
     updateUser,
+    removeRegisterHash,
     deleteUser
 }

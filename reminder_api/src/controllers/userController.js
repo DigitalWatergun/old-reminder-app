@@ -7,6 +7,7 @@ import {
     queryUserById,
     createUser,
     updateUser,
+    removeRegisterHash,
     deleteUser
 } from "../services/userService.js";
 import { removeReminderByUserId } from "../services/reminderService.js"
@@ -53,7 +54,8 @@ const loginUser = async (req, res) => {
     const user = (await queryUserById(id))[0];
 
     if (user === undefined) {
-        res.status(400).json("Unable to find user")
+        res.status(400).json("The username or password is incorrect.")
+        console.log("The user does not exist.")
     } else {
         if (!await bcrypt.compare(req.body.password, user.password)) {
             console.log("The username or password is not correct.")
@@ -65,8 +67,8 @@ const loginUser = async (req, res) => {
                 const refreshToken = generateRefreshToken(user);
                 user["refreshToken"] = refreshToken
                 user["active"] = true
-                user["registerToken"] = ""
                 await updateUser(user)
+                await removeRegisterHash(user)
                 res.json({ userId: user._id, username: user.username, accessToken: accessToken, refreshToken: refreshToken });
             } else {
                 res.status(401).send("The activation code is incorrect.")

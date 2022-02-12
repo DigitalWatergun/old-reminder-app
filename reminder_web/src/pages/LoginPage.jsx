@@ -43,6 +43,7 @@ export const Login = () => {
                 </tr>
             )
         } else {
+            setLoadingState(false);
             setError(response.response.data)
         }
     }
