@@ -8,6 +8,7 @@ The Reminder application is a custom built application that will allow you to in
 
 
 ### Unfinished Tasks
+- [ ] Impelement "Forgot Password" feature
 - [ ] Utilize a UI framework (Material UI) for the front end pages 
 - [ ] Add expiration date for the activation code 
 - [ ] Add password requirements 
