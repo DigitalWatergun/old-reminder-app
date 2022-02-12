@@ -5,34 +5,39 @@ import { api } from "../api/api"
 import image from "../static/sticky.png"
 
 export const Login = () => {
-    const [username, setUsername] = useState("");
-    const [password, setPassword] = useState("");
+    const [formData, setFormData] = useState({})
+    const [active, setActive] = useState(undefined);
     const [error, setError] = useState(undefined);
     const navigate = useNavigate();
 
 
     const handleChange = event => {
         setError(undefined)
-        const name = event.target.name; 
-        const value = event.target.value;
+        const name = event.target.name
+        const value = event.target.value
 
-        if (name === "username") {
-            setUsername(value)
-        }
-
-        if (name === "password") {
-            setPassword(value)
-        }
+        setFormData(items => {
+            return {... items, [name]:value}
+        })
     }
 
 
     const handleSubmit = async () => {
-        const data = {"username": username, "password": password}
+        const data = {"username": formData.username, "password": formData.password, "registerHash": formData.registerHash}
         const response = await api.loginUser(data)
         if (response.status === 200) {
             const stringResponse = JSON.stringify(response.data);
             sessionStorage.setItem("user", stringResponse)
+            sessionStorage.setItem("isAuthenticated", true)
             navigate("/reminders")
+        } else if (response.response.status === 401) {
+            setError(response.response.data)
+            setActive(
+                <tr>
+                    <td>Activation Code: </td>
+                    <td><input name="registerHash" type="text" onChange={handleChange}></input></td>
+                </tr>
+            )
         } else {
             setError(response.response.data)
         }
@@ -58,6 +63,7 @@ export const Login = () => {
                             <td>Password:</td>
                             <td><input name="password" type="password" onChange={handleChange}/></td>
                         </tr>
+                        {active}
                     </tbody>
                 </table>
                 <div className="errorText">{error}</div>

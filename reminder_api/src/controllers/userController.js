@@ -1,4 +1,5 @@
 import _ from "lodash";
+import {randomBytes} from "crypto"
 import bcrypt from "bcrypt";
 import { generateAccessToken, generateRefreshToken, verifyAccessToken, refreshAccessToken } from "../auth.js";
 import {
@@ -9,6 +10,7 @@ import {
     deleteUser
 } from "../services/userService.js";
 import { removeReminderByUserId } from "../services/reminderService.js"
+import { sendRegistrationEmail } from "../emitter/notifications/mailer/mailer.js";
 
 
 const getAllUsers = async (req, res) => {
@@ -25,9 +27,11 @@ const getAllUsers = async (req, res) => {
 const addUser = async (req, res) => {
     const user = {
         _id: _.snakeCase(req.body.username),
+        active: false,
         username: req.body.username,
         password: await bcrypt.hash(req.body.password, 15),
-        email: req.body.email
+        email: req.body.email,
+        registerHash: randomBytes(32).toString('hex')
     }
     const result = await createUser(user);
     
@@ -38,6 +42,7 @@ const addUser = async (req, res) => {
             res.status(500).send(result.error.message)
         }
     } else {
+        await sendRegistrationEmail(user.username, user.email, user.registerHash)
         res.status(201).send(result);
     }
 }
@@ -53,6 +58,21 @@ const loginUser = async (req, res) => {
         if (!await bcrypt.compare(req.body.password, user.password)) {
             console.log("The username or password is not correct.")
             res.status(403).send("The username or password is incorrect.")
+        } else if (req.body.registerHash !== undefined) {
+            if (req.body.registerHash === user.registerHash) {
+                console.log("The activation code is correct and the password is correct.");
+                const accessToken = generateAccessToken(user);
+                const refreshToken = generateRefreshToken(user);
+                user["refreshToken"] = refreshToken
+                user["active"] = true
+                user["registerToken"] = ""
+                await updateUser(user)
+                res.json({ userId: user._id, username: user.username, accessToken: accessToken, refreshToken: refreshToken });
+            } else {
+                res.status(401).send("The activation code is incorrect.")
+            }
+        } else if (!user.active){
+            res.status(401).send("The user needs to be activated. Please check your email for the activation code.")
         } else {
             console.log("The password is correct.");
             const accessToken = generateAccessToken(user);

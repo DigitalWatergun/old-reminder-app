@@ -19,9 +19,12 @@ const createUser = async (data) => {
     try {
         const newUser = User({
             _id: data._id,
+            active: data.active,
             username: data.username, 
             password: data.password,
-            refreshToken: data.refreshToken
+            refreshToken: data.refreshToken,
+            email: data.email,
+            registerHash: data.registerHash
         })
 
         await newUser.save();
