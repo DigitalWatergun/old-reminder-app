@@ -8,10 +8,10 @@ The Reminder application is a custom built application that will allow you to in
 
 
 ### Unfinished Tasks
-- [ ] Impelement "Forgot Password" feature
 - [ ] Utilize a UI framework (Material UI) for the front end pages 
 - [ ] Add expiration date for the activation code 
 - [ ] Add password requirements 
+- [ ] Force users to change their passwords after logging in with "forgot password"
 - [ ] Add error handling for MongoDB errors 
 - [ ] Add error handling for Nodemailer errors (retries and if email doesn't exist)
 - [ ] Add error handling for Twilio errors (retires and if number doesn't exist)
@@ -84,3 +84,5 @@ The Reminder application is a custom built application that will allow you to in
 - [x] ~~Add email verification when registering a user~~
 - [x] ~~Add loading state for buttons when registering, creating, and changing passwords~~
 - [x] ~~Remove registerHash from db after user has been activated~~
+- [x] ~~Make sure emails in User db are unique and not repeated~~
+- [x] ~~Impelement "Forgot Password" feature~~

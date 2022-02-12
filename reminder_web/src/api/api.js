@@ -102,6 +102,18 @@ const changeUserPassword = async (data) => {
 }
 
 
+const resetPassword = async (data) => {
+    try {
+        const response = await axiosAuth.post(BASEURL + "/users/reset", JSON.stringify(data))
+        if (response) {
+            return response
+        }
+    } catch (err) {
+        return err
+    }
+}
+
+
 const deleteUser = async (data) => {
     try {
         const response = await axiosAuth.delete(BASEURL + "/users/", {data: JSON.stringify(data)})
@@ -205,6 +217,7 @@ export const api = {
     loginUser,
     logoutUser,
     changeUserPassword,
+    resetPassword,
     deleteUser,
     getAllReminders,
     createReminder,

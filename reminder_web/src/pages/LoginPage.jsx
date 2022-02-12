@@ -32,6 +32,7 @@ export const Login = () => {
             const stringResponse = JSON.stringify(response.data);
             sessionStorage.setItem("user", stringResponse)
             sessionStorage.setItem("isAuthenticated", true)
+            sessionStorage.setItem("tempLogon", response.data.tempPass)
             navigate("/reminders")
         } else if (response.response.status === 401) {
             setLoadingState(false);
@@ -48,10 +49,6 @@ export const Login = () => {
         }
     }
 
-
-    const handleRegisterClick = () => {
-        navigate("/register")
-    }
 
 
     return (
@@ -73,8 +70,13 @@ export const Login = () => {
                     </tbody>
                 </table>
                 <div className="errorText">{error}</div>
-                <button onClick={handleRegisterClick}>Register</button>
-                <button onClick={handleSubmit}>Sign In</button>
+                <div style={{fontSize: 13}}>
+                    <a href="/forgotpassword">Forgot your password?</a>
+                </div>
+                <button style={{width: 240}} onClick={handleSubmit}>Sign In</button>
+                <div style={{fontSize: 13}}>
+                    Need an account? <a href="/register">Register</a>
+                </div>
             </div>}
         </HeaderFooter>
     )

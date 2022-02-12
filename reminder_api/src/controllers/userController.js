@@ -5,13 +5,14 @@ import { generateAccessToken, generateRefreshToken, verifyAccessToken, refreshAc
 import {
     queryAllUsers, 
     queryUserById,
+    queryUserByEmail,
     createUser,
     updateUser,
     removeRegisterHash,
     deleteUser
 } from "../services/userService.js";
 import { removeReminderByUserId } from "../services/reminderService.js"
-import { sendRegistrationEmail } from "../emitter/notifications/mailer/mailer.js";
+import { sendRegistrationEmail, sendTempPassword } from "../emitter/notifications/mailer/mailer.js";
 
 
 const getAllUsers = async (req, res) => {
@@ -81,14 +82,13 @@ const loginUser = async (req, res) => {
             const refreshToken = generateRefreshToken(user);
             user["refreshToken"] = refreshToken
             await updateUser(user)
-            res.json({ userId: user._id, username: user.username, accessToken: accessToken, refreshToken: refreshToken });
+            res.json({ userId: user._id, username: user.username, accessToken: accessToken, refreshToken: refreshToken});
         }
     }    
 }
 
 
 const changeUserPassword = async (req, res) => {
-    console.log(req.body);
     const id = req.body.userId; 
     const user = (await queryUserById(id))[0];
 
@@ -103,6 +103,23 @@ const changeUserPassword = async (req, res) => {
             user["password"] = newPassword;
             await updateUser(user)
             res.sendStatus(200);
+        }
+    }
+}
+
+
+const resetUserPassword = async (req, res) => {
+    const user = await queryUserByEmail(req.body.email)
+    
+    if (user === null || user === undefined) {
+        res.status(401).send("This account does not exist. Please make a new account.")
+    } else {
+        if (req.body.username === user.username) {
+            const tempPass = randomBytes(8).toString('hex')
+            user["password"] = await bcrypt.hash(tempPass, 15)
+            await updateUser(user)
+            await sendTempPassword(user.username, user.email, tempPass)
+            res.send("A temporary password has been sent to your email.")
         }
     }
 }
@@ -164,6 +181,7 @@ export {
     addUser,
     loginUser,
     changeUserPassword,
+    resetUserPassword,
     logoutUser,
     deleteAccount,
     verifyUserToken,

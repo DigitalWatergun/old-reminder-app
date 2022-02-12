@@ -15,6 +15,13 @@ const queryUserById = async (id) => {
 }
 
 
+const queryUserByEmail = async (email) => {
+    const user = await User.findOne({email: email})
+
+    return user
+}
+
+
 const createUser = async (data) => {
     try {
         const newUser = User({
@@ -59,6 +66,7 @@ const deleteUser = async (userId) => {
 export {
     queryAllUsers, 
     queryUserById,
+    queryUserByEmail,
     createUser,
     updateUser,
     removeRegisterHash,

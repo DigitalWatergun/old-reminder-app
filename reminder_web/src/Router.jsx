@@ -7,11 +7,12 @@ import { CreateRemindersPage } from "./pages/CreateRemindersPage"
 import { Settings } from "./pages/SettingsPage"
 import { ChangePassword } from "./pages/ChangePasswordPage"
 import { Register } from "./pages/RegisterPage"
+import { ForgotPassword } from "./pages/ForgotPasswordPage";
 
 
 const RequireAuth = ({children}) => {
     const isAuthenticated = sessionStorage.getItem("isAuthenticated")
-
+    
     if (isAuthenticated) {
         return children
     } else {
@@ -31,6 +32,7 @@ export const Router = () => {
                 <Route path="/reminders/create" element={<RequireAuth><CreateRemindersPage/></RequireAuth>}/>
                 <Route path="/settings" element={<RequireAuth><Settings/></RequireAuth>}/>
                 <Route path="/settings/password" element={<RequireAuth><ChangePassword/></RequireAuth>}/>
+                <Route path="/forgotpassword" element={<ForgotPassword/>} />
             </Routes>
         </BrowserRouter>
     )

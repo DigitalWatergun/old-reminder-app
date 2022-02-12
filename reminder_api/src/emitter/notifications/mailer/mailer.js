@@ -70,8 +70,34 @@ const sendRegistrationEmail = async (username, email, hash) => {
 
     let transporter = await createTransporter();
     await transporter.sendMail(emailOptions);
-
 }
 
 
-export { sendEmailReminder, sendRegistrationEmail };
+const sendTempPassword = async (username, email, tempPass) => {
+    const emailBody = `
+    Hi ${username}, 
+
+
+    This is your new password to log into your account. You may change your password after logging in.  
+
+
+    ${tempPass}
+
+
+    Thank you!
+    - Mr. Reminder
+    `
+
+    const emailOptions = {
+        subject: "New Password for the Reminders App!",
+        text: emailBody,
+        to: email,
+        bcc: process.env.EMAIL
+    };
+
+    let transporter = await createTransporter();
+    await transporter.sendMail(emailOptions);
+}
+
+
+export { sendEmailReminder, sendRegistrationEmail, sendTempPassword };
