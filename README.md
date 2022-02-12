@@ -10,6 +10,10 @@ The Reminder application is a custom built application that will allow you to in
 ### Unfinished Tasks
 - [ ] Add loading state for buttons when registering, creating, and changing passwords
 - [ ] Utilize a UI framework (Material UI) for the front end pages 
+- [ ] Add password requirements 
+- [ ] Add error handling for MongoDB errors 
+- [ ] Add error handling for Nodemailer errors (retries and if email doesn't exist)
+- [ ] Add error handling for Twilio errors (retires and if number doesn't exist)
 
 ### Finished Tasks
 - [x] ~~Create GitHub Repo to store all notes, project files and add gitignore~~
