@@ -82,7 +82,7 @@ const loginUser = async (req, res) => {
             const refreshToken = generateRefreshToken(user);
             user["refreshToken"] = refreshToken
             await updateUser(user)
-            res.json({ userId: user._id, username: user.username, accessToken: accessToken, refreshToken: refreshToken});
+            res.json({ userId: user._id, username: user.username, accessToken: accessToken, refreshToken: refreshToken, changePassword: user.changePassword});
         }
     }    
 }
@@ -101,6 +101,9 @@ const changeUserPassword = async (req, res) => {
             console.log("The password is correct.");
             const newPassword = await bcrypt.hash(req.body.newPassword, 15)
             user["password"] = newPassword;
+            if (req.body.changePassword) {
+                user["changePassword"] = false
+            }
             await updateUser(user)
             res.sendStatus(200);
         }
@@ -117,6 +120,7 @@ const resetUserPassword = async (req, res) => {
         if (req.body.username === user.username) {
             const tempPass = randomBytes(8).toString('hex')
             user["password"] = await bcrypt.hash(tempPass, 15)
+            user["changePassword"] = true;
             await updateUser(user)
             await sendTempPassword(user.username, user.email, tempPass)
             res.send("A temporary password has been sent to your email.")

@@ -1,16 +1,23 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom"
+import { useNavigate, useLocation } from "react-router-dom"
 import { HeaderFooter } from "../components/HeaderFooter";
 import { Loading } from "../components/Loading"
 import { api } from "../api/api"
 import image from "../static/sticky.png"
 
 export const Login = () => {
+    const state = useLocation()
     const [formData, setFormData] = useState({})
-    const [active, setActive] = useState(undefined);
+    const [active, setActive] = useState(undefined)
     const [loadingState, setLoadingState] = useState(false)
-    const [error, setError] = useState(undefined);
-    const navigate = useNavigate();
+    const [error, setError] = useState(() => {
+        if (state.state === null) {
+            return undefined
+        } else {
+            return state.state.message
+        }
+    });
+    const navigate = useNavigate()
 
 
     const handleChange = event => {
@@ -32,7 +39,6 @@ export const Login = () => {
             const stringResponse = JSON.stringify(response.data);
             sessionStorage.setItem("user", stringResponse)
             sessionStorage.setItem("isAuthenticated", true)
-            sessionStorage.setItem("tempLogon", response.data.tempPass)
             navigate("/reminders")
         } else if (response.response.status === 401) {
             setLoadingState(false);

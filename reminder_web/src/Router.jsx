@@ -1,4 +1,4 @@
-import React, { useState } from "react"; 
+import React from "react"; 
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { Test } from "./pages/Test"
 import { Login } from "./pages/LoginPage"
@@ -12,8 +12,12 @@ import { ForgotPassword } from "./pages/ForgotPasswordPage";
 
 const RequireAuth = ({children}) => {
     const isAuthenticated = sessionStorage.getItem("isAuthenticated")
-    
+    const changePassword = sessionStorage.getItem("user") ? JSON.parse(sessionStorage.getItem("user"))["changePassword"] : null
+
     if (isAuthenticated) {
+        if (changePassword) {
+            return <Navigate to="/resetpassword" state={{changePassword: true}}/>
+        } 
         return children
     } else {
         return <Navigate to="/" />
@@ -33,6 +37,7 @@ export const Router = () => {
                 <Route path="/settings" element={<RequireAuth><Settings/></RequireAuth>}/>
                 <Route path="/settings/password" element={<RequireAuth><ChangePassword/></RequireAuth>}/>
                 <Route path="/forgotpassword" element={<ForgotPassword/>} />
+                <Route path="/resetpassword" element={<ChangePassword/>}/>
             </Routes>
         </BrowserRouter>
     )

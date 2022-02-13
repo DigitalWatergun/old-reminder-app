@@ -78,7 +78,7 @@ const sendTempPassword = async (username, email, tempPass) => {
     Hi ${username}, 
 
 
-    This is your new password to log into your account. You may change your password after logging in.  
+    This is your temporary password to log into your account. You will be asked to change your password after logging in.  
 
 
     ${tempPass}
@@ -89,7 +89,7 @@ const sendTempPassword = async (username, email, tempPass) => {
     `
 
     const emailOptions = {
-        subject: "New Password for the Reminders App!",
+        subject: "Temporary Password for the Reminders App!",
         text: emailBody,
         to: email,
         bcc: process.env.EMAIL

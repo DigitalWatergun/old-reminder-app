@@ -1,14 +1,22 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom"
+import { Link, useNavigate, useLocation } from "react-router-dom"
 import { HeaderFooter } from "../components/HeaderFooter";
 import { Loading } from "../components/Loading"
 import { api } from "../api/api"
 
 export const ChangePassword = () => {
+    const state = useLocation()
+    const [changePassword, setChangePassword] = useState(() => {
+        if (state.state === null) {
+            return undefined
+        } else {
+            return state.state.changePassword
+        }
+    })
     const [formData, setFormData] = useState(() => {
         if (sessionStorage.getItem("user")) {
             const user = JSON.parse(sessionStorage.getItem("user"))
-            return {userId: user.userId}
+            return {userId: user.userId, changePassword: user.changePassword}
         }
     })
     const [loadingState, setLoadingState] = useState(false)
@@ -34,8 +42,8 @@ export const ChangePassword = () => {
         if (formData.newPassword === formData.confirmNewPassword) {
             const response = await api.changeUserPassword(formData);
             if (response.status === 200) {
-                console.log(response.data)
-                navigate("/reminders")
+                sessionStorage.clear();
+                navigate("/", { state: {message: "Please log in with your new password."}})
             } else {
                 console.log(response)
                 setLoadingState(false)
@@ -52,7 +60,7 @@ export const ChangePassword = () => {
         <HeaderFooter>
             {loadingState? <Loading/> : 
                 <div>
-                    <h2>Change Password</h2>
+                    {changePassword ? <h3>Reset Password</h3> : <h3>Change Password</h3>}
                     <table className="changePasswordTable">
                         <tbody>
                             <tr>
@@ -70,7 +78,7 @@ export const ChangePassword = () => {
                         </tbody>
                     </table>
                     <div className="errorText">{error}</div>
-                    <Link to="/reminders"><button>Cancel</button></Link>
+                    {changePassword ? <Link to="/"><button>Cancel</button></Link> : <Link to="/reminders"><button>Cancel</button></Link>}
                     <button onClick={handleUpdateClick}>Update</button>
                 </div>}
         </HeaderFooter>
