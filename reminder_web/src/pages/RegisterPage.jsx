@@ -48,9 +48,9 @@ export const Register = () => {
     if (submitted) {
         return (
             <HeaderFooter>
-                <h3>Register</h3>
-                <p>An activation email has been sent to your registered email.</p>
-                <Link to="/"><button>Login</button></Link>
+                <h2 className="pageHeading">Register</h2>
+                <p style={{color: "#fff"}}>An activation email has been sent to your registered email.</p>
+                <Link to="/"><button className="buttonOrange" style={{float: "none"}}>Login</button></Link>
             </HeaderFooter>
         )
     } else {
@@ -58,30 +58,22 @@ export const Register = () => {
             <HeaderFooter>
                 {loadingState ? <Loading/> : 
                     <div>
-                        <h3>Register</h3>
-                        <table className="userForm">
-                            <tbody>
-                                <tr>
-                                    <td>Username:</td>
-                                    <td><input name="username" type="text" onChange={handleChange}></input></td>
-                                </tr>
-                                <tr>
-                                    <td>Password:</td>
-                                    <td><input name="password" type="password" onChange={handleChange}></input></td>
-                                </tr>
-                                <tr>
-                                    <td>Confirm Password:</td>
-                                    <td><input name="confirmPassword" type="password" onChange={handleChange}></input></td>
-                                </tr>
-                                <tr>
-                                    <td>Email:</td>
-                                    <td><input name="email" type="email" onChange={handleChange}></input></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                        <div className="errorText">{error}</div>
-                        <button onClick={handleCancelClick}>Cancel</button>
-                        <button onClick={handleRegisterClick}>Register</button>
+                        <h2 className="pageHeading">Register</h2>
+                        <div className="formBoxes">
+                            <form className="customForm">
+                                <label>Username</label><br/>
+                                <input name="username" type="text" onChange={handleChange}></input><br/><br/>
+                                <label>Password</label><br/>
+                                <input name="password" type="password" onChange={handleChange}></input><br/><br/>
+                                <label>Confirm Password</label><br/>
+                                <input name="confirmPassword" type="password" onChange={handleChange}></input><br/><br/>
+                                <label>Email Address</label><br/>
+                                <input name="email" type="email" onChange={handleChange}></input><br/><br/>
+                                <div className="errorText">{error}</div>
+                                <button className="buttonCancel" onClick={handleCancelClick}>Cancel</button>
+                                <button className="buttonOrange" onClick={handleRegisterClick}>Register</button>
+                            </form>
+                        </div>
                     </div>}
             </HeaderFooter>
         )

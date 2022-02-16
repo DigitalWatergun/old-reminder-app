@@ -44,10 +44,10 @@ export const Login = () => {
             setLoadingState(false);
             setError(response.response.data)
             setActive(
-                <tr>
-                    <td>Activation Code: </td>
-                    <td><input name="registerHash" type="text" onChange={handleChange}></input></td>
-                </tr>
+            <div>
+                <label>Activation Code: </label>
+                <input name="registerHash" type="text" onChange={handleChange}></input>
+            </div>
             )
         } else {
             setLoadingState(false);
@@ -62,26 +62,18 @@ export const Login = () => {
             {loadingState ? <Loading/> : 
             <div>
                 <img style={{marginTop: 15}} width="120" height="100" src={image}></img>
-                <table className="userForm">
-                    <tbody>
-                        <tr>
-                            <td>Username:</td>
-                            <td><input name="username" type="text" onChange={handleChange}/></td>
-                        </tr>
-                        <tr>
-                            <td>Password:</td>
-                            <td><input name="password" type="password" onChange={handleChange}/></td>
-                        </tr>
+                <div className="formBoxes">
+                    <form className="customForm">
+                        <label>Username</label><br/>
+                        <input name="username" type="text" onChange={handleChange}/><br/><br/>
+                        <label>Password</label><br/>
+                        <input name="password" type="password" onChange={handleChange}/>
                         {active}
-                    </tbody>
-                </table>
-                <div className="errorText">{error}</div>
-                <div style={{fontSize: 13}}>
-                    <a href="/forgotpassword">Forgot your password?</a>
-                </div>
-                <button style={{width: 240}} onClick={handleSubmit}>Sign In</button>
-                <div style={{fontSize: 13}}>
-                    Need an account? <a href="/register">Register</a>
+                        <a href="/forgotpassword">Forgot your password?</a><br/><br/>
+                        <div className="errorText">{error}</div>
+                        <button className="buttonSignIn" onClick={handleSubmit}>Sign In</button>
+                        <a href="/register">Need an account? Register</a>
+                    </form>
                 </div>
             </div>}
         </HeaderFooter>

@@ -29,23 +29,27 @@ export const ReminderDetails = (props) => {
 
     return (
         <div>
-            <table className="reminderDetailTable">
-                <tbody>
-                    <tr>
-                        <td>Content:</td>
-                        <td>{props.data.content}</td>
-                    </tr>
-                    <tr>
-                        <td>Status:</td>
-                        <td>{props.data.status}</td>
-                    </tr>
-                </tbody>
-            </table>
-            <button onClick={handleRunClick} disabled={props.data.status === "ACTIVE"}>RUN</button>
-            <button onClick={handleStopClick} disabled={props.data.status === "INACTIVE"}>STOP</button>
-            <button onClick={handleEditClick}>EDIT</button>
-            <button onClick={handleDeleteClick}>DELETE</button>
+            <div className="reminderDetail">
+                <table className="reminderDetailTable">
+                    <tbody>
+                        <tr>
+                            <td>Content:</td>
+                            <td>{props.data.content}</td>
+                        </tr>
+                        <tr>
+                            <td>Status:</td>
+                            <td>{props.data.status}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <br/>                
+            </div>
+            <button className="reminderRunButton" onClick={handleRunClick} disabled={props.data.status === "ACTIVE"}>RUN</button>
+            <button className="reminderGrayButton" onClick={handleStopClick} disabled={props.data.status === "INACTIVE"}>STOP</button>
+            <button className="reminderGrayButton" onClick={handleEditClick}>EDIT</button>
+            <button className="reminderGrayButton" style={{paddingLeft: "10px"}} onClick={handleDeleteClick}>DELETE</button>
             {editPopup && <EditReminderPopup content={props.data} handleClose={handleEditClick}/>}
         </div>
+
     )
 }

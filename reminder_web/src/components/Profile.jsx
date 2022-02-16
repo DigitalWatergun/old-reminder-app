@@ -20,7 +20,7 @@ export const Profile = (props) => {
     return (
         <div>
             <div className="profile" onClick={handleClick}>
-                <p>{user.username}</p>
+                <p className="headerUser">{user.username}</p>
                 {expand}
             </div>            
         </div>

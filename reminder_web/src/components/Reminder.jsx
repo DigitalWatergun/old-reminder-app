@@ -17,8 +17,8 @@ export const Reminder = (props) => {
 
     return (
         <div className="reminder" >
-            <div onClick={handleClick}>
-                <h3 className="reminderTitle">{props.data.title}</h3>
+            <div className="reminderExpand" onClick={handleClick}>
+                <p className="reminderTitle">{props.data.title}</p>
             </div>
             {expand}
         </div>

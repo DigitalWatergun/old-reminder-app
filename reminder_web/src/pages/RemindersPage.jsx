@@ -25,12 +25,12 @@ export const RemindersPage = () => {
 
     return (
         <HeaderFooter userState={true} user={user}>
-            <h1 className="title">My Reminders</h1>
+            <h2 className="pageHeading">My Reminders</h2>
             {reminders.map((reminders, index) => {
                 return <Reminder key={index} data={reminders} />
             })}
             <Link to="/reminders/create">
-                <button>Create Reminder</button>
+                <button className="reminderCreateButton">Create Reminder</button>
             </Link>
         </HeaderFooter>
     )
