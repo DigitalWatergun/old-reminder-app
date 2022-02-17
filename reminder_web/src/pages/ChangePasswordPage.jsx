@@ -60,26 +60,20 @@ export const ChangePassword = () => {
         <HeaderFooter>
             {loadingState? <Loading/> : 
                 <div>
-                    {changePassword ? <h3>Reset Password</h3> : <h3>Change Password</h3>}
-                    <table className="changePasswordTable">
-                        <tbody>
-                            <tr>
-                                <td>Current Password:</td>
-                                <td><input name="currentPassword" type="password" onChange={handleChange}></input></td>
-                            </tr>
-                            <tr>
-                                <td>New Password:</td>
-                                <td><input name="newPassword" type="password" onChange={handleChange}></input></td>
-                            </tr>
-                            <tr>
-                                <td>Confirm New Password:</td>
-                                <td><input name="confirmNewPassword" type="password" onChange={handleChange}></input></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <div className="errorText">{error}</div>
-                    {changePassword ? <Link to="/"><button>Cancel</button></Link> : <Link to="/reminders"><button>Cancel</button></Link>}
-                    <button onClick={handleUpdateClick}>Update</button>
+                    {changePassword ? <h2 className="pageHeading">Reset Password</h2> : <h2 className="pageHeading">Change Password</h2>}
+                    <div className="formBoxes">
+                        <div className="customForm">
+                            <label>Password</label><br/>
+                            <input name="currentPassword" type="password" onChange={handleChange}></input><br/><br/>
+                            <label>New Password</label><br/>
+                            <input name="newPassword" type="password" onChange={handleChange}></input><br/><br/>
+                            <label>Confirm New Password</label><br/>
+                            <input name="confirmNewPassword" type="password" onChange={handleChange}></input><br/><br/>
+                            <div className="errorText">{error}</div><br/>
+                            {changePassword ? <Link to="/"><button className="buttonGray">Cancel</button></Link> : <Link to="/reminders"><button className="buttonGray">Cancel</button></Link>}
+                            <button className="buttonOrange" style={{float: "right"}} onClick={handleUpdateClick}>Update</button>
+                        </div>
+                    </div>
                 </div>}
         </HeaderFooter>
     )

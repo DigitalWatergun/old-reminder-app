@@ -20,15 +20,25 @@ export const Settings = () => {
         navigate("/")
     }
 
+    
+    const handleBackClick = () => {
+        navigate("/reminders")
+    }
+
 
     return (
         <HeaderFooter>
-            <h2>Settings</h2>
+            <h2 className="pageHeading">Settings</h2>
             <div>
-                <button onClick={handleChangePasswordClick}>Change Password</button>    
+                <button className="buttonOrange" style={{width: 250}} onClick={handleChangePasswordClick}>Change Password</button>    
             </div>
+            <br/>
             <div>
-                <button onClick={handleDeleteClick}>Delete Account</button>
+                <button className="buttonGray" style={{width: 250}} onClick={handleDeleteClick}>Delete Account</button>
+            </div>
+            <br/>
+            <div>
+                <button className="buttonGray" style={{width: 250}} onClick={handleBackClick}>Back</button>
             </div>
         </HeaderFooter>
     )

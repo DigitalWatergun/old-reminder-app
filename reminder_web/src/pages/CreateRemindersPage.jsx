@@ -6,7 +6,7 @@ export const CreateRemindersPage = () => {
 
     return (
         <HeaderFooter>
-            <h1 className="title">Create Reminder</h1>
+            <h2 className="pageHeading">Create Reminder</h2>
             <ReminderForm/>
         </HeaderFooter>
     )

@@ -44,9 +44,9 @@ export const ForgotPassword = () => {
     if (submitted) {
         return (
             <HeaderFooter>
-                <h3>Forgot Password</h3>
-                <p>An temporary password has been sent to your registered email.</p>
-                <Link to="/"><button>Login</button></Link>
+                <h2 className="pageHeading">Forgot Password</h2>
+                <p style={{color: "#fff"}}>An temporary password has been sent to your registered email.</p>
+                <Link to="/"><button className="buttonOrange">Login</button></Link>
             </HeaderFooter>
         )
     } else {
@@ -54,22 +54,18 @@ export const ForgotPassword = () => {
             <HeaderFooter>
                 {loadingState ? <Loading/> : 
                 <div>
-                    <h3>Forgot Password</h3>
-                    <table className="userForm">
-                        <tbody>
-                            <tr>
-                                <td>Username:</td>
-                                <td><input name="username" type="text" onChange={handleChange}></input></td>
-                            </tr>
-                            <tr>
-                                <td>Email:</td>
-                                <td><input name="email" type="email" onChange={handleChange}></input></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <div className="errorText">{error}</div>
-                    <button onClick={handleCancelClick}>Cancel</button>
-                    <button onClick={handleSubmit}>Submit</button>
+                    <h2 className="pageHeading">Forgot Password</h2>
+                    <div className="formBoxes">
+                            <form className="customForm">
+                                <label>Username</label><br/>
+                                <input name="username" type="text" onChange={handleChange}></input><br/><br/>
+                                <label>Email Address</label><br/>
+                                <input name="email" type="email" onChange={handleChange}></input><br/><br/>
+                                <div className="errorText">{error}</div><br/>
+                                <button className="buttonGray" onClick={handleCancelClick}>Cancel</button>
+                                <button className="buttonOrange" style={{float: "right"}} onClick={handleSubmit}>Submit</button>
+                            </form>
+                        </div>
                 </div>}
             </HeaderFooter>
         )

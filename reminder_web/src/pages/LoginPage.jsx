@@ -46,7 +46,7 @@ export const Login = () => {
             setActive(
             <div>
                 <label>Activation Code: </label>
-                <input name="registerHash" type="text" onChange={handleChange}></input>
+                <input name="registerHash" type="text" onChange={handleChange}></input><br/><br/>
             </div>
             )
         } else {
@@ -70,7 +70,7 @@ export const Login = () => {
                         <input name="password" type="password" onChange={handleChange}/>
                         {active}
                         <a href="/forgotpassword">Forgot your password?</a><br/><br/>
-                        <div className="errorText">{error}</div>
+                        <div className="errorText">{error}</div><br/>
                         <button className="buttonSignIn" onClick={handleSubmit}>Sign In</button>
                         <a href="/register">Need an account? Register</a>
                     </form>

@@ -70,8 +70,8 @@ export const Register = () => {
                                 <label>Email Address</label><br/>
                                 <input name="email" type="email" onChange={handleChange}></input><br/><br/>
                                 <div className="errorText">{error}</div>
-                                <button className="buttonCancel" onClick={handleCancelClick}>Cancel</button>
-                                <button className="buttonOrange" onClick={handleRegisterClick}>Register</button>
+                                <button className="buttonGray" onClick={handleCancelClick}>Cancel</button>
+                                <button className="buttonOrange" style={{float: "right"}} onClick={handleRegisterClick}>Register</button>
                             </form>
                         </div>
                     </div>}
