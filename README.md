@@ -8,6 +8,7 @@ The Reminder application is a custom built application that will allow you to in
 
 
 ### Unfinished Tasks
+- [ ] Fix editing reminders for the "Title" field
 - [ ] Add expiration date for the activation code 
 - [ ] Add password requirements 
 - [ ] Add error handling for MongoDB errors 
@@ -85,3 +86,4 @@ The Reminder application is a custom built application that will allow you to in
 - [x] ~~Make sure emails in User db are unique and not repeated~~
 - [x] ~~Impelement "Forgot Password" feature~~
 - [x] ~~Force users to change their passwords after logging in with "forgot password"~~
+- [x] ~~Add styling to frontend using CSS~~

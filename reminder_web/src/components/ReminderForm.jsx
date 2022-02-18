@@ -144,28 +144,44 @@ export const ReminderForm = (props) => {
                     <input name="title" type="text" value={formData.title || ""} onChange={handleChange}/><br/><br/>
                     <label>Content</label><br/>
                     <input name="content" type="text" value={formData.content || ""} onChange={handleChange}/><br/><br/>
-                    <label class="switch">Date
-                        <input name="dateEnable" type="checkbox" checked={formData.dateEnable || ""} onChange={handleChange} disabled={formData.repeatEnable}/>
+                    <label>
+                        <span style={{padding: "5px"}}>Date</span>
+                        <label className="switch">
+                            <input name="dateEnable" type="checkbox" checked={formData.dateEnable || ""} onChange={handleChange} disabled={formData.repeatEnable}/>
+                            <span className="slider"></span>
+                        </label>
                     </label>
                     {formData.dateEnable || (formData.dateEnable && formData.timeEnable) ? <DateInput  date={formData.date} onInputChange={handleChange}/>: null}<br/><br/>
                     <label>
-                        Time
-                        <input name="timeEnable" type="checkbox" checked={formData.timeEnable || ""} onChange={handleChange} disabled={!formData.dateEnable}/>
+                        <span style={{padding: "5px"}}>Time</span>
+                        <label className="switch">
+                            <input name="timeEnable" type="checkbox" checked={formData.timeEnable || ""} onChange={handleChange} disabled={!formData.dateEnable}/>
+                            <span className="slider"></span>
+                        </label>
                     </label>
                     {formData.timeEnable && formData.dateEnable ? <TimeInput time={formData.time} onInputChange={handleChange}/> : null}<br/><br/>
                     <label>
-                        Timer
-                        <input name="repeatEnable" type="checkbox" onChange={handleChange} checked={formData.repeatEnable || ""} disabled={formData.dateEnable || formData.dateEnable && formData.timeEnable}/>
+                        <span style={{padding: "5px"}}>Timer</span>
+                        <label className="switch">
+                            <input name="repeatEnable" type="checkbox" onChange={handleChange} checked={formData.repeatEnable || ""} disabled={formData.dateEnable || formData.dateEnable && formData.timeEnable}/>
+                            <span className="slider"></span>
+                        </label>
                     </label>
                     {formData.repeatEnable ? <RepeatInput minutes={formData.minutes} repeat={formData.repeat} onInputChange={handleChange}/> : null}<br/><br/>
                     <label>
-                        Email
-                        <input name="enableEmail" type="checkbox" checked={formData.enableEmail || ""} onChange={handleChange}/>
+                        <span style={{padding: "5px"}}>Email</span>
+                        <label className="switch">
+                            <input name="enableEmail" type="checkbox" checked={formData.enableEmail || ""} onChange={handleChange}/>
+                            <span className="slider"></span>
+                        </label>
                     </label>
                     {formData.enableEmail ? <input name="email" type="email"  value={formData.email || ""} onChange={handleChange}/> : null}<br/><br/>
                     <label>
-                        SMS
-                        <input name="enableSMS" type="checkbox" checked={formData.enableSMS || ""} onChange={handleChange}/>
+                        <span style={{padding: "5px"}}>SMS</span>
+                        <label className="switch">
+                            <input name="enableSMS" type="checkbox" checked={formData.enableSMS || ""} onChange={handleChange}/>
+                            <span className="slider"></span>
+                        </label>
                     </label>
                     {formData.enableSMS ? <input name="mobile" type="tel" value={formData.mobile || ""} onChange={handleChange}/>: null}<br/><br/>
                     {editState ? <button className="buttonGray" onClick={props.close}>Cancel</button> : <Link to="/reminders"><button className="buttonGray">Cancel</button></Link>}
