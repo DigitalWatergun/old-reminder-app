@@ -25,6 +25,7 @@ const RequireAuth = ({children}) => {
 }
 
 
+// Need to add a catch all route
 export const Router = () => {
     return (
         <BrowserRouter>

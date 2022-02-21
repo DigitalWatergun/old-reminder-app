@@ -63,11 +63,11 @@ export const ChangePassword = () => {
                     {changePassword ? <h2 className="pageHeading">Reset Password</h2> : <h2 className="pageHeading">Change Password</h2>}
                     <div className="formBoxes">
                         <div className="customForm">
-                            <label>Password</label><br/>
+                            <label>Password</label>
                             <input name="currentPassword" type="password" onChange={handleChange}></input><br/><br/>
-                            <label>New Password</label><br/>
+                            <label>New Password</label>
                             <input name="newPassword" type="password" onChange={handleChange}></input><br/><br/>
-                            <label>Confirm New Password</label><br/>
+                            <label>Confirm New Password</label>
                             <input name="confirmNewPassword" type="password" onChange={handleChange}></input><br/><br/>
                             <div className="errorText">{error}</div><br/>
                             {changePassword ? <Link to="/"><button className="buttonGray">Cancel</button></Link> : <Link to="/reminders"><button className="buttonGray">Cancel</button></Link>}

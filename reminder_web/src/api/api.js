@@ -11,14 +11,18 @@ if (sessionStorage.getItem("user")) {
 
 
 const axiosAuth = axios.create({
-    headers: { "Content-Type": "application/json"}
+    headers: { "Content-Type": "application/json"},
+    withCredentials: true
 });
+
+
 const axiosReminders = axios.create({
     baseURL: BASEURL,
     headers: { 
         "Authorization": "Bearer " + currentUserAccessToken,
         "Content-Type": "application/json"
-    }
+    },
+    withCredentials: true
 });
 
 
@@ -26,20 +30,18 @@ axiosReminders.interceptors.request.use( async (config) => {
     const user = JSON.parse(sessionStorage.getItem("user"))
     const accessToken = user.accessToken
     const userId = user.userId
-    const userRefreshToken = user.refreshToken
 
     const result = await axios.post(BASEURL + "/users/verify", {token: accessToken}, {headers: { "Content-Type": "application/json" }})
     if (!result.data) {
         console.log("Refreshing access token...")
 
-        const axiosConfig = {headers: { "Content-Type": "application/json" }}
-        const axiosBody = { userId: userId, token: userRefreshToken }
+        const axiosConfig = {headers: { "Content-Type": "application/json" }, withCredentials: true}
+        const axiosBody = { userId: userId }
         const response = await axios.post(BASEURL + "/users/refresh", axiosBody, axiosConfig)
 
         config.headers.Authorization = "Bearer " + response.data.accessToken
         const sessionItems = {
             accessToken: response.data.accessToken,
-            refreshToken: userRefreshToken,
             userId: userId,
             username: user.username
         }

@@ -140,9 +140,9 @@ export const ReminderForm = (props) => {
         <div>
             <div className="formBoxes">
                 <div className="customForm">
-                    <label>Title</label><br/>
+                    <label>Title</label>
                     <input name="title" type="text" value={formData.title || ""} onChange={handleChange}/><br/><br/>
-                    <label>Content</label><br/>
+                    <label>Content</label>
                     <input name="content" type="text" value={formData.content || ""} onChange={handleChange}/><br/><br/>
                     <label>
                         <span style={{padding: "5px"}}>Date</span>

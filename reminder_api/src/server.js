@@ -2,6 +2,8 @@ import dotenv from "dotenv";
 import mongoose from "mongoose";
 import express from "express"; 
 import cors from "cors";
+import cookieParser from "cookie-parser"
+import { corsOptions } from "./config/corsOptions.js";
 import { usersRoute } from "./routes/usersRoute.js";
 import { remindersRoute } from "./routes/remindersRoute.js";
 import { runActiveReminders } from "./startup/runActiveReminders.js"
@@ -19,9 +21,11 @@ mongoose.connection.on("connected", (err, res) => {
 
 // Set up Express server 
 const app = express(); 
-app.use(cors());
+// app.use(cors({credentials: true, origin: allowedOrigins}));
+app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser())
 
 
 // Routes for the web server 

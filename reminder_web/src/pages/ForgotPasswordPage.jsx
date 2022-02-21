@@ -57,9 +57,9 @@ export const ForgotPassword = () => {
                     <h2 className="pageHeading">Forgot Password</h2>
                     <div className="formBoxes">
                             <form className="customForm">
-                                <label>Username</label><br/>
+                                <label>Username</label>
                                 <input name="username" type="text" onChange={handleChange}></input><br/><br/>
-                                <label>Email Address</label><br/>
+                                <label>Email Address</label>
                                 <input name="email" type="email" onChange={handleChange}></input><br/><br/>
                                 <div className="errorText">{error}</div><br/>
                                 <button className="buttonGray" onClick={handleCancelClick}>Cancel</button>

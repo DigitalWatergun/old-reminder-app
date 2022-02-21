@@ -8,9 +8,12 @@ The Reminder application is a custom built application that will allow you to in
 
 
 ### Unfinished Tasks
+- [ ] Figure out how to block unexisting routes to express server 
 - [ ] Fix editing reminders for the "Title" field
 - [ ] Add expiration date for the activation code 
 - [ ] Add password requirements 
+- [ ] Add 404 for urls that don't exist 
+- [ ] Add Logger to log errors from a central place
 - [ ] Add error handling for MongoDB errors 
 - [ ] Add error handling for Nodemailer errors (retries and if email doesn't exist)
 - [ ] Add error handling for Twilio errors (retires and if number doesn't exist)
@@ -87,3 +90,4 @@ The Reminder application is a custom built application that will allow you to in
 - [x] ~~Impelement "Forgot Password" feature~~
 - [x] ~~Force users to change their passwords after logging in with "forgot password"~~
 - [x] ~~Add styling to frontend using CSS~~
+- [x] ~~Refactor code to store refreshToken in httpOnly cookie instead of sessionStorage~~

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom"
-import { HeaderFooter } from "../components/HeaderFooter";
+import { HeaderFooter } from "../components/HeaderFooter"
 import { Loading } from "../components/Loading"
 import { api } from "../api/api"
 import image from "../static/sticky.png"
@@ -31,7 +31,8 @@ export const Login = () => {
     }
 
 
-    const handleSubmit = async () => {
+    const handleSubmit = async (e) => {
+        e.preventDefault();
         setLoadingState(true)
         const data = {"username": formData.username, "password": formData.password, "registerHash": formData.registerHash}
         const response = await api.loginUser(data)
@@ -64,12 +65,12 @@ export const Login = () => {
                 <img style={{marginTop: 15}} width="120" height="100" src={image}></img>
                 <div className="formBoxes">
                     <form className="customForm">
-                        <label>Username</label><br/>
+                        <label>Username</label>
                         <input name="username" type="text" onChange={handleChange}/><br/><br/>
-                        <label>Password</label><br/>
+                        <label>Password</label>
                         <input name="password" type="password" onChange={handleChange}/>
                         {active}
-                        <a href="/forgotpassword">Forgot your password?</a><br/><br/>
+                        <a href="/forgotpassword">Forgot your password?</a><br/>
                         <div className="errorText">{error}</div><br/>
                         <button className="buttonSignIn" onClick={handleSubmit}>Sign In</button>
                         <a href="/register">Need an account? Register</a>

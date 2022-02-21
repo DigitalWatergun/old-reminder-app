@@ -61,13 +61,13 @@ export const Register = () => {
                         <h2 className="pageHeading">Register</h2>
                         <div className="formBoxes">
                             <form className="customForm">
-                                <label>Username</label><br/>
+                                <label>Username</label>
                                 <input name="username" type="text" onChange={handleChange}></input><br/><br/>
-                                <label>Password</label><br/>
+                                <label>Password</label>
                                 <input name="password" type="password" onChange={handleChange}></input><br/><br/>
-                                <label>Confirm Password</label><br/>
+                                <label>Confirm Password</label>
                                 <input name="confirmPassword" type="password" onChange={handleChange}></input><br/><br/>
-                                <label>Email Address</label><br/>
+                                <label>Email Address</label>
                                 <input name="email" type="email" onChange={handleChange}></input><br/><br/>
                                 <div className="errorText">{error}</div>
                                 <button className="buttonGray" onClick={handleCancelClick}>Cancel</button>

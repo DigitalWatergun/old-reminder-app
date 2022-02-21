@@ -2,7 +2,7 @@ import dotenv from "dotenv"
 dotenv.config();
 import jwt from "jsonwebtoken"
 
-const authenticateToken = (req, res, next) => {
+const verifyJWT = (req, res, next) => {
     const authHeader = req.headers["authorization"]
     const token = authHeader && authHeader.split(" ")[1]
     if (token === null ) {
@@ -24,4 +24,4 @@ const authenticateToken = (req, res, next) => {
     })
 }
 
-export { authenticateToken }
+export { verifyJWT }

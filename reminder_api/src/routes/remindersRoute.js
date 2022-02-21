@@ -1,5 +1,5 @@
 import express from "express";
-import { authenticateToken } from "../middleware/authenticateToken.js";
+import { verifyJWT } from "../middleware/verifyJWT.js";
 import {
     getAllRemindersForUser, 
     postReminder, 
@@ -14,17 +14,21 @@ import {
 
 const router = express.Router();
 
-router.use(authenticateToken)
+router.use(verifyJWT)
 
-router.get("/", getAllRemindersForUser);
+// router.get("/", getAllRemindersForUser);
+// router.post("/", postReminder);
+// router.delete("/", deleteReminder);
+router.route("/")
+    .get(getAllRemindersForUser)
+    .post(postReminder)
+    .delete(deleteReminder)
 router.get("/title", getReminderById);
 router.get("/filter", getReminderByFilter);
 router.get("/run", runReminder)
 router.get("/stop", stopReminder)
 router.get("/list", listRunningReminders)
 router.patch("/update", changeReminder)
-router.post("/", postReminder);
-router.delete("/", deleteReminder);
 
 
 export { router as remindersRoute };

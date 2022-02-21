@@ -82,7 +82,8 @@ const loginUser = async (req, res) => {
             const refreshToken = generateRefreshToken(user);
             user["refreshToken"] = refreshToken
             await updateUser(user)
-            res.json({ userId: user._id, username: user.username, accessToken: accessToken, refreshToken: refreshToken, changePassword: user.changePassword});
+            res.cookie("jwt", refreshToken, { httpOnly: true, sameSite: "None", secure: true, maxAge: 24 * 60 * 60 * 1000 })
+            res.json({ userId: user._id, username: user.username, accessToken: accessToken, changePassword: user.changePassword});
         }
     }    
 }
@@ -133,6 +134,9 @@ const logoutUser = async (req, res) => {
     const user = (await queryUserById(req.body.userId))[0];
     user["refreshToken"] = ""
     await updateUser(user)
+    if (req.cookies.jwt) {
+        res.clearCookie("jwt", { httpOnly: true, sameSite: "None", secure: true })
+    }
     res.send("User has been logged out.")
 }
 
@@ -165,14 +169,14 @@ const verifyUserToken = async (req, res) => {
 
 const refreshUserToken =  async (req, res) => {
     const user = (await queryUserById(req.body.userId))[0];
-    const refreshToken = req.body.token;
+    const refreshToken = req?.cookies?.jwt;
 
     if (refreshToken === null) {
-        res.sendStatus(401).send("No token found.")
+        res.status(401).send("No token found.")
     } 
     
     if (user['refreshToken'] !== refreshToken) {
-        res.sendStatus(403).send("User tokens do not match.")
+        res.status(403).send("User tokens do not match.")
     }
 
     const accessToken = refreshAccessToken(refreshToken)
