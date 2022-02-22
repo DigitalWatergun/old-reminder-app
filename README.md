@@ -91,3 +91,4 @@ The Reminder application is a custom built application that will allow you to in
 - [x] ~~Force users to change their passwords after logging in with "forgot password"~~
 - [x] ~~Add styling to frontend using CSS~~
 - [x] ~~Refactor code to store refreshToken in httpOnly cookie instead of sessionStorage~~
+- [x] ~~Fix refreshToken interceptors for axiosReminders instance~~

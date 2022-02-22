@@ -69,7 +69,7 @@ const getAllRemindersForUser = async (req, res) => {
     const id = req.user._id
     const reminders = await queryAllRemindersByUserId(id);
     
-    return res.send(reminders);
+    res.send(reminders);
 };
 
 
@@ -145,6 +145,7 @@ const changeReminder = async (req, res) => {
 
 
 const postReminder = async (req, res) => {
+    console.log("Creating Reminder...")
     if (bodyValidator(req.body)) {
         const data = parseReqBody(req.body)
         const result = await createReminder(data);

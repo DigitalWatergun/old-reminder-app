@@ -69,8 +69,8 @@ export const Login = () => {
                         <input name="username" type="text" onChange={handleChange}/><br/><br/>
                         <label>Password</label>
                         <input name="password" type="password" onChange={handleChange}/>
-                        {active}
                         <a href="/forgotpassword">Forgot your password?</a><br/>
+                        {active}
                         <div className="errorText">{error}</div><br/>
                         <button className="buttonSignIn" onClick={handleSubmit}>Sign In</button>
                         <a href="/register">Need an account? Register</a>

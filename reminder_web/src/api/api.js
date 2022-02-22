@@ -1,57 +1,69 @@
 import axios from "axios"
 
-
 const BASEURL = "http://localhost:3001";
-let currentUserAccessToken = undefined
-if (sessionStorage.getItem("user")) {
-    currentUserAccessToken = JSON.parse(sessionStorage.getItem("user")).refreshToken
-} else {
-    currentUserAccessToken = undefined
+const retrieveAccessToken = () => {
+    let currentUserAccessToken = undefined
+    if (sessionStorage.getItem("user")) {
+        currentUserAccessToken = JSON.parse(sessionStorage.getItem("user")).accessToken
+    } else {
+        currentUserAccessToken = undefined
+    }
+
+    return currentUserAccessToken;
 }
 
 
 const axiosAuth = axios.create({
+    baseURL: BASEURL,
     headers: { "Content-Type": "application/json"},
     withCredentials: true
 });
 
 
 const axiosReminders = axios.create({
-    baseURL: BASEURL,
+    baseURL: BASEURL, 
     headers: { 
-        "Authorization": "Bearer " + currentUserAccessToken,
         "Content-Type": "application/json"
     },
     withCredentials: true
 });
 
 
-axiosReminders.interceptors.request.use( async (config) => {
-    const user = JSON.parse(sessionStorage.getItem("user"))
-    const accessToken = user.accessToken
-    const userId = user.userId
-
-    const result = await axios.post(BASEURL + "/users/verify", {token: accessToken}, {headers: { "Content-Type": "application/json" }})
-    if (!result.data) {
-        console.log("Refreshing access token...")
-
-        const axiosConfig = {headers: { "Content-Type": "application/json" }, withCredentials: true}
-        const axiosBody = { userId: userId }
-        const response = await axios.post(BASEURL + "/users/refresh", axiosBody, axiosConfig)
-
-        config.headers.Authorization = "Bearer " + response.data.accessToken
-        const sessionItems = {
-            accessToken: response.data.accessToken,
-            userId: userId,
-            username: user.username
-        }
-        sessionStorage.setItem("user", JSON.stringify(sessionItems))
-    } else {
-        config.headers.Authorization = "Bearer " + accessToken
+axiosReminders.interceptors.request.use(config => {
+    if (!config.headers["Authorization"]) {
+        config.headers["Authorization"] = "Bearer " + retrieveAccessToken()
     }
-    
     return config
 }, (error) => {
+    Promise.reject(error)
+})
+
+axiosReminders.interceptors.response.use(response => response, async (error) => {
+    const prevRequest = error?.config;
+
+    if (error?.response?.status === 403 && !prevRequest?.sent) {
+        console.log("Refreshing access token...")
+        prevRequest.sent = true
+        const user = JSON.parse(sessionStorage.getItem("user"))
+        
+        const axiosConfig = {headers: { "Content-Type": "application/json" }, withCredentials: true}
+        const axiosBody = { userId: user.userId }
+        try {
+            const response = await axios.post(BASEURL + "/users/refresh", axiosBody, axiosConfig)
+
+            const sessionItems = {
+                accessToken: response.data.accessToken,
+                userId: user.userId,
+                username: user.username
+            }
+            sessionStorage.setItem("user", JSON.stringify(sessionItems))
+    
+            prevRequest.headers['Authorization'] = `Bearer ${response.data.accessToken}`;
+            return axiosReminders(prevRequest)
+        } catch(err) {
+            return err
+        }
+    }
     return Promise.reject(error)
 })
 
@@ -70,7 +82,7 @@ const registerUser = async (data) => {
 
 const loginUser = async (data) => {
     try {
-        const response = await axiosAuth.post(BASEURL + "/users/login", JSON.stringify(data))
+        const response = await axiosAuth.post("/users/login", JSON.stringify(data))
         if (response) {
             return response
         }
@@ -82,7 +94,7 @@ const loginUser = async (data) => {
 
 const logoutUser = async (data) => {
     try {
-        const response = await axiosAuth.post(BASEURL + "/users/logout", JSON.stringify(data))
+        const response = await axiosAuth.post("/users/logout", JSON.stringify(data))
         if (response) {
             return response
         }
@@ -94,7 +106,7 @@ const logoutUser = async (data) => {
 
 const changeUserPassword = async (data) => {
     try {
-        const response = await axiosAuth.post(BASEURL + "/users/update", JSON.stringify(data))
+        const response = await axiosAuth.post("/users/update", JSON.stringify(data))
         if (response) {
             return response
         }
@@ -106,7 +118,7 @@ const changeUserPassword = async (data) => {
 
 const resetPassword = async (data) => {
     try {
-        const response = await axiosAuth.post(BASEURL + "/users/reset", JSON.stringify(data))
+        const response = await axiosAuth.post("/users/reset", JSON.stringify(data))
         if (response) {
             return response
         }
@@ -118,7 +130,7 @@ const resetPassword = async (data) => {
 
 const deleteUser = async (data) => {
     try {
-        const response = await axiosAuth.delete(BASEURL + "/users/", {data: JSON.stringify(data)})
+        const response = await axiosAuth.delete("/users/", {data: JSON.stringify(data)})
         if (response) {
             return response
         }
@@ -157,7 +169,7 @@ const createReminder = async (data) => {
 
 const deleteReminder = async (data) => {
     try {
-        const response = await axiosReminders.delete(BASEURL + "/reminders", {data: JSON.stringify(data)})
+        const response = await axiosReminders.delete("/reminders", {data: JSON.stringify(data)})
         if (response) {
             window.location.reload();
             return response
@@ -171,7 +183,7 @@ const deleteReminder = async (data) => {
 
 const editReminder = async (data) => {
     try {
-        const response = await axiosReminders.patch(BASEURL + "/reminders/update", JSON.stringify(data))
+        const response = await axiosReminders.patch("/reminders/update", JSON.stringify(data))
         if (response) {
             return response
         }

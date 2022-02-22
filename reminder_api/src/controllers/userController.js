@@ -82,7 +82,7 @@ const loginUser = async (req, res) => {
             const refreshToken = generateRefreshToken(user);
             user["refreshToken"] = refreshToken
             await updateUser(user)
-            res.cookie("jwt", refreshToken, { httpOnly: true, sameSite: "None", secure: true, maxAge: 24 * 60 * 60 * 1000 })
+            res.cookie("jwt", refreshToken, { httpOnly: true, maxAge: 24 * 60 * 60 * 1000 })
             res.json({ userId: user._id, username: user.username, accessToken: accessToken, changePassword: user.changePassword});
         }
     }    
@@ -135,7 +135,7 @@ const logoutUser = async (req, res) => {
     user["refreshToken"] = ""
     await updateUser(user)
     if (req.cookies.jwt) {
-        res.clearCookie("jwt", { httpOnly: true, sameSite: "None", secure: true })
+        res.clearCookie("jwt")
     }
     res.send("User has been logged out.")
 }
@@ -173,14 +173,12 @@ const refreshUserToken =  async (req, res) => {
 
     if (refreshToken === null) {
         res.status(401).send("No token found.")
-    } 
-    
-    if (user['refreshToken'] !== refreshToken) {
+    } else if (user['refreshToken'] !== refreshToken) {
         res.status(403).send("User tokens do not match.")
+    } else {
+        const accessToken = refreshAccessToken(refreshToken)
+        res.json({accessToken : accessToken});
     }
-
-    const accessToken = refreshAccessToken(refreshToken)
-    res.json({accessToken : accessToken});
 }
 
 
