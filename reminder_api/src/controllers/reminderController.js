@@ -1,4 +1,5 @@
 import _ from "lodash"; 
+import {v4 as uuid} from "uuid";
 import { 
     queryAllReminders, 
     queryAllRemindersByUserId,
@@ -47,7 +48,7 @@ const parseReqBody = body => {
         }
     };
 
-    data["_id"] = _.snakeCase(body.title + body.userId);
+    data["_id"] = body._id;
     data["title"] = body.title;
     data["content"] = body.content; 
     data["dateEnable"] = body.dateEnable;
@@ -74,7 +75,7 @@ const getAllRemindersForUser = async (req, res) => {
 
 
 const getReminderById = async (req, res) => {
-    const _id = _.toLower(req.query.title);
+    const _id = req.body.id;
     const reminder = await findReminderById(_id);
 
     if (reminder) {
@@ -132,7 +133,7 @@ const changeReminder = async (req, res) => {
     if (bodyValidator(req.body)) {
         const data = parseReqBody(req.body)
         const reminder = await updateReminder(data);
-    
+        
         if (reminder) {
             res.send(`Updated ${reminder.title}`);
         } else {
@@ -147,6 +148,7 @@ const changeReminder = async (req, res) => {
 const postReminder = async (req, res) => {
     console.log("Creating Reminder...")
     if (bodyValidator(req.body)) {
+        req.body["_id"] = uuid();
         const data = parseReqBody(req.body)
         const result = await createReminder(data);
     

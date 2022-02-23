@@ -1,10 +1,12 @@
 import _ from "lodash";
-import {randomBytes} from "crypto"
+import { randomBytes } from "crypto"
 import bcrypt from "bcrypt";
+import {v4 as uuid} from "uuid";
 import { generateAccessToken, generateRefreshToken, verifyAccessToken, refreshAccessToken } from "../auth.js";
 import {
     queryAllUsers, 
     queryUserById,
+    queryUserByUsername,
     queryUserByEmail,
     createUser,
     updateUser,
@@ -28,9 +30,10 @@ const getAllUsers = async (req, res) => {
 
 const addUser = async (req, res) => {
     const user = {
-        _id: _.snakeCase(req.body.username),
+        _id: uuid(),
         active: false,
-        username: req.body.username,
+        username: _.toLower(req.body.username),
+        userdisplayname: req.body.username,
         password: await bcrypt.hash(req.body.password, 15),
         email: req.body.email,
         registerHash: randomBytes(32).toString('hex')
@@ -44,15 +47,15 @@ const addUser = async (req, res) => {
             res.status(500).send(result.error.message)
         }
     } else {
-        await sendRegistrationEmail(user.username, user.email, user.registerHash)
+        await sendRegistrationEmail(user.userdisplayname, user.email, user.registerHash)
         res.status(201).send(result);
     }
 }
 
 
 const loginUser = async (req, res) => {
-    const id = _.snakeCase(req.body.username)
-    const user = (await queryUserById(id))[0];
+    const username = _.toLower(req.body.username)
+    const user = (await queryUserByUsername(username))[0];
 
     if (user === undefined) {
         res.status(400).json("The username or password is incorrect.")
@@ -70,9 +73,9 @@ const loginUser = async (req, res) => {
                 user["active"] = true
                 await updateUser(user)
                 await removeRegisterHash(user)
-                res.cookie("jwta", accessToken, {httpOnly: true, maxAge: 600000})
+                res.cookie("jwta", accessToken, {httpOnly: true, maxAge: 24 * 60 * 60 * 1000 })
                 res.cookie("jwtr", refreshToken, { httpOnly: true, maxAge: 24 * 60 * 60 * 1000 })
-                res.json({ userId: user._id, username: user.username, changePassword: user.changePassword});
+                res.json({ userId: user._id, username: user.userdisplayname, changePassword: user.changePassword});
             } else {
                 res.status(401).send("The activation code is incorrect.")
             }
@@ -84,9 +87,10 @@ const loginUser = async (req, res) => {
             const refreshToken = generateRefreshToken(user);
             user["refreshToken"] = refreshToken
             await updateUser(user)
-            res.cookie("jwta", accessToken, {httpOnly: true, maxAge: 600000})
+            console.log(user);
+            res.cookie("jwta", accessToken, {httpOnly: true, maxAge: 24 * 60 * 60 * 1000 })
             res.cookie("jwtr", refreshToken, { httpOnly: true, maxAge: 24 * 60 * 60 * 1000 })
-            res.json({ userId: user._id, username: user.username, changePassword: user.changePassword});
+            res.json({ userId: user._id, username: user.userdisplayname, changePassword: user.changePassword});
         }
     }    
 }

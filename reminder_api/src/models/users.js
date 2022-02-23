@@ -5,6 +5,7 @@ const userSchema = new mongoose.Schema({
     active: Boolean,
     changePassword: Boolean,
     username: {type: String, unique: true}, 
+    userdisplayname: String,
     password: String,
     email: {type: String, unique: true},
     refreshToken: String,

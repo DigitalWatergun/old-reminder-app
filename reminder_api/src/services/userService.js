@@ -14,6 +14,12 @@ const queryUserById = async (id) => {
     return user;
 }
 
+const queryUserByUsername = async (username) => {
+    const user = await User.find({username: username});
+
+    return user;
+}
+
 
 const queryUserByEmail = async (email) => {
     const user = await User.findOne({email: email})
@@ -28,6 +34,7 @@ const createUser = async (data) => {
             _id: data._id,
             active: data.active,
             username: data.username, 
+            userdisplayname: data.userdisplayname,
             password: data.password,
             refreshToken: data.refreshToken,
             email: data.email,
@@ -66,6 +73,7 @@ const deleteUser = async (userId) => {
 export {
     queryAllUsers, 
     queryUserById,
+    queryUserByUsername,
     queryUserByEmail,
     createUser,
     updateUser,
