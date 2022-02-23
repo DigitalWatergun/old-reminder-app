@@ -16,9 +16,6 @@ const router = express.Router();
 
 router.use(verifyJWT)
 
-// router.get("/", getAllRemindersForUser);
-// router.post("/", postReminder);
-// router.delete("/", deleteReminder);
 router.route("/")
     .get(getAllRemindersForUser)
     .post(postReminder)

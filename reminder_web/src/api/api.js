@@ -1,17 +1,6 @@
 import axios from "axios"
 
 const BASEURL = "http://localhost:3001";
-const retrieveAccessToken = () => {
-    let currentUserAccessToken = undefined
-    if (sessionStorage.getItem("user")) {
-        currentUserAccessToken = JSON.parse(sessionStorage.getItem("user")).accessToken
-    } else {
-        currentUserAccessToken = undefined
-    }
-
-    return currentUserAccessToken;
-}
-
 
 const axiosAuth = axios.create({
     baseURL: BASEURL,
@@ -29,14 +18,14 @@ const axiosReminders = axios.create({
 });
 
 
-axiosReminders.interceptors.request.use(config => {
-    if (!config.headers["Authorization"]) {
-        config.headers["Authorization"] = "Bearer " + retrieveAccessToken()
-    }
-    return config
-}, (error) => {
-    Promise.reject(error)
-})
+// axiosReminders.interceptors.request.use(config => {
+//     // if (!config.headers["Authorization"]) {
+//     //     config.headers["Authorization"] = "Bearer " + retrieveAccessToken()
+//     // }
+//     return config
+// }, (error) => {
+//     Promise.reject(error)
+// })
 
 axiosReminders.interceptors.response.use(response => response, async (error) => {
     const prevRequest = error?.config;
@@ -49,16 +38,7 @@ axiosReminders.interceptors.response.use(response => response, async (error) => 
         const axiosConfig = {headers: { "Content-Type": "application/json" }, withCredentials: true}
         const axiosBody = { userId: user.userId }
         try {
-            const response = await axios.post(BASEURL + "/users/refresh", axiosBody, axiosConfig)
-
-            const sessionItems = {
-                accessToken: response.data.accessToken,
-                userId: user.userId,
-                username: user.username
-            }
-            sessionStorage.setItem("user", JSON.stringify(sessionItems))
-    
-            prevRequest.headers['Authorization'] = `Bearer ${response.data.accessToken}`;
+            await axios.post(BASEURL + "/users/refresh", axiosBody, axiosConfig)
             return axiosReminders(prevRequest)
         } catch(err) {
             return err

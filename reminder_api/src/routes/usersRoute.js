@@ -13,9 +13,6 @@ import {
 
 const router = express.Router();
 
-// router.get("/", getAllUsers)
-// router.post("/", addUser)
-// router.delete("/", deleteAccount)
 router.route("/")
     .get(getAllUsers)
     .post(addUser)

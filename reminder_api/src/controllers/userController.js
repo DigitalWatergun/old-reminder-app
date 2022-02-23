@@ -70,7 +70,9 @@ const loginUser = async (req, res) => {
                 user["active"] = true
                 await updateUser(user)
                 await removeRegisterHash(user)
-                res.json({ userId: user._id, username: user.username, accessToken: accessToken, refreshToken: refreshToken });
+                res.cookie("jwta", accessToken, {httpOnly: true, maxAge: 600000})
+                res.cookie("jwtr", refreshToken, { httpOnly: true, maxAge: 24 * 60 * 60 * 1000 })
+                res.json({ userId: user._id, username: user.username, changePassword: user.changePassword});
             } else {
                 res.status(401).send("The activation code is incorrect.")
             }
@@ -82,8 +84,9 @@ const loginUser = async (req, res) => {
             const refreshToken = generateRefreshToken(user);
             user["refreshToken"] = refreshToken
             await updateUser(user)
-            res.cookie("jwt", refreshToken, { httpOnly: true, maxAge: 24 * 60 * 60 * 1000 })
-            res.json({ userId: user._id, username: user.username, accessToken: accessToken, changePassword: user.changePassword});
+            res.cookie("jwta", accessToken, {httpOnly: true, maxAge: 600000})
+            res.cookie("jwtr", refreshToken, { httpOnly: true, maxAge: 24 * 60 * 60 * 1000 })
+            res.json({ userId: user._id, username: user.username, changePassword: user.changePassword});
         }
     }    
 }
@@ -135,7 +138,8 @@ const logoutUser = async (req, res) => {
     user["refreshToken"] = ""
     await updateUser(user)
     if (req.cookies.jwt) {
-        res.clearCookie("jwt")
+        res.clearCookie("jwta")
+        res.clearCookie("jwtr")
     }
     res.send("User has been logged out.")
 }
@@ -157,11 +161,13 @@ const deleteAccount = async (req, res) => {
 
 
 const verifyUserToken = async (req, res) => {
-    const token = req.body.token;
+    // const token = req.body.token;
+    const token = req?.cookies?.jwta;
 
     if (verifyAccessToken(token)) {
         res.send(true);
     } else {
+        console.log("Access Token expired")
         res.send(false);
     }
 }
@@ -169,7 +175,7 @@ const verifyUserToken = async (req, res) => {
 
 const refreshUserToken =  async (req, res) => {
     const user = (await queryUserById(req.body.userId))[0];
-    const refreshToken = req?.cookies?.jwt;
+    const refreshToken = req?.cookies?.jwtr;
 
     if (refreshToken === null) {
         res.status(401).send("No token found.")
@@ -177,7 +183,11 @@ const refreshUserToken =  async (req, res) => {
         res.status(403).send("User tokens do not match.")
     } else {
         const accessToken = refreshAccessToken(refreshToken)
-        res.json({accessToken : accessToken});
+        // res.json({accessToken : accessToken});
+        res.clearCookie("jwta")
+        res.cookie("jwta", accessToken, {httpOnly: true, maxAge: 600000}).json({message: "Access token has been refreshed"})
+        // res.json({message: "Access token has been refreshed"})
+        console.log("Access token has been refreshed")
     }
 }
 

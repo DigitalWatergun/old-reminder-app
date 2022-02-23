@@ -8,6 +8,7 @@ The Reminder application is a custom built application that will allow you to in
 
 
 ### Unfinished Tasks
+- [ ] Fix "Enter" button on all forms 
 - [ ] Figure out how to block unexisting routes to express server 
 - [ ] Fix editing reminders for the "Title" field
 - [ ] Add expiration date for the activation code 
@@ -92,3 +93,4 @@ The Reminder application is a custom built application that will allow you to in
 - [x] ~~Add styling to frontend using CSS~~
 - [x] ~~Refactor code to store refreshToken in httpOnly cookie instead of sessionStorage~~
 - [x] ~~Fix refreshToken interceptors for axiosReminders instance~~
+- [x] ~~Refactor code to have accessToken in httpOnly cookie~~

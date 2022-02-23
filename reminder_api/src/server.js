@@ -9,6 +9,7 @@ import { remindersRoute } from "./routes/remindersRoute.js";
 import { runActiveReminders } from "./startup/runActiveReminders.js"
 dotenv.config();
 
+const PORT = process.env.PORT || 3001
 
 // Connect to MongoDB 
 mongoose.connect(process.env.MONGO_URI);
@@ -21,7 +22,6 @@ mongoose.connection.on("connected", (err, res) => {
 
 // Set up Express server 
 const app = express(); 
-// app.use(cors({credentials: true, origin: allowedOrigins}));
 app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -37,8 +37,8 @@ app.use("/users", usersRoute);
 app.use("/reminders", remindersRoute);
 
 
-app.listen(3001, () => {
+app.listen(PORT, () => {
     runActiveReminders();
     const currentTime = new Date().toLocaleTimeString();
-    console.log(`[${currentTime}] Server running on port 3001.`);
+    console.log(`[${currentTime}] Server running on port ${PORT}.`);
 });
