@@ -1,6 +1,6 @@
 import React from "react"; 
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import { Test } from "./pages/Test"
+import { Error } from "./pages/Error"
 import { Login } from "./pages/LoginPage"
 import { RemindersPage } from "./pages/RemindersPage"
 import { CreateRemindersPage } from "./pages/CreateRemindersPage"
@@ -25,13 +25,11 @@ const RequireAuth = ({children}) => {
 }
 
 
-// Need to add a catch all route
 export const Router = () => {
     return (
         <BrowserRouter>
             <Routes>
                 <Route path="/" element={<Login/>}/>
-                <Route path="/test" element={<Test/>}/>
                 <Route path="/register" element={<Register/>}/>
                 <Route path="/reminders/" element={<RequireAuth><RemindersPage/></RequireAuth>}/>
                 <Route path="/reminders/create" element={<RequireAuth><CreateRemindersPage/></RequireAuth>}/>
@@ -39,6 +37,7 @@ export const Router = () => {
                 <Route path="/settings/password" element={<RequireAuth><ChangePassword/></RequireAuth>}/>
                 <Route path="/forgotpassword" element={<ForgotPassword/>} />
                 <Route path="/resetpassword" element={<ChangePassword/>}/>
+                <Route path="/*" element={<Error/>}/>
             </Routes>
         </BrowserRouter>
     )

@@ -8,15 +8,13 @@ The Reminder application is a custom built application that will allow you to in
 
 
 ### Unfinished Tasks
-- [ ] Figure out how to block unexisting routes to express server 
-- [ ] Fix editing reminders for the "Title" field
 - [ ] Add expiration date for the activation code 
-- [ ] Add password requirements 
-- [ ] Add 404 for urls that don't exist 
+- [ ] Add password complexity requirements 
 - [ ] Add Logger to log errors from a central place
 - [ ] Add error handling for MongoDB errors 
 - [ ] Add error handling for Nodemailer errors (retries and if email doesn't exist)
 - [ ] Add error handling for Twilio errors (retires and if number doesn't exist)
+- [ ] Figure out how to block unexisting routes to express server 
 
 ### Finished Tasks
 - [x] ~~Create GitHub Repo to store all notes, project files and add gitignore~~
@@ -94,3 +92,7 @@ The Reminder application is a custom built application that will allow you to in
 - [x] ~~Fix refreshToken interceptors for axiosReminders instance~~
 - [x] ~~Refactor code to have accessToken in httpOnly cookie~~
 - [x] ~~Fix "Enter" button on all React forms~~
+- [x] ~~Add 404 Error page for URLs that don't exist for React frontend~~
+- [x] ~~Replace user IDs with UUIDs~~
+- [x] ~~Replace reminder ID with UUIDs and fixed editing reminders for the "Title" field~~
+- [x] ~~Add form validation to Registration form~~ 

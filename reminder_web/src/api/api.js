@@ -19,6 +19,9 @@ const axiosReminders = axios.create({
 
 
 axiosReminders.interceptors.request.use(config => {
+    // if (!config.headers["Authorization"]) {
+    //     config.headers["Authorization"] = "Bearer " + "asdfasdfasdf"
+    // }
     return config
 }, (error) => {
     Promise.reject(error)
