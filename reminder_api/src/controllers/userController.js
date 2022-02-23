@@ -150,6 +150,8 @@ const deleteAccount = async (req, res) => {
         await removeReminderByUserId(req.body.userId)
         const result = await deleteUser(req.body.userId)
         if (result.deletedCount === 1) {
+            res.clearCookie("jwta")
+            res.clearCookie("jwtr")
             res.send(result);
         } else {
             res.status(500).send("Unable to delete user.")

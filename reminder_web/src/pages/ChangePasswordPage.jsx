@@ -35,8 +35,8 @@ export const ChangePassword = () => {
     }
 
 
-    const handleUpdateClick = async (event) => {
-        event.preventDefault();
+    const handleUpdateClick = async (e) => {
+        e.preventDefault();
         setLoadingState(true)
 
         if (formData.newPassword === formData.confirmNewPassword) {
@@ -62,7 +62,7 @@ export const ChangePassword = () => {
                 <div>
                     {changePassword ? <h2 className="pageHeading">Reset Password</h2> : <h2 className="pageHeading">Change Password</h2>}
                     <div className="formBoxes">
-                        <div className="customForm">
+                        <form className="customForm">
                             <label>Password</label>
                             <input name="currentPassword" type="password" onChange={handleChange}></input><br/><br/>
                             <label>New Password</label>
@@ -70,9 +70,9 @@ export const ChangePassword = () => {
                             <label>Confirm New Password</label>
                             <input name="confirmNewPassword" type="password" onChange={handleChange}></input><br/><br/>
                             <div className="errorText">{error}</div><br/>
-                            {changePassword ? <Link to="/"><button className="buttonGray">Cancel</button></Link> : <Link to="/reminders"><button className="buttonGray">Cancel</button></Link>}
+                            {changePassword ? <Link to="/"><button className="buttonGray" type="button">Cancel</button></Link> : <Link to="/reminders"><button className="buttonGray" type="button">Cancel</button></Link>}
                             <button className="buttonOrange" style={{float: "right"}} onClick={handleUpdateClick}>Update</button>
-                        </div>
+                        </form>
                     </div>
                 </div>}
         </HeaderFooter>

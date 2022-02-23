@@ -18,14 +18,11 @@ const axiosReminders = axios.create({
 });
 
 
-// axiosReminders.interceptors.request.use(config => {
-//     // if (!config.headers["Authorization"]) {
-//     //     config.headers["Authorization"] = "Bearer " + retrieveAccessToken()
-//     // }
-//     return config
-// }, (error) => {
-//     Promise.reject(error)
-// })
+axiosReminders.interceptors.request.use(config => {
+    return config
+}, (error) => {
+    Promise.reject(error)
+})
 
 axiosReminders.interceptors.response.use(response => response, async (error) => {
     const prevRequest = error?.config;

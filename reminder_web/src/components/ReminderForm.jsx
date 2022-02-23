@@ -108,8 +108,8 @@ export const ReminderForm = (props) => {
     }
 
 
-    const handleSubmit = async (event) => {
-        event.preventDefault();
+    const handleSubmit = async (e) => {
+        e.preventDefault();
 
         if (formData.title) {
             if (formData.enableSMS || formData.enableEmail) {
@@ -139,7 +139,7 @@ export const ReminderForm = (props) => {
     return (
         <div>
             <div className="formBoxes">
-                <div className="customForm">
+                <form className="customForm">
                     <label>Title</label>
                     <input name="title" type="text" value={formData.title || ""} onChange={handleChange}/><br/><br/>
                     <label>Content</label>
@@ -184,9 +184,9 @@ export const ReminderForm = (props) => {
                         </label>
                     </label>
                     {formData.enableSMS ? <input name="mobile" type="tel" value={formData.mobile || ""} onChange={handleChange}/>: null}<br/><br/>
-                    {editState ? <button className="buttonGray" onClick={props.close}>Cancel</button> : <Link to="/reminders"><button className="buttonGray">Cancel</button></Link>}
-                    <button className="buttonOrange" style={{float: "right"}} onClick={handleSubmit}>Submit</button>
-                </div>
+                    {editState ? <button className="buttonGray" onClick={props.close} type="button">Cancel</button> : <Link to="/reminders"><button className="buttonGray" type="button">Cancel</button></Link>}
+                    <button className="buttonOrange" style={{float: "right"}} type="submit" onClick={handleSubmit}>Submit</button>
+                </form>
             </div>
         </div>
     )

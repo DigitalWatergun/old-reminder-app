@@ -28,7 +28,8 @@ export const Register = () => {
     }
 
 
-    const handleRegisterClick = async () => {
+    const handleRegisterClick = async (e) => {
+        e.preventDefault();
         setLoadingState(true)
         if (formData.password === formData.confirmPassword) {
             const response = await api.registerUser(formData);
@@ -70,7 +71,7 @@ export const Register = () => {
                                 <label>Email Address</label>
                                 <input name="email" type="email" onChange={handleChange}></input><br/><br/>
                                 <div className="errorText">{error}</div>
-                                <button className="buttonGray" onClick={handleCancelClick}>Cancel</button>
+                                <button className="buttonGray" onClick={handleCancelClick} type="button">Cancel</button>
                                 <button className="buttonOrange" style={{float: "right"}} onClick={handleRegisterClick}>Register</button>
                             </form>
                         </div>

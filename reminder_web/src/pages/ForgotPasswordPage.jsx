@@ -27,7 +27,8 @@ export const ForgotPassword = () => {
         navigate("/")
     }
 
-    const handleSubmit = async () => {
+    const handleSubmit = async (e) => {
+        e.preventDefault();
         setLoadingState(true)
         const data = {"username": formData.username, "email": formData.email}
         const response = await api.resetPassword(data);
@@ -56,16 +57,16 @@ export const ForgotPassword = () => {
                 <div>
                     <h2 className="pageHeading">Forgot Password</h2>
                     <div className="formBoxes">
-                            <form className="customForm">
-                                <label>Username</label>
-                                <input name="username" type="text" onChange={handleChange}></input><br/><br/>
-                                <label>Email Address</label>
-                                <input name="email" type="email" onChange={handleChange}></input><br/><br/>
-                                <div className="errorText">{error}</div><br/>
-                                <button className="buttonGray" onClick={handleCancelClick}>Cancel</button>
-                                <button className="buttonOrange" style={{float: "right"}} onClick={handleSubmit}>Submit</button>
-                            </form>
-                        </div>
+                        <form className="customForm">
+                            <label>Username</label>
+                            <input name="username" type="text" onChange={handleChange}></input><br/><br/>
+                            <label>Email Address</label>
+                            <input name="email" type="email" onChange={handleChange}></input><br/><br/>
+                            <div className="errorText">{error}</div><br/>
+                            <button className="buttonGray" onClick={handleCancelClick} type="button">Cancel</button>
+                            <button className="buttonOrange" style={{float: "right"}} onClick={handleSubmit}>Submit</button>
+                        </form>
+                    </div>
                 </div>}
             </HeaderFooter>
         )
