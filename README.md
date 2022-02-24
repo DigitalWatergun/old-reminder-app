@@ -93,6 +93,7 @@ The Reminder application is a custom built application that will allow you to in
 - [x] ~~Add 404 Error page for URLs that don't exist for React frontend~~
 - [x] ~~Replace user IDs with UUIDs~~
 - [x] ~~Replace reminder ID with UUIDs and fixed editing reminders for the "Title" field~~
+- [x] ~~Fix Axios Interceptor to account for 401 status code during /reminders call~~
 - [x] ~~Add form validation to Registration form~~ 
 - [x] ~~Add password complexity requirements~~
 - [x] ~~Add password, email, and sms input validation as well as form validation for creating reminders~~
