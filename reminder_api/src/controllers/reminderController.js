@@ -1,12 +1,10 @@
 import _ from "lodash"; 
 import {v4 as uuid} from "uuid";
 import { 
-    queryAllReminders, 
     queryAllRemindersByUserId,
     createReminder, 
     removeReminder,
     findReminderById,
-    filterReminders,
     updateReminder
 } from "../services/reminderService.js";
 import { bodyValidator } from "../validator/validator.js";
@@ -83,36 +81,6 @@ const getReminderById = async (req, res) => {
     } else {
         return res.send("No reminders found with that title.");
     };
-};
-
-
-const getReminderByFilter = async (req, res) => {
-    const data = {};
-
-    for (let [key, value] of Object.entries(req.query)) {
-        if (key.includes("id") && key !== "_id") {
-            key = "_id";
-            value = _.toLower(value);
-        } else if (key.includes("id")) {
-            value = _.toLower(value);
-        };
-        data[key] = value;
-    }
-
-    const reminders = await filterReminders(data);
-
-    if (reminders) {
-        res.send(reminders);
-    } else {
-        res.send("No reminders found.");
-    };
-};
-
-
-const getActiveReminders = async () => {
-    const reminders = await filterReminders({status: "ACTIVE"});
-
-    return reminders;
 };
 
 
@@ -210,9 +178,7 @@ export {
     postReminder, 
     deleteReminder,
     getReminderById,
-    getReminderByFilter,
     changeReminder,
-    getActiveReminders,
     changeReminderStatus,
     runReminder,
     stopReminder,

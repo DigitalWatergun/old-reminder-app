@@ -9,9 +9,6 @@ The Reminder application is a custom built application that will allow you to in
 
 ### Unfinished Tasks
 - [ ] Add expiration date for the activation code 
-- [ ] Add password complexity requirements 
-- [ ] Add Logger to log errors from a central place
-- [ ] Add error handling for MongoDB errors 
 - [ ] Add error handling for Nodemailer errors (retries and if email doesn't exist)
 - [ ] Add error handling for Twilio errors (retires and if number doesn't exist)
 - [ ] Figure out how to block unexisting routes to express server 
@@ -96,3 +93,4 @@ The Reminder application is a custom built application that will allow you to in
 - [x] ~~Replace user IDs with UUIDs~~
 - [x] ~~Replace reminder ID with UUIDs and fixed editing reminders for the "Title" field~~
 - [x] ~~Add form validation to Registration form~~ 
+- [x] ~~Add password validation and complexity requirements~~

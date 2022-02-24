@@ -4,7 +4,6 @@ import bcrypt from "bcrypt";
 import {v4 as uuid} from "uuid";
 import { generateAccessToken, generateRefreshToken, verifyAccessToken, refreshAccessToken } from "../auth.js";
 import {
-    queryAllUsers, 
     queryUserById,
     queryUserByUsername,
     queryUserByEmail,
@@ -15,17 +14,6 @@ import {
 } from "../services/userService.js";
 import { removeReminderByUserId } from "../services/reminderService.js"
 import { sendRegistrationEmail, sendTempPassword } from "../emitter/notifications/mailer/mailer.js";
-
-
-const getAllUsers = async (req, res) => {
-    const users = await queryAllUsers();
-
-    if (users) {
-        return res.send(users);
-    } else  {
-        return res.send("No users found")
-    }
-} 
 
 
 const addUser = async (req, res) => {
@@ -167,7 +155,6 @@ const deleteAccount = async (req, res) => {
 
 
 const verifyUserToken = async (req, res) => {
-    // const token = req.body.token;
     const token = req?.cookies?.jwta;
 
     if (verifyAccessToken(token)) {
@@ -189,17 +176,13 @@ const refreshUserToken =  async (req, res) => {
         res.status(403).send("User tokens do not match.")
     } else {
         const accessToken = refreshAccessToken(refreshToken)
-        // res.json({accessToken : accessToken});
         res.clearCookie("jwta")
         res.cookie("jwta", accessToken, {httpOnly: true, maxAge: 600000}).json({message: "Access token has been refreshed"})
-        // res.json({message: "Access token has been refreshed"})
-        console.log("Access token has been refreshed")
     }
 }
 
 
 export {
-    getAllUsers,
     addUser,
     loginUser,
     changeUserPassword,

@@ -4,6 +4,18 @@ import { HeaderFooter } from "../components/HeaderFooter";
 import { Loading } from "../components/Loading"
 import { api } from "../api/api"
 
+
+const validatePassword = (pass) => {
+    if (pass.match(/[a-z]/g) && pass.match(
+        /[A-Z]/g) && pass.match(
+        /[0-9]/g) && pass.match(
+        /[^a-zA-Z\d]/g) && pass.length >= 8 && pass.length <=32)
+        return true;
+    else
+        return false;
+}
+
+
 export const Register = () => {
     const [submitted, setSubmitted] = useState(false);
     const [formData, setFormData] = useState({})
@@ -33,8 +45,7 @@ export const Register = () => {
         setLoadingState(true)
         if ("username" in formData && "password" in formData && "email" in formData) {
             if (!formData.username.includes(" ")) {
-                if ((formData.password).length >= 8 && formData.password.length <= 32) {
-                    console.log("The password is the correct length")
+                if (validatePassword(formData.password)) {
                     if (formData.password === formData.confirmPassword) {
                         if (formData.email.includes("@")) {
                             const response = await api.registerUser(formData);
@@ -54,7 +65,16 @@ export const Register = () => {
                     }
                 } else {
                     setLoadingState(false)
-                    setError("The password needs to be between 8 and 32 characters")
+                    setError(<div>
+                        <p>The password needs to be:</p>
+                        <ul style={{textAlign: "left"}}>
+                            <li>Between 8 and 32 characters</li>
+                            <li>Contain 1 Uppercase character</li>
+                            <li>Contain 1 Lowercase character</li>
+                            <li>Contain 1 Number</li>
+                            <li>Contain 1 special character</li>
+                        </ul>
+                    </div>)
                 }
             } else {
                 setLoadingState(false)

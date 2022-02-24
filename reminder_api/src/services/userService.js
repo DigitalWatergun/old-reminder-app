@@ -1,13 +1,6 @@
 import { User } from "../models/users.js"
 
 
-const queryAllUsers = async () => {
-    const users = await User.find({})
-
-    return users;
-};
-
-
 const queryUserById = async (id) => {
     const user = await User.find({_id: id});
 
@@ -71,7 +64,6 @@ const deleteUser = async (userId) => {
 
 
 export {
-    queryAllUsers, 
     queryUserById,
     queryUserByUsername,
     queryUserByEmail,

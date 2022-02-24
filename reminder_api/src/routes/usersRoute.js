@@ -1,6 +1,5 @@
 import express from "express";
 import {
-    getAllUsers,
     addUser,
     loginUser,
     changeUserPassword,
@@ -14,7 +13,6 @@ import {
 const router = express.Router();
 
 router.route("/")
-    .get(getAllUsers)
     .post(addUser)
     .delete(deleteAccount)
 router.post("/login", loginUser)

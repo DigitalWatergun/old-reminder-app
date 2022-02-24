@@ -5,7 +5,6 @@ import {
     postReminder, 
     deleteReminder,
     getReminderById,
-    getReminderByFilter,
     changeReminder,
     runReminder,
     stopReminder,
@@ -21,7 +20,6 @@ router.route("/")
     .post(postReminder)
     .delete(deleteReminder)
 router.get("/title", getReminderById);
-router.get("/filter", getReminderByFilter);
 router.get("/run", runReminder)
 router.get("/stop", stopReminder)
 router.get("/list", listRunningReminders)

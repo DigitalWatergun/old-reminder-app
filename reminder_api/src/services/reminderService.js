@@ -1,11 +1,5 @@
 import { Reminder } from "../models/reminder.js";
 
-const queryAllReminders = async () => {
-    const reminders = await Reminder.find({});
-
-    return reminders;
-};
-
 
 const queryAllRemindersByUserId = async (id) => {
     const reminders = await Reminder.find({userId: id});
@@ -19,13 +13,6 @@ const findReminderById = async (id) => {
 
     return reminder
 }
-
-
-const filterReminders = async (filter) => {
-    const reminders = await Reminder.find(filter);
-
-    return reminders; 
-};
 
 
 const updateReminder = async (data) => {
@@ -94,12 +81,10 @@ const removeReminderByUserId = async (userId) => {
 
 
 export { 
-    queryAllReminders, 
     queryAllRemindersByUserId,
     createReminder, 
     removeReminder,
     findReminderById,
-    filterReminders,
     updateReminder,
     removeReminderByUserId
 }; 
