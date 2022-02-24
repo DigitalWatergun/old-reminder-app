@@ -3,17 +3,7 @@ import { Link, useNavigate } from "react-router-dom"
 import { HeaderFooter } from "../components/HeaderFooter";
 import { Loading } from "../components/Loading"
 import { api } from "../api/api"
-
-
-const validatePassword = (pass) => {
-    if (pass.match(/[a-z]/g) && pass.match(
-        /[A-Z]/g) && pass.match(
-        /[0-9]/g) && pass.match(
-        /[^a-zA-Z\d]/g) && pass.length >= 8 && pass.length <=32)
-        return true;
-    else
-        return false;
-}
+import { validateEmail, validatePassword } from "../validation/validation.js"
 
 
 export const Register = () => {
@@ -47,7 +37,7 @@ export const Register = () => {
             if (!formData.username.includes(" ")) {
                 if (validatePassword(formData.password)) {
                     if (formData.password === formData.confirmPassword) {
-                        if (formData.email.includes("@")) {
+                        if (validateEmail(formData.email)) {
                             const response = await api.registerUser(formData);
                             if (response.status === 201) {
                                 setSubmitted(true)

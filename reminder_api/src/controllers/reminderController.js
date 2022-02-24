@@ -5,6 +5,7 @@ import {
     createReminder, 
     removeReminder,
     findReminderById,
+    filterReminders,
     updateReminder
 } from "../services/reminderService.js";
 import { bodyValidator } from "../validator/validator.js";
@@ -81,6 +82,13 @@ const getReminderById = async (req, res) => {
     } else {
         return res.send("No reminders found with that title.");
     };
+};
+
+
+const getActiveReminders = async () => {
+    const reminders = await filterReminders({status: "ACTIVE"});
+
+    return reminders;
 };
 
 
@@ -179,6 +187,7 @@ export {
     deleteReminder,
     getReminderById,
     changeReminder,
+    getActiveReminders,
     changeReminderStatus,
     runReminder,
     stopReminder,

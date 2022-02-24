@@ -16,10 +16,10 @@ eventEmitter.on("test", () => {
 
 eventEmitter.on("RUN", reminder => {
     changeReminderStatus(reminder, "ACTIVE");
-    console.log(`[${new Date().toLocaleTimeString()}] Emitted RUN event.`)
+
     let count = reminder.repeat; 
     const cronSchedule = `${reminder.minutes} ${reminder.hour} ${reminder.day} ${reminder.month} ${reminder.weekday}`;
-
+    console.log(`[${new Date().toLocaleTimeString()}] Emitted RUN event. REMINDER: ${reminder.title} - ${reminder.content}. Cronschedule: ${cronSchedule}`)
     const cronTask = schedule.scheduleJob(cronSchedule, async () => {
         const currentTime = new Date().toLocaleTimeString();
         

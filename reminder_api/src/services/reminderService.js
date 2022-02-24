@@ -15,6 +15,13 @@ const findReminderById = async (id) => {
 }
 
 
+const filterReminders = async (filter) => {
+    const reminders = await Reminder.find(filter);
+
+    return reminders; 
+};
+
+
 const updateReminder = async (data) => {
     const reminder = await Reminder.findByIdAndUpdate(data._id, data)
 
@@ -85,6 +92,7 @@ export {
     createReminder, 
     removeReminder,
     findReminderById,
+    filterReminders,
     updateReminder,
     removeReminderByUserId
 }; 

@@ -1,6 +1,7 @@
 import React, { useState } from "react"; 
 import { Link, useNavigate } from "react-router-dom";
 import { api } from "../api/api"
+import { validateReminderForm } from "../validation/validation";
 
 
 const DateInput = (props) => {
@@ -53,6 +54,7 @@ export const ReminderForm = (props) => {
             return { userId: JSON.parse(sessionStorage.getItem("user")).userId}
         }
     })
+    const [error, setError] = useState(undefined);
     const navigate = useNavigate();
 
 
@@ -111,28 +113,21 @@ export const ReminderForm = (props) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        if (formData.title) {
-            if (formData.enableSMS || formData.enableEmail) {
-                if (formData.email || formData.mobile) {
-                    if (!editState) {
-                        const response = await api.createReminder(formData);
-                        if (response.status === 200) {
-                            navigate("/reminders")
-                        }
-                    } else {
-                        const response = await api.editReminder(formData);
-                        if (response.status === 200) {
-                            window.location.reload();
-                        }
-                    }
-                } else {
-                    alert("Email or SMS can not be blank.")
+        const result = validateReminderForm(formData);
+        if (result.status) {
+            if (!editState) {
+                const response = await api.createReminder(formData);
+                if (response.status === 200) {
+                    navigate("/reminders")
                 }
             } else {
-                alert("You need to enable either SMS or Email")
+                const response = await api.editReminder(formData);
+                if (response.status === 200) {
+                    window.location.reload();
+                }
             }
         } else {
-            alert("Title of reminder can not be blank.")
+            setError(result.error)
         }
     }
 
@@ -184,6 +179,7 @@ export const ReminderForm = (props) => {
                         </label>
                     </label>
                     {formData.enableSMS ? <input name="mobile" type="tel" value={formData.mobile || ""} onChange={handleChange}/>: null}<br/><br/>
+                    <div className="errorText">{error}</div><br/>
                     {editState ? <button className="buttonGray" onClick={props.close} type="button">Cancel</button> : <Link to="/reminders"><button className="buttonGray" type="button">Cancel</button></Link>}
                     <button className="buttonOrange" style={{float: "right"}} type="submit" onClick={handleSubmit}>Submit</button>
                 </form>

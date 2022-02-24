@@ -30,7 +30,7 @@ axiosReminders.interceptors.request.use(config => {
 axiosReminders.interceptors.response.use(response => response, async (error) => {
     const prevRequest = error?.config;
 
-    if (error?.response?.status === 403 && !prevRequest?.sent) {
+    if ((error?.response?.status === 403 || error?.response?.status === 401) && !prevRequest?.sent) {
         console.log("Refreshing access token...")
         prevRequest.sent = true
         const user = JSON.parse(sessionStorage.getItem("user"))

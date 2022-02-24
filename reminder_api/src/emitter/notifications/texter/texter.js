@@ -8,14 +8,17 @@ const client = new twilio(accountSid, authToken);
 
 
 const sendTextReminder = async (reminder) => {
-    client.messages.create({
-        body: `REMINDER: ${reminder.title} - ${reminder.content}`,
-        from: process.env.TWILIO_NUMBER,
-        to: reminder.mobile
-    })
-    .then(message => {
-        console.log(message.body);
-    });
+    try {
+        const result = await client.messages.create({
+            body: `REMINDER: ${reminder.title} - ${reminder.content}`,
+            from: process.env.TWILIO_NUMBER,
+            to: reminder.mobile
+        })
+        console.log(result.body)
+    } catch (error) {
+        console.log(error) 
+        return error
+    }
 };
 
 export { sendTextReminder }

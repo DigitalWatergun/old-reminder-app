@@ -75,7 +75,6 @@ const loginUser = async (req, res) => {
             const refreshToken = generateRefreshToken(user);
             user["refreshToken"] = refreshToken
             await updateUser(user)
-            console.log(user);
             res.cookie("jwta", accessToken, {httpOnly: true, maxAge: 24 * 60 * 60 * 1000 })
             res.cookie("jwtr", refreshToken, { httpOnly: true, maxAge: 24 * 60 * 60 * 1000 })
             res.json({ userId: user._id, username: user.userdisplayname, changePassword: user.changePassword});

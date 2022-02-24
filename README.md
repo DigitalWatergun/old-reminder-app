@@ -8,6 +8,7 @@ The Reminder application is a custom built application that will allow you to in
 
 
 ### Unfinished Tasks
+- [ ] Fix "Date Only" reminders to remind user at midnight of no time has been added
 - [ ] Add expiration date for the activation code 
 - [ ] Add error handling for Nodemailer errors (retries and if email doesn't exist)
 - [ ] Add error handling for Twilio errors (retires and if number doesn't exist)
@@ -93,4 +94,5 @@ The Reminder application is a custom built application that will allow you to in
 - [x] ~~Replace user IDs with UUIDs~~
 - [x] ~~Replace reminder ID with UUIDs and fixed editing reminders for the "Title" field~~
 - [x] ~~Add form validation to Registration form~~ 
-- [x] ~~Add password validation and complexity requirements~~
+- [x] ~~Add password complexity requirements~~
+- [x] ~~Add password, email, and sms input validation as well as form validation for creating reminders~~
