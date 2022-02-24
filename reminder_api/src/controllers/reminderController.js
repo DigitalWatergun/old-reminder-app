@@ -14,38 +14,45 @@ import { eventEmitter } from "../emitter/reminderEmitter.js";
 
 const parseReqBody = body => {
     const data = {};
-    for (const [key, value] of Object.entries(body)) {
-        if (key === "date") {
-            data["date"] = value
-            const dateValue = value.split("-")
-            data["month"] = dateValue[1]
-            data["day"] = dateValue[2]
-        };
 
-        if (key === "time") {
-            data["time"] = value
-            const timeValue = value.split(":")
-            data["hour"] = timeValue[0]
-            data["minutes"] = timeValue[1]
-        };
+    if (body.dateEnable && "date" in body) {
+        data["date"] = body.date
+        const dateValue = body.date.split("-")
+        data["month"] = dateValue[1]
+        data["day"] = dateValue[2]
+        data["repeat"] = 1
+    }
 
-        if (key === "repeatEnable" && value === true) {
-            if (body.minutes === "1") {
-                data["minutes"] = "*";
-            } else {
-                data["minutes"] = body.minutes
-            }
+    if (body.timeEnable && "time" in body) {
+        data["time"] = body.time
+        const timeValue = body.time.split(":")
+        data["hour"] = timeValue[0]
+        data["minutes"] = timeValue[1]
+    } else if (body.dateEnable && !body.timeEnable) {
+        data["hour"] = "*"
+        data["minutes"] = "*"
+    }
 
-            data["hour"] = "*";
-            data["day"] = "*";
-            data["month"] ="*";
-            data["repeat"] = body.repeat
+    if (body.repeatEnable) {
+        if (body.minutes === "1") {
+            data["minutes"] = "*";
+        } else {
+            data["minutes"] = body.minutes
         }
 
-        if (key === "dateEnable" && value === true) {
-            data["repeat"] = 1
-        }
-    };
+        data["hour"] = "*";
+        data["day"] = "*";
+        data["month"] ="*";
+        data["repeat"] = body.repeat
+    }
+
+    if (body.enableEmail) {
+        data["email"] = body.email; 
+    }
+
+    if (body.enableSMS) {
+        data["mobile"] = body.mobile;
+    }
 
     data["_id"] = body._id;
     data["title"] = body.title;
@@ -54,8 +61,6 @@ const parseReqBody = body => {
     data["timeEnable"] = body.timeEnable;
     data["weekday"] = "*";
     data["status"] = "INACTIVE";
-    data["email"] = body.email; 
-    data["mobile"] = body.mobile;
     data["repeatEnable"] = body.repeatEnable;
     data["enableEmail"] = body.enableEmail;
     data["enableSMS"] = body.enableSMS;

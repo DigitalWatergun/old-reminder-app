@@ -56,7 +56,7 @@ const validateReminderForm = (formData) => {
             result["error"] = "Please enter a valid email"
             result["status"] = false 
             break
-        case !formData.enableEmail: 
+        case !formData.enableEmail && !formData.enableSMS: 
             result["error"] = "You need to enable at least email or SMS"
             result["status"] = false 
             break

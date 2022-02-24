@@ -33,11 +33,11 @@ export const ReminderDetails = (props) => {
                 <table className="reminderDetailTable">
                     <tbody>
                         <tr>
-                            <td>Content:</td>
+                            <td className="field">Content:</td>
                             <td>{props.data.content}</td>
                         </tr>
                         <tr>
-                            <td>Status:</td>
+                            <td className="field">Status:</td>
                             <td>{props.data.status}</td>
                         </tr>
                     </tbody>
