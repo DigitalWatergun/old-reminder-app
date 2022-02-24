@@ -8,7 +8,7 @@ The Reminder application is a custom built application that will allow you to in
 
 
 ### Unfinished Tasks
-- [ ] Fix "Date Only" reminders to remind user at midnight of no time has been added
+- [ ] Fix "Date Only" reminders to remind user at midnight of no time has been added (rewrite parseReqBody)
 - [ ] Add error handling for Nodemailer errors (display error to user)
 - [ ] Add error handling for Twilio errors (display error to user)
 - [ ] Add expiration date for the activation code 

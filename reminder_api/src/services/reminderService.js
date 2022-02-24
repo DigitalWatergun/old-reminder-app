@@ -23,7 +23,9 @@ const filterReminders = async (filter) => {
 
 
 const updateReminder = async (data) => {
-    const reminder = await Reminder.findByIdAndUpdate(data._id, data)
+    await Reminder.deleteOne({_id: data._id})
+    const reminder = await createReminder(data)
+    // const reminder = await Reminder.findByIdAndUpdate(data._id, data)
 
     return reminder; 
 };
@@ -54,9 +56,9 @@ const createReminder = async (data) => {
             userId: data.userId
         });
 
-        await newReminder.save()
+        const reminder = await newReminder.save()
 
-        return "Successfully added a new reminder"
+        return reminder
     } catch(err) {
         console.log(err);
         return err;
