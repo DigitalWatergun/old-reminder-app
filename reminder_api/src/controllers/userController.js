@@ -21,7 +21,7 @@ const addUser = async (req, res) => {
         _id: uuid(),
         active: false,
         username: _.toLower(req.body.username),
-        userdisplayname: req.body.username,
+        userDisplayName: req.body.username,
         password: await bcrypt.hash(req.body.password, 15),
         email: req.body.email,
         registerHash: randomBytes(32).toString('hex')
@@ -35,7 +35,7 @@ const addUser = async (req, res) => {
             res.status(500).send(result.error.message)
         }
     } else {
-        await sendRegistrationEmail(user.userdisplayname, user.email, user.registerHash)
+        await sendRegistrationEmail(user.userDisplayName, user.email, user.registerHash)
         res.status(201).send(result);
     }
 }
@@ -54,7 +54,6 @@ const loginUser = async (req, res) => {
             res.status(403).send("The username or password is incorrect.")
         } else if (req.body.registerHash !== undefined) {
             if (req.body.registerHash === user.registerHash) {
-                console.log("The activation code is correct and the password is correct.");
                 const accessToken = generateAccessToken(user);
                 const refreshToken = generateRefreshToken(user);
                 user["refreshToken"] = refreshToken
@@ -63,7 +62,7 @@ const loginUser = async (req, res) => {
                 await removeRegisterHash(user)
                 res.cookie("jwta", accessToken, {httpOnly: true, maxAge: 24 * 60 * 60 * 1000 })
                 res.cookie("jwtr", refreshToken, { httpOnly: true, maxAge: 24 * 60 * 60 * 1000 })
-                res.json({ userId: user._id, username: user.userdisplayname, changePassword: user.changePassword});
+                res.json({ userId: user._id, username: user.userDisplayName, changePassword: user.changePassword});
             } else {
                 res.status(401).send("The activation code is incorrect.")
             }
@@ -77,7 +76,7 @@ const loginUser = async (req, res) => {
             await updateUser(user)
             res.cookie("jwta", accessToken, {httpOnly: true, maxAge: 24 * 60 * 60 * 1000 })
             res.cookie("jwtr", refreshToken, { httpOnly: true, maxAge: 24 * 60 * 60 * 1000 })
-            res.json({ userId: user._id, username: user.userdisplayname, changePassword: user.changePassword});
+            res.json({ userId: user._id, username: user.userDisplayName, changePassword: user.changePassword});
         }
     }    
 }
@@ -128,7 +127,7 @@ const logoutUser = async (req, res) => {
     const user = (await queryUserById(req.body.userId))[0];
     user["refreshToken"] = ""
     await updateUser(user)
-    if (req.cookies.jwt) {
+    if (req.cookies) {
         res.clearCookie("jwta")
         res.clearCookie("jwtr")
     }

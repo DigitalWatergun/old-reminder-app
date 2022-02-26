@@ -97,3 +97,4 @@ The Reminder application is a custom built application that will allow you to in
 - [x] ~~Add password complexity requirements~~
 - [x] ~~Add password, email, and sms input validation as well as form validation for creating reminders~~
 - [x] ~~Rewrite parseBody function to set time to midnight if no time has been added to Date reminder~~
+- [x] ~~Fix res.clearCookie function on user logout~~

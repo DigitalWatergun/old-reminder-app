@@ -27,7 +27,7 @@ const createUser = async (data) => {
             _id: data._id,
             active: data.active,
             username: data.username, 
-            userdisplayname: data.userdisplayname,
+            userDisplayName: data.userDisplayName,
             password: data.password,
             refreshToken: data.refreshToken,
             email: data.email,
