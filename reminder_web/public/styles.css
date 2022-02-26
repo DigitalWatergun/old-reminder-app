@@ -1,5 +1,5 @@
 body {
-    font-family: "Helvetica Neue";
+    font-family: 'Arimo', sans-serif;
     text-align: center;
     margin: 0;
 }
@@ -194,6 +194,7 @@ body {
     font-weight: bold;
     color: white;
     margin: 0;
+    padding-top: 3px;
 }
 
 .headerUser {
