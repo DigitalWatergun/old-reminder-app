@@ -128,23 +128,6 @@ export const ReminderForm = (props) => {
                 setError(response.response.data)
             }
         }
-
-        // const result = validateReminderForm(formData);
-        // if (result.status) {
-        //     if (!editState) {
-        //         const response = await api.createReminder(formData);
-        //         if (response.status === 200) {
-        //             navigate("/reminders")
-        //         }
-        //     } else {
-        //         const response = await api.editReminder(formData);
-        //         if (response.status === 200) {
-        //             window.location.reload();
-        //         }
-        //     }
-        // } else {
-        //     setError(result.error)
-        // }
     }
 
     return (
