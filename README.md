@@ -98,3 +98,7 @@ The Reminder application is a custom built application that will allow you to in
 - [x] ~~Add password, email, and sms input validation as well as form validation for creating reminders~~
 - [x] ~~Rewrite parseBody function to set time to midnight if no time has been added to Date reminder~~
 - [x] ~~Fix res.clearCookie function on user logout~~
+- [x] ~~Refactor verifyJWT to have backend handle refreshing access tokens~~
+- [x] ~~Refactor code to have backend perform form validation instead of frontend~~
+- [x] ~~Purchased domain to host application on GCP~~
+- [x] ~~Updated corsOptions to have domain there~~

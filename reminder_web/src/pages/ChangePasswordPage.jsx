@@ -3,7 +3,6 @@ import { Link, useNavigate, useLocation } from "react-router-dom"
 import { HeaderFooter } from "../components/HeaderFooter";
 import { Loading } from "../components/Loading"
 import { api } from "../api/api"
-import { validatePassword } from "../validation/validation";
 
 export const ChangePassword = () => {
     const state = useLocation()
@@ -40,35 +39,27 @@ export const ChangePassword = () => {
         e.preventDefault();
         setLoadingState(true)
 
-        if (validatePassword(formData.newPassword)) {
-            if (formData.newPassword === formData.confirmNewPassword) {
-                const response = await api.changeUserPassword(formData);
-                if (response.status === 200) {
-                    sessionStorage.clear();
-                    navigate("/", { state: {message: "Please log in with your new password."}})
-                } else {
-                    console.log(response)
-                    setLoadingState(false)
-                    setError(response.response.data)
-                }
-            } else {
-                setLoadingState(false)
-                setError("New passwords do not match!")
-            }
+        const response = await api.changeUserPassword(formData);
+        if (response.status === 200) {
+            sessionStorage.clear();
+            navigate("/", { state: {message: "Please log in with your new password."}})
         } else {
             setLoadingState(false)
-            setError(<div>
-                <p>The password needs to be:</p>
-                <ul style={{textAlign: "left"}}>
-                    <li>Between 8 and 32 characters</li>
-                    <li>Contain 1 Uppercase character</li>
-                    <li>Contain 1 Lowercase character</li>
-                    <li>Contain 1 Number</li>
-                    <li>Contain 1 special character</li>
-                </ul>
-            </div>)
+            if (response.response.data === "Password requirements not met") {
+                setError(<div>
+                    <p>The password needs to be:</p>
+                    <ul style={{textAlign: "left"}}>
+                        <li>Between 8 and 32 characters</li>
+                        <li>Contain 1 Uppercase character</li>
+                        <li>Contain 1 Lowercase character</li>
+                        <li>Contain 1 Number</li>
+                        <li>Contain 1 special character</li>
+                    </ul>
+                </div>)
+            } else {
+                setError(response.response.data)
+            }
         }
-
     }
 
 

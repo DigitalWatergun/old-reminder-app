@@ -3,7 +3,6 @@ import { Link, useNavigate } from "react-router-dom"
 import { HeaderFooter } from "../components/HeaderFooter";
 import { Loading } from "../components/Loading"
 import { api } from "../api/api"
-import { validateEmail, validatePassword } from "../validation/validation.js"
 
 
 export const Register = () => {
@@ -33,46 +32,25 @@ export const Register = () => {
     const handleRegisterClick = async (e) => {
         e.preventDefault();
         setLoadingState(true)
-        if ("username" in formData && "password" in formData && "email" in formData) {
-            if (!formData.username.includes(" ")) {
-                if (validatePassword(formData.password)) {
-                    if (formData.password === formData.confirmPassword) {
-                        if (validateEmail(formData.email)) {
-                            const response = await api.registerUser(formData);
-                            if (response.status === 201) {
-                                setSubmitted(true)
-                            } else {
-                                setLoadingState(false)
-                                setError(response.response.data)
-                            }
-                        } else {
-                            setLoadingState(false)
-                            setError("Please enter a valid email address.")
-                        }
-                    } else {
-                        setLoadingState(false)
-                        setError("Passwords do not match!")
-                    }
-                } else {
-                    setLoadingState(false)
-                    setError(<div>
-                        <p>The password needs to be:</p>
-                        <ul style={{textAlign: "left"}}>
-                            <li>Between 8 and 32 characters</li>
-                            <li>Contain 1 Uppercase character</li>
-                            <li>Contain 1 Lowercase character</li>
-                            <li>Contain 1 Number</li>
-                            <li>Contain 1 special character</li>
-                        </ul>
-                    </div>)
-                }
-            } else {
-                setLoadingState(false)
-                setError("Username cannot have spaces.")
-            }
+        const response = await api.registerUser(formData);
+        if (response.status === 201) {
+            setSubmitted(true)
         } else {
             setLoadingState(false)
-            setError("There can be no blank fields")
+            if (response.response.data === "Password requirements not met") {
+                setError(<div>
+                    <p>The password needs to be:</p>
+                    <ul style={{textAlign: "left"}}>
+                        <li>Between 8 and 32 characters</li>
+                        <li>Contain 1 Uppercase character</li>
+                        <li>Contain 1 Lowercase character</li>
+                        <li>Contain 1 Number</li>
+                        <li>Contain 1 special character</li>
+                    </ul>
+                </div>)
+            } else {
+                setError(response.response.data)
+            }
         }
     }
 

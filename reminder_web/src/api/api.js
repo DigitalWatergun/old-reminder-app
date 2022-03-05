@@ -1,7 +1,7 @@
 import axios from "axios"
 
-// const BASEURL = "http://35.222.96.222:8080";
 const BASEURL = "http://localhost:3001";
+// const BASEURL = "http://api.mrreminder.xyz"
 
 const axiosAuth = axios.create({
     baseURL: BASEURL,
@@ -17,36 +17,6 @@ const axiosReminders = axios.create({
     },
     withCredentials: true
 });
-
-
-axiosReminders.interceptors.request.use(config => {
-    // if (!config.headers["Authorization"]) {
-    //     config.headers["Authorization"] = "Bearer " + "asdfasdfasdf"
-    // }
-    return config
-}, (error) => {
-    Promise.reject(error)
-})
-
-axiosReminders.interceptors.response.use(response => response, async (error) => {
-    const prevRequest = error?.config;
-
-    if ((error?.response?.status === 403 || error?.response?.status === 401) && !prevRequest?.sent) {
-        console.log("Refreshing access token...")
-        prevRequest.sent = true
-        const user = JSON.parse(sessionStorage.getItem("user"))
-        
-        const axiosConfig = {headers: { "Content-Type": "application/json" }, withCredentials: true}
-        const axiosBody = { userId: user.userId }
-        try {
-            await axios.post(BASEURL + "/users/refresh", axiosBody, axiosConfig)
-            return axiosReminders(prevRequest)
-        } catch(err) {
-            return err
-        }
-    }
-    return Promise.reject(error)
-})
 
 
 const registerUser = async (data) => {

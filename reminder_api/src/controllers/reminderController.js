@@ -8,7 +8,7 @@ import {
     filterReminders,
     updateReminder
 } from "../services/reminderService.js";
-import { bodyValidator } from "../validator/validator.js";
+import { validateReminderForm } from "../validator/validator.js";
 import { eventEmitter } from "../emitter/reminderEmitter.js";
 
 
@@ -111,7 +111,10 @@ const changeReminderStatus = async (reminder, status) => {
 
 
 const changeReminder = async (req, res) => {
-    if (bodyValidator(req.body)) {
+    const validateStatus = validateReminderForm(req.body)
+    if (!validateStatus.status) {
+        res.status(500).send(validateStatus.error)
+    } else {
         const data = parseReqBody(req.body)
         const reminder = await updateReminder(data);
         
@@ -120,22 +123,20 @@ const changeReminder = async (req, res) => {
         } else {
             res.send("Failed to update reminder.")
         }
-    } else {
-        res.status(500).send("There is an issue with your values for your reminder.")
     }
 };
 
 
 const postReminder = async (req, res) => {
-    console.log("Creating Reminder...")
-    if (bodyValidator(req.body)) {
+    const validateStatus = validateReminderForm(req.body)
+    if (!validateStatus.status) {
+        res.status(500).send(validateStatus.error)
+    } else {
         req.body["_id"] = uuid();
         const data = parseReqBody(req.body)
         const result = await createReminder(data);
     
         res.send(result);
-    } else {
-        res.status(500).send("There is an issue with your values for your reminder.")
     }
 };
 

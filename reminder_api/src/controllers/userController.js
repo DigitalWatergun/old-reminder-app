@@ -2,7 +2,7 @@ import _ from "lodash";
 import { randomBytes } from "crypto"
 import bcrypt from "bcrypt";
 import {v4 as uuid} from "uuid";
-import { generateAccessToken, generateRefreshToken, verifyAccessToken, refreshAccessToken } from "../auth.js";
+import { generateAccessToken, generateRefreshToken } from "../auth.js";
 import {
     queryUserById,
     queryUserByUsername,
@@ -12,31 +12,37 @@ import {
     removeRegisterHash,
     deleteUser
 } from "../services/userService.js";
+import { validateUserRegister, validateChangePassword } from "../validator/validator.js"
 import { removeReminderByUserId } from "../services/reminderService.js"
 import { sendRegistrationEmail, sendTempPassword } from "../emitter/notifications/mailer/mailer.js";
 
 
 const addUser = async (req, res) => {
-    const user = {
-        _id: uuid(),
-        active: false,
-        username: _.toLower(req.body.username),
-        userDisplayName: req.body.username,
-        password: await bcrypt.hash(req.body.password, 15),
-        email: req.body.email,
-        registerHash: randomBytes(32).toString('hex')
-    }
-    const result = await createUser(user);
-    
-    if (result.error) {
-        if (result.error.message.includes("E11000 duplicate key error collection")) {
-            res.status(500).send("A user with this username already exists.")
-        } else {
-            res.status(500).send(result.error.message)
-        }
+    const validateStatus = validateUserRegister(req.body)
+    if (!validateStatus.status) {
+        res.status(500).send(validateStatus.error)
     } else {
-        await sendRegistrationEmail(user.userDisplayName, user.email, user.registerHash)
-        res.status(201).send(result);
+        const user = {
+            _id: uuid(),
+            active: false,
+            username: _.toLower(req.body.username),
+            userDisplayName: req.body.username,
+            password: await bcrypt.hash(req.body.password, 15),
+            email: req.body.email,
+            registerHash: randomBytes(32).toString('hex')
+        }
+        const result = await createUser(user);
+        
+        if (result.error) {
+            if (result.error.message.includes("E11000 duplicate key error collection")) {
+                res.status(500).send("A user with this username already exists.")
+            } else {
+                res.status(500).send(result.error.message)
+            }
+        } else {
+            await sendRegistrationEmail(user.userDisplayName, user.email, user.registerHash)
+            res.status(201).send(result);
+        }
     }
 }
 
@@ -60,7 +66,7 @@ const loginUser = async (req, res) => {
                 user["active"] = true
                 await updateUser(user)
                 await removeRegisterHash(user)
-                res.cookie("jwta", accessToken, {httpOnly: true, maxAge: 24 * 60 * 60 * 1000 })
+                res.cookie("jwta", accessToken, {httpOnly: true, maxAge: 600000 })
                 res.cookie("jwtr", refreshToken, { httpOnly: true, maxAge: 24 * 60 * 60 * 1000 })
                 res.json({ userId: user._id, username: user.userDisplayName, changePassword: user.changePassword});
             } else {
@@ -74,7 +80,7 @@ const loginUser = async (req, res) => {
             const refreshToken = generateRefreshToken(user);
             user["refreshToken"] = refreshToken
             await updateUser(user)
-            res.cookie("jwta", accessToken, {httpOnly: true, maxAge: 24 * 60 * 60 * 1000 })
+            res.cookie("jwta", accessToken, {httpOnly: true, maxAge: 600000 })
             res.cookie("jwtr", refreshToken, { httpOnly: true, maxAge: 24 * 60 * 60 * 1000 })
             res.json({ userId: user._id, username: user.userDisplayName, changePassword: user.changePassword});
         }
@@ -86,21 +92,22 @@ const changeUserPassword = async (req, res) => {
     const id = req.body.userId; 
     const user = (await queryUserById(id))[0];
 
-    if (user === undefined) {
+    const validateStatus = validateChangePassword(req.body)
+    if (!validateStatus.status) {
+        res.status(500).send(validateStatus.error)
+    } else if (user === undefined) {
         res.status(400).send("Unable to find user")
+    }else if (!await bcrypt.compare(req.body.currentPassword, user.password)) {
+        res.status(403).send("The current password is incorrect.")
     } else {
-        if (!await bcrypt.compare(req.body.currentPassword, user.password)) {
-            res.status(403).send("The current password is incorrect.")
-        } else {
-            console.log("The password is correct.");
-            const newPassword = await bcrypt.hash(req.body.newPassword, 15)
-            user["password"] = newPassword;
-            if (req.body.changePassword) {
-                user["changePassword"] = false
-            }
-            await updateUser(user)
-            res.sendStatus(200);
+        console.log("The password is correct.");
+        const newPassword = await bcrypt.hash(req.body.newPassword, 15)
+        user["password"] = newPassword;
+        if (req.body.changePassword) {
+            user["changePassword"] = false
         }
+        await updateUser(user)
+        res.sendStatus(200);
     }
 }
 
@@ -152,41 +159,11 @@ const deleteAccount = async (req, res) => {
 }
 
 
-const verifyUserToken = async (req, res) => {
-    const token = req?.cookies?.jwta;
-
-    if (verifyAccessToken(token)) {
-        res.send(true);
-    } else {
-        console.log("Access Token expired")
-        res.send(false);
-    }
-}
-
-
-const refreshUserToken =  async (req, res) => {
-    const user = (await queryUserById(req.body.userId))[0];
-    const refreshToken = req?.cookies?.jwtr;
-
-    if (refreshToken === null) {
-        res.status(401).send("No token found.")
-    } else if (user['refreshToken'] !== refreshToken) {
-        res.status(403).send("User tokens do not match.")
-    } else {
-        const accessToken = refreshAccessToken(refreshToken)
-        res.clearCookie("jwta")
-        res.cookie("jwta", accessToken, {httpOnly: true, maxAge: 600000}).json({message: "Access token has been refreshed"})
-    }
-}
-
-
 export {
     addUser,
     loginUser,
     changeUserPassword,
     resetUserPassword,
     logoutUser,
-    deleteAccount,
-    verifyUserToken,
-    refreshUserToken
+    deleteAccount
 }

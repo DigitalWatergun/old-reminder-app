@@ -1,27 +1,39 @@
 import dotenv from "dotenv"
-dotenv.config();
 import jwt from "jsonwebtoken"
+import { refreshAccessToken } from "../auth.js"
+dotenv.config();
 
 const verifyJWT = (req, res, next) => {
-    const token = req?.cookies?.jwta
+    const accessToken = req?.cookies?.jwta
+    const refreshToken = req?.cookies?.jwtr
 
-    if (token === null || token == undefined) {
-        return res.status(401).send("No token found.")
-    } 
-
-    jwt.verify(token, process.env.JWT_ACCESS_TOKEN_SECRET, (err, user) => {
-        if (err) {
-            res.status(403);
-            if (err.message.includes("expire")) {
-                return res.send("Your access token has expired")
-            } else {
-                return res.send(err.message)
-            }
+    if (accessToken === null || accessToken == undefined) {
+        if (refreshToken === null || refreshToken === undefined) {
+            return res.status(401).send("No token found.")
         } else {
-            req.user = user
-            next()
+            jwt.verify(refreshToken, process.env.JWT_REFRESH_TOKEN_SECRET, (err, user) => {
+                if (err) {
+                    res.status(403);
+                } else {
+                    const newAccessToken = refreshAccessToken(refreshToken)
+                    res.clearCookie("jwta")
+                    res.cookie("jwta", newAccessToken, {httpOnly: true, maxAge: 600000})
+                    req.user = user
+                    next()
+                }
+            })
         }
-    })
+    } else {
+        jwt.verify(accessToken, process.env.JWT_ACCESS_TOKEN_SECRET, (err, user) => {
+            if (err) {
+                console.log(err.message)
+                return res.status(403).send(err.message)
+            } else {
+                req.user = user
+                next()
+            }
+        })
+    }
 }
 
 export { verifyJWT }

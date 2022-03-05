@@ -113,22 +113,38 @@ export const ReminderForm = (props) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        const result = validateReminderForm(formData);
-        if (result.status) {
-            if (!editState) {
-                const response = await api.createReminder(formData);
-                if (response.status === 200) {
-                    navigate("/reminders")
-                }
+        if (!editState) {
+            const response = await api.createReminder(formData);
+            if (response.status === 200) {
+                navigate("/reminders")
             } else {
-                const response = await api.editReminder(formData);
-                if (response.status === 200) {
-                    window.location.reload();
-                }
+                setError(response.response.data)
             }
         } else {
-            setError(result.error)
+            const response = await api.editReminder(formData);
+            if (response.status === 200) {
+                window.location.reload();
+            } else {
+                setError(response.response.data)
+            }
         }
+
+        // const result = validateReminderForm(formData);
+        // if (result.status) {
+        //     if (!editState) {
+        //         const response = await api.createReminder(formData);
+        //         if (response.status === 200) {
+        //             navigate("/reminders")
+        //         }
+        //     } else {
+        //         const response = await api.editReminder(formData);
+        //         if (response.status === 200) {
+        //             window.location.reload();
+        //         }
+        //     }
+        // } else {
+        //     setError(result.error)
+        // }
     }
 
     return (

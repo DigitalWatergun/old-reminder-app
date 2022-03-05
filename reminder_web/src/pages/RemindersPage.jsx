@@ -17,7 +17,7 @@ export const RemindersPage = () => {
         if (response.status === 200) {
             setReminders(response.data)
         } else {
-            console.log("No reminders found")
+            console.log(response.response.data)
         }
     }
 
