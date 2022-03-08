@@ -45,9 +45,9 @@ export const ReminderDetails = (props) => {
                 <br/>                
             </div>
             <button className="reminderRunButton" onClick={handleRunClick} disabled={props.data.status === "ACTIVE"}>RUN</button>
-            <button className="reminderGrayButton" onClick={handleStopClick} disabled={props.data.status === "INACTIVE"}>STOP</button>
-            <button className="reminderGrayButton" onClick={handleEditClick}>EDIT</button>
-            <button className="reminderGrayButton" style={{paddingLeft: "10px"}} onClick={handleDeleteClick}>DELETE</button>
+            <button className={props.data.status === "ACTIVE" ? "reminderGrayButton" : "reminderGrayButtonDisabled"} onClick={handleStopClick} disabled={props.data.status === "INACTIVE"}>STOP</button>
+            <button className={props.data.status === "ACTIVE" ? "reminderGrayButtonDisabled" : "reminderGrayButton"} onClick={handleEditClick} disabled={props.data.status === "ACTIVE"}>EDIT</button>
+            <button className={props.data.status === "ACTIVE" ? "reminderGrayButtonDisabled" : "reminderGrayButton"} style={{paddingLeft: "10px"}} onClick={handleDeleteClick} disabled={props.data.status === "ACTIVE"}>DELETE</button>
             {editPopup && <EditReminderPopup content={props.data} handleClose={handleEditClick}/>}
         </div>
 

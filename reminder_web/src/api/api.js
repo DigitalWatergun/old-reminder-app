@@ -1,7 +1,7 @@
 import axios from "axios"
 
-const BASEURL = "http://localhost:3001";
-// const BASEURL = "http://api.mrreminder.xyz"
+// const BASEURL = "http://localhost:3001";
+const BASEURL = "http://api.mrreminder.xyz"
 
 const axiosAuth = axios.create({
     baseURL: BASEURL,
