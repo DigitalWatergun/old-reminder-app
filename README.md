@@ -102,3 +102,4 @@ The Reminder application is a custom built application that will allow you to in
 - [x] ~~Refactor code to have backend perform form validation instead of frontend~~
 - [x] ~~Purchased domain to host application on GCP~~
 - [x] ~~Updated corsOptions to have domain there~~
+- [x] ~~Updated apiClient to mrreminder.xyz~~
