@@ -40,6 +40,7 @@ const createReminder = async (data) => {
             dateEnable: data.dateEnable,
             date: data.date,
             timeEnable: data.timeEnable,
+            timeZone: data.timeZone,
             time: data.time,
             minutes: data.minutes,
             hour: data.hour, 

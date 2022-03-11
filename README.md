@@ -103,3 +103,6 @@ The Reminder application is a custom built application that will allow you to in
 - [x] ~~Purchased domain to host application on GCP~~
 - [x] ~~Updated corsOptions to have domain there~~
 - [x] ~~Updated apiClient to mrreminder.xyz~~
+- [x] ~~Add TimeZone property to reminder create/edit form~~
+- [x] ~~Add TimeZone property to mongodb schema and reminder controller~~
+- [x] ~~Switch node-schedule to cron to have timezone capability~~

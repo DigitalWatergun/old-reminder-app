@@ -1,5 +1,6 @@
 import EventEmitter from "events";
 import schedule from "node-schedule";
+import cron from "cron";
 import { changeReminderStatus } from "../controllers/reminderController.js";
 import { sendEmailReminder } from "./notifications/mailer/mailer.js"
 import { sendTextReminder } from "./notifications/texter/texter.js";
@@ -16,31 +17,56 @@ eventEmitter.on("test", () => {
 
 eventEmitter.on("RUN", reminder => {
     changeReminderStatus(reminder, "ACTIVE");
-
-    let count = reminder.repeat; 
+    
+    let count = reminder.repeat 
     const cronSchedule = `${reminder.minutes} ${reminder.hour} ${reminder.day} ${reminder.month} ${reminder.weekday}`;
     console.log(`[${new Date().toLocaleTimeString()}] Emitted RUN event. REMINDER: ${reminder.title} - ${reminder.content}. Cronschedule: ${cronSchedule}`)
-    const cronTask = schedule.scheduleJob(cronSchedule, async () => {
-        const currentTime = new Date().toLocaleTimeString();
+    const cronTask = new cron.CronJob(cronSchedule, () => {
+            const currentTime = new Date().toLocaleTimeString();
+            
+            console.log(`[${currentTime}] REMINDER: ${reminder.title} - ${reminder.content}.`)
+            
+            if (reminder.enableEmail === true) {
+                eventEmitter.emit("EMAIL", reminder);
+            };
+    
+            if (reminder.enableSMS === true) {
+                eventEmitter.emit("TEXT", reminder);
+            };
+    
+            count = count - 1;
+            console.log(`Count: ${count}`)
+            if (count === 0) {
+                console.log("Reminder count has reached 0")
+                eventEmitter.emit("STOP", reminder);
+            };    
+        }, null, true, reminder.timeZone)
+
+    // let count = reminder.repeat; 
+    // const cronSchedule = `${reminder.minutes} ${reminder.hour} ${reminder.day} ${reminder.month} ${reminder.weekday}`;
+    // console.log(`[${new Date().toLocaleTimeString()}] Emitted RUN event. REMINDER: ${reminder.title} - ${reminder.content}. Cronschedule: ${cronSchedule}`)
+    // const cronTask = schedule.scheduleJob(cronSchedule, async () => {
+    //     const currentTime = new Date().toLocaleTimeString();
         
-        console.log(`[${currentTime}] REMINDER: ${reminder.title} - ${reminder.content}.`)
+    //     console.log(`[${currentTime}] REMINDER: ${reminder.title} - ${reminder.content}.`)
         
-        if (reminder.enableEmail === true) {
-            eventEmitter.emit("EMAIL", reminder);
-        };
+    //     if (reminder.enableEmail === true) {
+    //         eventEmitter.emit("EMAIL", reminder);
+    //     };
 
-        if (reminder.enableSMS === true) {
-            eventEmitter.emit("TEXT", reminder);
-        };
+    //     if (reminder.enableSMS === true) {
+    //         eventEmitter.emit("TEXT", reminder);
+    //     };
 
-        count = count - 1;
-        console.log(`Count: ${count}`)
-        if (count === 0) {
-            console.log("Reminder count has reached 0")
-            eventEmitter.emit("STOP", reminder);
-        };    
-    });
-
+    //     count = count - 1;
+    //     console.log(`Count: ${count}`)
+    //     if (count === 0) {
+    //         console.log("Reminder count has reached 0")
+    //         eventEmitter.emit("STOP", reminder);
+    //     };    
+    // });
+    console.log(cronTask)
+    console.log(cronTask.cronTime)
     runningReminders[reminder._id] = cronTask;
 });
 
@@ -59,7 +85,8 @@ eventEmitter.on("STOP", reminder => {
     console.log(runningReminders);
     changeReminderStatus(reminder, "INACTIVE");
     if (runningReminders[reminder._id]) {
-        runningReminders[reminder._id].cancel();
+        // runningReminders[reminder._id].cancel();
+        runningReminders[reminder._id].stop();
         console.log(`${reminder.title} has stopped running.`)
         delete runningReminders[reminder._id];
     } else {

@@ -18,12 +18,17 @@ const parseReqBody = body => {
     if (body.dateEnable && "date" in body) {
         data["date"] = body.date
         const dateValue = body.date.split("-")
-        data["month"] = dateValue[1]
+        if (dateValue[1] === "01") {
+            data["month"] = "00"
+        } else {
+            data["month"] = (parseInt(dateValue[1]) - 1).toString();
+        }
         data["day"] = dateValue[2]
         data["repeat"] = 1
     }
 
     if (body.timeEnable && "time" in body) {
+        data["timeZone"] = body.timeZone
         data["time"] = body.time
         const timeValue = body.time.split(":")
         data["hour"] = timeValue[0]
@@ -116,6 +121,7 @@ const changeReminder = async (req, res) => {
         res.status(500).send(validateStatus.error)
     } else {
         const data = parseReqBody(req.body)
+        console.log(data);
         const reminder = await updateReminder(data);
         
         if (reminder) {
@@ -134,6 +140,7 @@ const postReminder = async (req, res) => {
     } else {
         req.body["_id"] = uuid();
         const data = parseReqBody(req.body)
+        console.log(data)
         const result = await createReminder(data);
     
         res.send(result);

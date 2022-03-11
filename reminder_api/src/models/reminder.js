@@ -7,6 +7,7 @@ const reminderSchema = new mongoose.Schema({
     dateEnable: Boolean,
     date: String,
     timeEnable: Boolean,
+    timeZone: String,
     time: String,
     minutes: String,
     hour: String,

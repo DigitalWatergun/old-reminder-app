@@ -1,7 +1,6 @@
 import React, { useState } from "react"; 
 import { Link, useNavigate } from "react-router-dom";
 import { api } from "../api/api"
-import { validateReminderForm } from "../validation/validation";
 
 
 const DateInput = (props) => {
@@ -13,7 +12,23 @@ const DateInput = (props) => {
 
 const TimeInput = (props) => {
     return (
-        <input name="time" type="time"  value={props.time || ""} onChange={props.onInputChange}/>
+        <div>
+            <input name="time" type="time"  value={props.time || ""} onChange={props.onInputChange} style={{width: "150px"}}/>
+                <select name="timeZone" onChange={props.onInputChange} defaultValue={props.timeZone || "US/Pacific"}>
+                    <option value="US/Alaska">US/Alaska</option>
+                    <option value="US/Aleutian">US/Aleutian</option>
+                    <option value="US/Arizona">US/Arizona</option>
+                    <option value="US/Central">US/Central</option>
+                    <option value="US/Eastern">US/Eastern</option>
+                    <option value="US/Hawaii">US/Hawaii</option>
+                    <option value="US/Indiana-Starke">US/Indiana-Starke</option>
+                    <option value="US/Michigan">US/Michigan</option>
+                    <option value="US/Mountain">US/Mountain</option>
+                    <option value="US/Pacific">US/Pacific</option>
+                    <option value="US/Samoa">US/Samoa</option>
+            </select>
+        </div>
+        
     )
 }
 
@@ -153,7 +168,7 @@ export const ReminderForm = (props) => {
                             <span className="slider"></span>
                         </label>
                     </label>
-                    {formData.timeEnable && formData.dateEnable ? <TimeInput time={formData.time} onInputChange={handleChange}/> : null}<br/><br/>
+                    {formData.timeEnable && formData.dateEnable ? <TimeInput time={formData.time} timeZone={formData.timeZone} onInputChange={handleChange}/>  : null}<br/><br/>
                     <label>
                         <span style={{padding: "5px"}}>Timer</span>
                         <label className="switch">
