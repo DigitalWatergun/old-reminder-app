@@ -14,7 +14,8 @@ const TimeInput = (props) => {
     return (
         <div>
             <input name="time" type="time"  value={props.time || ""} onChange={props.onInputChange} style={{width: "150px"}}/>
-                <select name="timeZone" onChange={props.onInputChange} defaultValue={props.timeZone || "US/Pacific"}>
+                <select name="timeZone" onChange={props.onInputChange} defaultValue={props.timeZone || "select"}>
+                    <option value="select">--Select Time Zone--</option>
                     <option value="US/Alaska">US/Alaska</option>
                     <option value="US/Aleutian">US/Aleutian</option>
                     <option value="US/Arizona">US/Arizona</option>
