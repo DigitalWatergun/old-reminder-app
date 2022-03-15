@@ -138,7 +138,7 @@ export const ReminderForm = (props) => {
         } else {
             const response = await api.editReminder(formData);
             if (response.status === 200) {
-                window.location.reload();
+                navigate("/reminders")
             } else {
                 setError(response.response.data)
             }
@@ -194,7 +194,7 @@ export const ReminderForm = (props) => {
                     </label>
                     {formData.enableSMS ? <input name="mobile" type="tel" value={formData.mobile || ""} onChange={handleChange}/>: null}<br/><br/>
                     <div className="errorText">{error}</div><br/>
-                    {editState ? <button className="buttonGray" onClick={props.close} type="button">Cancel</button> : <Link to="/reminders"><button className="buttonGray" type="button">Cancel</button></Link>}
+                    <Link to="/reminders"><button className="buttonGray" type="button">Cancel</button></Link>
                     <button className="buttonOrange" style={{float: "right"}} type="submit" onClick={handleSubmit}>Submit</button>
                 </form>
             </div>

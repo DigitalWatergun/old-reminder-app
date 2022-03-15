@@ -1,10 +1,11 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { EditReminderPopup } from "./EditReminderBox";
-import { api } from "../api/api"
+import { api } from "../api/api";
 
 export const ReminderDetails = (props) => {
     const [editPopup, setEditPopup] = useState(false)
-
+    const navigate = useNavigate();
     
     const handleRunClick = async () => {
         await api.runReminder(props.data);
@@ -18,7 +19,9 @@ export const ReminderDetails = (props) => {
 
 
     const handleEditClick = () => {
-        setEditPopup(!editPopup)
+        // setEditPopup(!editPopup)
+        // console.log(props)
+        navigate("/reminders/edit", { state: {data: props.data }})
     }
 
 

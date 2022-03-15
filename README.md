@@ -106,3 +106,4 @@ The Reminder application is a custom built application that will allow you to in
 - [x] ~~Add TimeZone property to reminder create/edit form~~
 - [x] ~~Add TimeZone property to mongodb schema and reminder controller~~
 - [x] ~~Switch node-schedule to cron to have timezone capability~~
+- [x] ~~Remove Edit popup and replace with EditReminder page to avoid button overlap issue~~
