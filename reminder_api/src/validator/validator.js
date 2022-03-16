@@ -111,7 +111,7 @@ const validateReminderForm = (body) => {
             result["error"] = "Please enter a time"
             result["status"] = false 
             break
-        case !body.timeZone || body.timeZone === "select":
+        case body.timeEnable && (!body.timeZone || body.timeZone === "select"):
             result["error"] = "Please enter a time zone"
             result["status"] = false 
             break
