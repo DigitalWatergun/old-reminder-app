@@ -121,7 +121,6 @@ const changeReminder = async (req, res) => {
         res.status(500).send(validateStatus.error)
     } else {
         const data = parseReqBody(req.body)
-        console.log(data);
         const reminder = await updateReminder(data);
         
         if (reminder) {
@@ -140,7 +139,6 @@ const postReminder = async (req, res) => {
     } else {
         req.body["_id"] = uuid();
         const data = parseReqBody(req.body)
-        console.log(data)
         const result = await createReminder(data);
     
         res.send(result);

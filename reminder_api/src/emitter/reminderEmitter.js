@@ -1,5 +1,4 @@
 import EventEmitter from "events";
-import schedule from "node-schedule";
 import cron from "cron";
 import { changeReminderStatus } from "../controllers/reminderController.js";
 import { sendEmailReminder } from "./notifications/mailer/mailer.js"
@@ -42,7 +41,7 @@ eventEmitter.on("RUN", reminder => {
             };    
         }, null, true, reminder.timeZone)
 
-    runningReminders[reminder._id] = cronTask;
+    runningReminders[reminder._id] = {status: "RUNNING", cronTask: cronTask};
 });
 
 
@@ -60,7 +59,7 @@ eventEmitter.on("STOP", reminder => {
     console.log(runningReminders);
     changeReminderStatus(reminder, "INACTIVE");
     if (runningReminders[reminder._id]) {
-        runningReminders[reminder._id].stop();
+        runningReminders[reminder._id].cronTask.stop();
         console.log(`${reminder.title} has stopped running.`)
         delete runningReminders[reminder._id];
     } else {
