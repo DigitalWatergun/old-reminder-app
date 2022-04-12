@@ -13,21 +13,7 @@ const DateInput = (props) => {
 const TimeInput = (props) => {
     return (
         <div>
-            <input name="time" type="time"  value={props.time || ""} onChange={props.onInputChange} style={{width: "150px"}}/>
-                <select name="timeZone" onChange={props.onInputChange} defaultValue={props.timeZone || "select"}>
-                    <option value="select">--Select Time Zone--</option>
-                    <option value="US/Alaska">US/Alaska</option>
-                    <option value="US/Aleutian">US/Aleutian</option>
-                    <option value="US/Arizona">US/Arizona</option>
-                    <option value="US/Central">US/Central</option>
-                    <option value="US/Eastern">US/Eastern</option>
-                    <option value="US/Hawaii">US/Hawaii</option>
-                    <option value="US/Indiana-Starke">US/Indiana-Starke</option>
-                    <option value="US/Michigan">US/Michigan</option>
-                    <option value="US/Mountain">US/Mountain</option>
-                    <option value="US/Pacific">US/Pacific</option>
-                    <option value="US/Samoa">US/Samoa</option>
-            </select>
+            <input name="time" type="time"  value={props.time || ""} onChange={props.onInputChange}/>
         </div>
         
     )
@@ -128,6 +114,37 @@ export const ReminderForm = (props) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+		if (formData.date && formData.time) {
+			const combinedDateTime = formData.date + "T" + formData.time;
+			const dateObject = new Date(combinedDateTime)
+			const utcYear = dateObject.getUTCFullYear().toString()
+			let utcMonth = dateObject.getUTCMonth().toString()
+			let utcDay = dateObject.getUTCDate().toString()
+			let utcHours = dateObject.getUTCHours().toString()
+			let utcMin = dateObject.getUTCMinutes().toString()
+
+			if (utcMonth.length === 1) {
+				utcMonth = "0" + utcMonth
+			}
+
+			if (utcDay.length === 1) {
+				utcDay = "0" + utcDay
+			}
+
+			if (utcHours.length === 1) {
+				utcHours = "0" + utcHours
+			}
+
+			if (utcMin.length === 1) {
+				utcMin = "0" + utcMin
+			}
+
+			const utcDateTime = `${utcYear}-${utcMonth}-${utcDay}T${utcHours}:${utcMin}`
+			formData["utcDateTime"] = utcDateTime
+			formData["date"] = `${utcYear}-${utcMonth}-${utcDay}`
+			formData["time"] = `${utcHours}:${utcMin}`
+		}
 
         if (!editState) {
             const response = await api.createReminder(formData);

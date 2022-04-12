@@ -66,7 +66,7 @@ const loginUser = async (req, res) => {
                 user["active"] = true
                 await updateUser(user)
                 await removeRegisterHash(user)
-                res.cookie("jwta", accessToken, {httpOnly: true, maxAge: 600000 })
+                res.cookie("jwta", accessToken, { httpOnly: true, maxAge: 600000 })
                 res.cookie("jwtr", refreshToken, { httpOnly: true, maxAge: 24 * 60 * 60 * 1000 })
                 res.json({ userId: user._id, username: user.userDisplayName, changePassword: user.changePassword});
             } else {
@@ -80,9 +80,9 @@ const loginUser = async (req, res) => {
             const refreshToken = generateRefreshToken(user);
             user["refreshToken"] = refreshToken
             await updateUser(user)
-            res.cookie("jwta", accessToken, {httpOnly: true, maxAge: 600000 })
+            res.cookie("jwta", accessToken, { httpOnly: true, maxAge: 600000 })
             res.cookie("jwtr", refreshToken, { httpOnly: true, maxAge: 24 * 60 * 60 * 1000 })
-            res.json({ userId: user._id, username: user.userDisplayName, changePassword: user.changePassword});
+            res.json({ userId: user._id, username: user.userDisplayName, changePassword: user.changePassword });
         }
     }    
 }

@@ -18,11 +18,7 @@ const parseReqBody = body => {
     if (body.dateEnable && "date" in body) {
         data["date"] = body.date
         const dateValue = body.date.split("-")
-        if (dateValue[1] === "01") {
-            data["month"] = "00"
-        } else {
-            data["month"] = (parseInt(dateValue[1]) - 1).toString();
-        }
+		data["month"] = dateValue[1]
         data["day"] = dateValue[2]
         data["repeat"] = 1
     }
@@ -64,6 +60,7 @@ const parseReqBody = body => {
     data["content"] = body.content; 
     data["dateEnable"] = body.dateEnable;
     data["timeEnable"] = body.timeEnable;
+	data["utcDateTime"] = body.utcDateTime;
     data["weekday"] = "*";
     data["status"] = "INACTIVE";
     data["repeatEnable"] = body.repeatEnable;
@@ -121,6 +118,7 @@ const changeReminder = async (req, res) => {
         res.status(500).send(validateStatus.error)
     } else {
         const data = parseReqBody(req.body)
+		console.log(data)
         const reminder = await updateReminder(data);
         
         if (reminder) {

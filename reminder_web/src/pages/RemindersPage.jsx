@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Reminder } from "../components/Reminder";
 import { HeaderFooter } from "../components/HeaderFooter";
+import { convertRemindersToLocal } from "../conversion/convertToLocal.js"
 import { api } from "../api/api"
 
 export const RemindersPage = () => {
@@ -15,7 +16,8 @@ export const RemindersPage = () => {
 
         const response = await api.getAllReminders()
         if (response.status === 200) {
-            setReminders(response.data)
+			const reminders = convertRemindersToLocal(response.data)
+            setReminders(reminders)
         } else {
             console.log(response.response.data)
         }

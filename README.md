@@ -107,3 +107,7 @@ The Reminder application is a custom built application that will allow you to in
 - [x] ~~Add TimeZone property to mongodb schema and reminder controller~~
 - [x] ~~Switch node-schedule to cron to have timezone capability~~
 - [x] ~~Remove Edit popup and replace with EditReminder page to avoid button overlap issue~~
+- [x] ~~Remove tiemZone parameter on frontend and backend~~
+- [x] ~~Convert user's inputed time into UTC and send UTC time to backend~~
+- [x] ~~Convert user's UTC time into local time based off the browser when retrieving reminders~~
+- [x] ~~Refactor backend reminderController to account for UTC changes~~

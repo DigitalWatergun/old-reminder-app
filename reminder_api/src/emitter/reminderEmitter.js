@@ -14,7 +14,7 @@ eventEmitter.on("test", () => {
 });
 
 
-eventEmitter.on("RUN", reminder => {
+eventEmitter.on("RUN", async reminder => {
     changeReminderStatus(reminder, "ACTIVE");
     
     let count = reminder.repeat 
@@ -25,11 +25,11 @@ eventEmitter.on("RUN", reminder => {
             
             console.log(`[${currentTime}] REMINDER: ${reminder.title} - ${reminder.content}.`)
             
-            if (reminder.enableEmail === true) {
+            if (reminder.enableEmail) {
                 eventEmitter.emit("EMAIL", reminder);
             };
     
-            if (reminder.enableSMS === true) {
+            if (reminder.enableSMS) {
                 eventEmitter.emit("TEXT", reminder);
             };
     
@@ -55,7 +55,7 @@ eventEmitter.on("TEXT", reminder => {
 });
 
 
-eventEmitter.on("STOP", reminder => {
+eventEmitter.on("STOP", async reminder => {
     console.log(runningReminders);
     changeReminderStatus(reminder, "INACTIVE");
     if (runningReminders[reminder._id]) {

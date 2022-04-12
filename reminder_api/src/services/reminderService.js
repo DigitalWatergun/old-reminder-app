@@ -42,6 +42,7 @@ const createReminder = async (data) => {
             timeEnable: data.timeEnable,
             timeZone: data.timeZone,
             time: data.time,
+			utcDateTime: data.utcDateTime,
             minutes: data.minutes,
             hour: data.hour, 
             day: data.day,
