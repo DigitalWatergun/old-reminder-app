@@ -24,7 +24,6 @@ const parseReqBody = body => {
     }
 
     if (body.timeEnable && "time" in body) {
-        data["timeZone"] = body.timeZone
         data["time"] = body.time
         const timeValue = body.time.split(":")
         data["hour"] = timeValue[0]
@@ -118,7 +117,6 @@ const changeReminder = async (req, res) => {
         res.status(500).send(validateStatus.error)
     } else {
         const data = parseReqBody(req.body)
-		console.log(data)
         const reminder = await updateReminder(data);
         
         if (reminder) {

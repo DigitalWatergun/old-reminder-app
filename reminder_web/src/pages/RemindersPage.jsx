@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Reminder } from "../components/Reminder";
 import { HeaderFooter } from "../components/HeaderFooter";
-import { convertRemindersToLocal } from "../conversion/convertToLocal.js"
+import { convertRemindersToLocal } from "../conversion/convertReminders.js"
 import { api } from "../api/api"
 
 export const RemindersPage = () => {

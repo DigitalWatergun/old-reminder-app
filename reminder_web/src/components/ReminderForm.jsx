@@ -1,6 +1,7 @@
 import React, { useState } from "react"; 
 import { Link, useNavigate } from "react-router-dom";
-import { api } from "../api/api"
+import { convertRemindersToUTC } from "../conversion/convertReminders";
+import { api } from "../api/api";
 
 
 const DateInput = (props) => {
@@ -115,46 +116,48 @@ export const ReminderForm = (props) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-		if (formData.date && formData.time) {
-			const combinedDateTime = formData.date + "T" + formData.time;
-			const dateObject = new Date(combinedDateTime)
-			const utcYear = dateObject.getUTCFullYear().toString()
-			let utcMonth = dateObject.getUTCMonth().toString()
-			let utcDay = dateObject.getUTCDate().toString()
-			let utcHours = dateObject.getUTCHours().toString()
-			let utcMin = dateObject.getUTCMinutes().toString()
+		let reminder = formData
+		if (reminder.date && reminder.time) {
+			reminder = convertRemindersToUTC(formData);
+			// const combinedDateTime = formData.date + "T" + formData.time;
+			// const dateObject = new Date(combinedDateTime)
+			// const utcYear = dateObject.getUTCFullYear().toString()
+			// let utcMonth = dateObject.getUTCMonth().toString()
+			// let utcDay = dateObject.getUTCDate().toString()
+			// let utcHours = dateObject.getUTCHours().toString()
+			// let utcMin = dateObject.getUTCMinutes().toString()
 
-			if (utcMonth.length === 1) {
-				utcMonth = "0" + utcMonth
-			}
+			// if (utcMonth.length === 1) {
+			// 	utcMonth = "0" + utcMonth
+			// }
 
-			if (utcDay.length === 1) {
-				utcDay = "0" + utcDay
-			}
+			// if (utcDay.length === 1) {
+			// 	utcDay = "0" + utcDay
+			// }
 
-			if (utcHours.length === 1) {
-				utcHours = "0" + utcHours
-			}
+			// if (utcHours.length === 1) {
+			// 	utcHours = "0" + utcHours
+			// }
 
-			if (utcMin.length === 1) {
-				utcMin = "0" + utcMin
-			}
+			// if (utcMin.length === 1) {
+			// 	utcMin = "0" + utcMin
+			// }
 
-			const utcDateTime = `${utcYear}-${utcMonth}-${utcDay}T${utcHours}:${utcMin}`
-			formData["utcDateTime"] = utcDateTime
-			formData["date"] = `${utcYear}-${utcMonth}-${utcDay}`
-			formData["time"] = `${utcHours}:${utcMin}`
+			// const utcDateTime = `${utcYear}-${utcMonth}-${utcDay}T${utcHours}:${utcMin}`
+			// formData["utcDateTime"] = utcDateTime
+			// formData["date"] = `${utcYear}-${utcMonth}-${utcDay}`
+			// formData["time"] = `${utcHours}:${utcMin}`
 		}
 
         if (!editState) {
-            const response = await api.createReminder(formData);
+            const response = await api.createReminder(reminder);
             if (response.status === 200) {
                 navigate("/reminders")
             } else {
                 setError(response.response.data)
             }
         } else {
-            const response = await api.editReminder(formData);
+            const response = await api.editReminder(reminder);
             if (response.status === 200) {
                 navigate("/reminders")
             } else {

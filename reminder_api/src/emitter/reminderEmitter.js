@@ -23,23 +23,25 @@ eventEmitter.on("RUN", async reminder => {
     const cronTask = new cron.CronJob(cronSchedule, () => {
             const currentTime = new Date().toLocaleTimeString();
             
-            console.log(`[${currentTime}] REMINDER: ${reminder.title} - ${reminder.content}.`)
+			if (reminder.status === "ACTIVE") {
+				console.log(`[${currentTime}] REMINDER: ${reminder.title} - ${reminder.content}.`)
             
-            if (reminder.enableEmail) {
-                eventEmitter.emit("EMAIL", reminder);
-            };
-    
-            if (reminder.enableSMS) {
-                eventEmitter.emit("TEXT", reminder);
-            };
-    
-            count = count - 1;
-            console.log(`Count: ${count}`)
-            if (count === 0) {
-                console.log("Reminder count has reached 0")
-                eventEmitter.emit("STOP", reminder);
-            };    
-        }, null, true, reminder.timeZone)
+				if (reminder.enableEmail) {
+					eventEmitter.emit("EMAIL", reminder);
+				};
+		
+				if (reminder.enableSMS) {
+					eventEmitter.emit("TEXT", reminder);
+				};
+		
+				count = count - 1;
+				console.log(`Count: ${count}`)
+				if (count === 0) {
+					console.log("Reminder count has reached 0")
+					eventEmitter.emit("STOP", reminder);
+				};
+			}
+        }, null, true, "UTC")
 
     runningReminders[reminder._id] = {status: "RUNNING", cronTask: cronTask};
 });
