@@ -22,7 +22,7 @@ eventEmitter.on("RUN", async reminder => {
     console.log(`[${new Date().toLocaleTimeString()}] Emitted RUN event. REMINDER: ${reminder.title} - ${reminder.content}. Cronschedule: ${cronSchedule}`)
     const cronTask = new cron.CronJob(cronSchedule, () => {
             const currentTime = new Date().toLocaleTimeString();
-            
+			
 			if (reminder.status === "ACTIVE") {
 				console.log(`[${currentTime}] REMINDER: ${reminder.title} - ${reminder.content}.`)
             
@@ -72,6 +72,9 @@ eventEmitter.on("STOP", async reminder => {
 
 eventEmitter.on("LIST", () => {
     console.log(runningReminders)
+	for (const [key, value] of Object.entries(runningReminders)) {
+		console.log(value.cronTask.running)
+	}
     return runningReminders
 })
 

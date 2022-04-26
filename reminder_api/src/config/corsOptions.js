@@ -10,4 +10,4 @@ const corsOptions = {
     optionsSuccessStatus: 200
 }
 
-export {corsOptions}
+export { corsOptions }
