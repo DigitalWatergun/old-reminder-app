@@ -6,7 +6,6 @@ import cookieParser from "cookie-parser"
 import { corsOptions } from "./config/corsOptions.js";
 import { usersRoute } from "./routes/usersRoute.js";
 import { remindersRoute } from "./routes/remindersRoute.js";
-import { runActiveReminders } from "./startup/runActiveReminders.js"
 dotenv.config();
 
 const PORT = process.env.PORT || 3001
@@ -38,7 +37,6 @@ app.use("/reminders", remindersRoute);
 
 
 app.listen(PORT, () => {
-    runActiveReminders();
     const currentTime = new Date().toLocaleTimeString();
     console.log(`[${currentTime}] Server running on port ${PORT}.`);
 });

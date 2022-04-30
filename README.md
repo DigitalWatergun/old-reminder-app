@@ -112,3 +112,4 @@ The Reminder application is a custom built application that will allow you to in
 - [x] ~~Convert user's UTC time into local time based off the browser when retrieving reminders~~
 - [x] ~~Refactor backend reminderController to account for UTC changes~~
 - [x] ~~Refactor emitter to account for UTC times and tested reminders~~
+- [x] ~~Added PubSub, Bull, and Mongoose to deployment project to run reminders from Redis~~

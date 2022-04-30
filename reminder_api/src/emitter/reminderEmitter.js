@@ -1,10 +1,9 @@
 import EventEmitter from "events";
-import cron from "cron";
+import { PubSub } from "@google-cloud/pubsub";
 import { changeReminderStatus } from "../controllers/reminderController.js";
-import { sendEmailReminder } from "./notifications/mailer/mailer.js"
-import { sendTextReminder } from "./notifications/texter/texter.js";
+import dotenv from "dotenv";
+dotenv.config();
 
-const runningReminders = {};
 const eventEmitter = new EventEmitter(); 
 
 
@@ -17,65 +16,42 @@ eventEmitter.on("test", () => {
 eventEmitter.on("RUN", async reminder => {
     changeReminderStatus(reminder, "ACTIVE");
     
-    let count = reminder.repeat 
     const cronSchedule = `${reminder.minutes} ${reminder.hour} ${reminder.day} ${reminder.month} ${reminder.weekday}`;
     console.log(`[${new Date().toLocaleTimeString()}] Emitted RUN event. REMINDER: ${reminder.title} - ${reminder.content}. Cronschedule: ${cronSchedule}`)
-    const cronTask = new cron.CronJob(cronSchedule, () => {
-            const currentTime = new Date().toLocaleTimeString();
-			
-			if (reminder.status === "ACTIVE") {
-				console.log(`[${currentTime}] REMINDER: ${reminder.title} - ${reminder.content}.`)
-            
-				if (reminder.enableEmail) {
-					eventEmitter.emit("EMAIL", reminder);
-				};
-		
-				if (reminder.enableSMS) {
-					eventEmitter.emit("TEXT", reminder);
-				};
-		
-				count = count - 1;
-				console.log(`Count: ${count}`)
-				if (count === 0) {
-					console.log("Reminder count has reached 0")
-					eventEmitter.emit("STOP", reminder);
-				};
-			}
-        }, null, true, "UTC")
 
-    runningReminders[reminder._id] = {status: "RUNNING", cronTask: cronTask};
-});
+	const data = JSON.stringify(reminder)
+	const dataBuffer = Buffer.from(data)
+	const customAttributes = { eventType: "RUN" }
+	const pubSubClient = new PubSub({projectId: process.env.GCP_PROJECT_ID});
 
-
-eventEmitter.on("EMAIL", reminder => {
-    sendEmailReminder(reminder);
-});
-
-
-eventEmitter.on("TEXT", reminder => {
-    sendTextReminder(reminder);
+	try {
+		await pubSubClient
+		.topic(process.env.PUBSUB_TOPIC)
+		.publishMessage({data: dataBuffer, attributes: customAttributes})
+	} catch (err) {
+		console.log(err)
+	} finally {
+		pubSubClient.close()
+	}
 });
 
 
 eventEmitter.on("STOP", async reminder => {
-    console.log(runningReminders);
-    changeReminderStatus(reminder, "INACTIVE");
-    if (runningReminders[reminder._id]) {
-        runningReminders[reminder._id].cronTask.stop();
-        console.log(`${reminder.title} has stopped running.`)
-        delete runningReminders[reminder._id];
-    } else {
-        console.log(`No reminders found with the title ${reminder.title}.`)
-    }
-})
+	const data = JSON.stringify(reminder)
+	const dataBuffer = Buffer.from(data)
+	const customAttributes = { eventType: "STOP" }
+	const pubSubClient = new PubSub();
 
-
-eventEmitter.on("LIST", () => {
-    console.log(runningReminders)
-	for (const [key, value] of Object.entries(runningReminders)) {
-		console.log(value.cronTask.running)
+	try {
+		await pubSubClient
+		.topic(process.env.PUBSUB_TOPIC)
+		.publishMessage({data: dataBuffer, attributes: customAttributes})
+	} catch (err) {
+		console.log(err)
+	} finally {
+		pubSubClient.close()
+		changeReminderStatus(reminder, "INACTIVE");
 	}
-    return runningReminders
 })
 
 

@@ -4,7 +4,7 @@ const convertRemindersToLocal = (reminders) => {
 		if (reminder.dateEnable && reminder.timeEnable) {
 			const year = reminder.utcDateTime.split("-")[0]
 			const utcDateTime = new Date(Date.UTC(year, reminder.month, reminder.day, reminder.hour, reminder.minutes))
-			let localMonth = (utcDateTime.getMonth() + 1).toString();
+			let localMonth = utcDateTime.getMonth().toString();
 			let localDay = (utcDateTime.getDate()).toString();
 			let localHour = utcDateTime.getHours().toString();
 			let localMinutes = utcDateTime.getMinutes().toString();
@@ -41,7 +41,7 @@ const convertRemindersToUTC = (formData) => {
 	const combinedDateTime = formData.date + "T" + formData.time;
 	const dateObject = new Date(combinedDateTime)
 	const utcYear = dateObject.getUTCFullYear().toString()
-	let utcMonth = dateObject.getUTCMonth().toString()
+	let utcMonth = (dateObject.getUTCMonth() + 1).toString()
 	let utcDay = dateObject.getUTCDate().toString()
 	let utcHours = dateObject.getUTCHours().toString()
 	let utcMin = dateObject.getUTCMinutes().toString()

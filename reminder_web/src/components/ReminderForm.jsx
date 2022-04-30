@@ -119,34 +119,6 @@ export const ReminderForm = (props) => {
 		let reminder = formData
 		if (reminder.date && reminder.time) {
 			reminder = convertRemindersToUTC(formData);
-			// const combinedDateTime = formData.date + "T" + formData.time;
-			// const dateObject = new Date(combinedDateTime)
-			// const utcYear = dateObject.getUTCFullYear().toString()
-			// let utcMonth = dateObject.getUTCMonth().toString()
-			// let utcDay = dateObject.getUTCDate().toString()
-			// let utcHours = dateObject.getUTCHours().toString()
-			// let utcMin = dateObject.getUTCMinutes().toString()
-
-			// if (utcMonth.length === 1) {
-			// 	utcMonth = "0" + utcMonth
-			// }
-
-			// if (utcDay.length === 1) {
-			// 	utcDay = "0" + utcDay
-			// }
-
-			// if (utcHours.length === 1) {
-			// 	utcHours = "0" + utcHours
-			// }
-
-			// if (utcMin.length === 1) {
-			// 	utcMin = "0" + utcMin
-			// }
-
-			// const utcDateTime = `${utcYear}-${utcMonth}-${utcDay}T${utcHours}:${utcMin}`
-			// formData["utcDateTime"] = utcDateTime
-			// formData["date"] = `${utcYear}-${utcMonth}-${utcDay}`
-			// formData["time"] = `${utcHours}:${utcMin}`
 		}
 
         if (!editState) {

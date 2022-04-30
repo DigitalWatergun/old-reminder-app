@@ -23,9 +23,10 @@ const filterReminders = async (filter) => {
 
 
 const updateReminder = async (data) => {
-    await Reminder.deleteOne({_id: data._id})
-    const reminder = await createReminder(data)
-    // const reminder = await Reminder.findByIdAndUpdate(data._id, data)
+	const filter = {
+		_id: data._id
+	}
+	const reminder = await Reminder.findOneAndUpdate(filter, data)
 
     return reminder; 
 };
