@@ -18,8 +18,10 @@ export const RemindersPage = () => {
         if (response.status === 200) {
 			const reminders = convertRemindersToLocal(response.data)
             setReminders(reminders)
-        } else {
+        } else if (response.response.status === 401 || response.response.status === 403) {
             console.log(response.response.data)
+			sessionStorage.clear()
+			navigate("/", { state: { message: "Session expired" }})
         }
     }
 

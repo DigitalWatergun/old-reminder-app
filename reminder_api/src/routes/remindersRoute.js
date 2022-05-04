@@ -19,9 +19,9 @@ router.route("/")
     .get(getAllRemindersForUser)
     .post(postReminder)
     .delete(deleteReminder)
-router.get("/title", getReminderById);
-router.get("/run", runReminder)
-router.get("/stop", stopReminder)
+router.get("/title", getReminderById)
+router.post("/run", runReminder)
+router.post("/stop", stopReminder)
 router.get("/list", listRunningReminders)
 router.patch("/update", changeReminder)
 

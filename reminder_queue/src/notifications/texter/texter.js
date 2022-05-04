@@ -1,6 +1,8 @@
+import { consoleLogWithDateTime } from "../../logger/logger.js";
+import twilio from "twilio";
 import dotenv from "dotenv";
 dotenv.config();
-import twilio from "twilio";
+
 
 const accountSid = process.env.TWILIO_ACCOUNT_SID;
 const authToken = process.env.TWILIO_AUTH_TOKEN;
@@ -14,10 +16,9 @@ const sendTextReminder = async (reminder) => {
             from: process.env.TWILIO_NUMBER,
             to: reminder.mobile
         })
-        console.log(result.body)
+        consoleLogWithDateTime(result.body)
     } catch (error) {
-        console.log(error) 
-        return error
+        consoleLogWithDateTime(error.message) 
     }
 };
 

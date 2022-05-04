@@ -23,7 +23,6 @@ const refreshAccessToken = (token) => {
     console.log("Refreshing access token...")
     const accessToken = jwt.verify(token, process.env.JWT_REFRESH_TOKEN_SECRET, (err, user) => {
         if (err) {
-            console.log(err)
             return err
         } 
 

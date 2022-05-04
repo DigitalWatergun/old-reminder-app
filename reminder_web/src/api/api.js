@@ -3,177 +3,100 @@ import axios from "axios"
 const BASEURL = "http://localhost:3001";
 // const BASEURL = "https://api.mrreminder.xyz"
 
-const axiosAuth = axios.create({
-    baseURL: BASEURL,
+
+const axiosInstance = axios.create({
+	baseURL: BASEURL,
     headers: { "Content-Type": "application/json"},
     withCredentials: true
-});
+})
 
 
-const axiosReminders = axios.create({
-    baseURL: BASEURL, 
-    headers: { 
-        "Content-Type": "application/json"
-    },
-    withCredentials: true
-});
+const apiHelper = async (method, route, data) => {
+	try {
+		if (method === "get") {
+			const response = await axiosInstance.get(BASEURL + route, JSON.stringify(data))
+			if (response) {
+				return response
+			}
+		} else if (method === "post") {
+			const response = await axiosInstance.post(BASEURL + route, JSON.stringify(data))
+			if (response) {
+				return response
+			}
+		} else if (method === "delete") {
+			const response = await axiosInstance.delete(BASEURL + route, JSON.stringify(data))
+			if (response) {
+				return response
+			}
+		} else if (method === "patch") {
+			const response = await axiosInstance.patch(BASEURL + route, JSON.stringify(data))
+			if (response) {
+				return response
+			}
+		}
+	} catch (err) {
+		return err
+	}
+}
 
 
 const registerUser = async (data) => {
-    try {
-        const response = await axiosAuth.post(BASEURL + "/users", JSON.stringify(data))
-        if (response) {
-            return response 
-        }
-    } catch(err) {
-        return err
-    }
+	return await apiHelper("post", "/users", data)
 }
 
 
 const loginUser = async (data) => {
-    try {
-        const response = await axiosAuth.post("/users/login", JSON.stringify(data))
-        if (response) {
-            return response
-        }
-    } catch (err) {
-        return err
-    }
+	return await apiHelper("post", "/users/login", data)
 }
 
 
 const logoutUser = async (data) => {
-    try {
-        const response = await axiosAuth.post("/users/logout", JSON.stringify(data))
-        if (response) {
-            return response
-        }
-    } catch (err) {
-        return err
-    }
+	return await apiHelper("post", "/users/logout", data)
 }
 
 
 const changeUserPassword = async (data) => {
-    try {
-        const response = await axiosAuth.post("/users/update", JSON.stringify(data))
-        if (response) {
-            return response
-        }
-    } catch (err) {
-        return err
-    }
+	return await apiHelper("post", "/users/update", data)
 }
 
 
 const resetPassword = async (data) => {
-    try {
-        const response = await axiosAuth.post("/users/reset", JSON.stringify(data))
-        if (response) {
-            return response
-        }
-    } catch (err) {
-        return err
-    }
+	return await apiHelper("post", "/users/reset", data)
 }
 
 
 const deleteUser = async (data) => {
-    try {
-        const response = await axiosAuth.delete("/users/", {data: JSON.stringify(data)})
-        if (response) {
-            return response
-        }
-    } catch(err) {
-        console.log(err)
-        return err
-    }
+	return await apiHelper("delete", "/users", data)
 }
 
 
 const getAllReminders = async () => {
-    try {
-        const response = await axiosReminders.get("/reminders")
-        if (response) {
-            return response
-        }
-    } catch (err) {
-        console.log(err)
-        return err
-    }
+	return await apiHelper("get", "/reminders")
 }
 
 
 const createReminder = async (data) => {
-    try {
-        const response = await axiosReminders.post("/reminders", JSON.stringify(data))
-        if (response) {
-            return response
-        }
-    } catch (err) {
-        console.log(err)
-        return err
-    }
+	return await apiHelper("post", "/reminders", data)
 }
 
 
 const deleteReminder = async (data) => {
-    try {
-        const response = await axiosReminders.delete("/reminders", {data: JSON.stringify(data)})
-        if (response) {
-            window.location.reload();
-            return response
-        }
-    } catch (err) {
-        console.log(err)
-        return err
-    }
+	return await apiHelper("delete", "/reminders", data)
 }
 
 
 const editReminder = async (data) => {
-    try {
-        const response = await axiosReminders.patch("/reminders/update", JSON.stringify(data))
-        if (response) {
-            return response
-        }
-    } catch (err) {
-        console.log(err)
-        return err
-    }
+	return await apiHelper("patch", "/reminders/update", data)
 }
 
 
 const runReminder = async (data) =>{
-    const query = `?_id=${data._id}`
-
-    try {
-        const response = await axiosReminders.get("/reminders/run" + query)
-        if (response) {
-            window.location.reload();
-            return response
-        }
-    } catch (err) {
-        console.log(err)
-        return err
-    }
+	return await apiHelper("post", "/reminders/run", data)
 }
 
 
 const stopReminder = async (data) => {
-    const query = `?_id=${data._id}`
-
-    try {
-        const response = await axiosReminders.get("/reminders/stop" + query)
-        if (response) {
-            window.location.reload();
-            return response
-        }
-    } catch (err) {
-        console.log(err)
-        return err
-    }
+	return await apiHelper("post", "/reminders/stop", data)
 }
 
 

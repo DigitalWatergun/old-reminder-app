@@ -113,3 +113,4 @@ The Reminder application is a custom built application that will allow you to in
 - [x] ~~Refactor backend reminderController to account for UTC changes~~
 - [x] ~~Refactor emitter to account for UTC times and tested reminders~~
 - [x] ~~Added PubSub, Bull, and Mongoose to deployment project to run reminders from Redis~~
+- [x] ~~Added redirect to "/" if user session times out~~

@@ -4,10 +4,10 @@ import { refreshAccessToken } from "../auth.js"
 dotenv.config();
 
 const verifyJWT = (req, res, next) => {
-    const accessToken = req?.cookies?.jwta
-    const refreshToken = req?.cookies?.jwtr
+    const accessToken = req.cookies.jwta
+    const refreshToken = req.cookies.jwtr
 
-    if (accessToken === null || accessToken == undefined) {
+    if (accessToken === null || accessToken === undefined) {
         if (refreshToken === null || refreshToken === undefined) {
             return res.status(401).send("No token found.")
         } else {

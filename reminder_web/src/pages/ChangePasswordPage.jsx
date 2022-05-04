@@ -43,6 +43,9 @@ export const ChangePassword = () => {
         if (response.status === 200) {
             sessionStorage.clear();
             navigate("/", { state: {message: "Please log in with your new password."}})
+        } else if (response.response.status === 401 || response.response.status === 403) {
+			sessionStorage.clear()
+			navigate("/", { state: { message: "Session expired" }})
         } else {
             setLoadingState(false)
             if (response.response.data === "Password requirements not met") {

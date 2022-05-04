@@ -89,7 +89,7 @@ const checkJobState = async (reminderQueue, jobId) => {
 	}
 
 	if (completedJobs.length === foundJobsWithJobIdRef.length) {
-		consoleLogWithDateTime(`All jobs that include ${jobIdRef} have been completed. Removing all jobs with ${jobIdRef} from queue and update Mongo`)
+		consoleLogWithDateTime(`All jobs that include ${jobIdRef} have been completed. Removing all jobs with ${jobIdRef} from queue and updating Mongo`)
 		for (const job of foundJobsWithJobIdRef) {
 			consoleLogWithDateTime(`Removing job ${job.id}-${job.name} from reminder queue.`)
 			await changeReminderStatus(job.data, "INACTIVE")

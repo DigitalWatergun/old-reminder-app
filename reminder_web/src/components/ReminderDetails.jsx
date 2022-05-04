@@ -8,25 +8,38 @@ export const ReminderDetails = (props) => {
     const navigate = useNavigate();
     
     const handleRunClick = async () => {
-        await api.runReminder(props.data);
+        const response = await api.runReminder(props.data);
+		if (response.status === 200) {
+			window.location.reload()
+		} else if (response.response.status === 401 || response.response.status === 403) {
+			sessionStorage.clear()
+			navigate("/", { state: { message: "Session expired" }})
+		} 
     }
 
 
     const handleStopClick = async () => {
-        const result = await api.stopReminder(props.data);
-        console.log(result);
+        const response = await api.stopReminder(props.data);
+		if (response.status === 200) {
+			window.location.reload()
+		} else if (response.response.status === 401 || response.response.status === 403) {
+			sessionStorage.clear()
+			navigate("/", { state: { message: "Session expired" }})
+		} 
     }
 
 
     const handleEditClick = () => {
-        // setEditPopup(!editPopup)
-        // console.log(props)
-        navigate("/reminders/edit", { state: {data: props.data }})
+        navigate("/reminders/edit", { state: { data: props.data }})
     }
 
 
     const handleDeleteClick = async () => {
-       await api.deleteReminder(props.data)
+       const response = await api.deleteReminder(props.data)
+	   if (response.response.status === 401 || response.response.status === 403) {
+		sessionStorage.clear()
+		navigate("/", { state: { message: "Session expired" }})
+		} 
     }
 
 

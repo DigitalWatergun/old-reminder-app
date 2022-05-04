@@ -125,14 +125,20 @@ export const ReminderForm = (props) => {
             const response = await api.createReminder(reminder);
             if (response.status === 200) {
                 navigate("/reminders")
-            } else {
+			} else if (response.response.status === 401 || response.response.status === 403) {
+				sessionStorage.clear()
+				navigate("/", { state: { message: "Session expired" }})
+			} else {
                 setError(response.response.data)
             }
         } else {
             const response = await api.editReminder(reminder);
             if (response.status === 200) {
                 navigate("/reminders")
-            } else {
+			} else if (response.response.status === 401 || response.response.status === 403) {
+				sessionStorage.clear()
+				navigate("/", { state: { message: "Session expired" }})
+			} else {
                 setError(response.response.data)
             }
         }
