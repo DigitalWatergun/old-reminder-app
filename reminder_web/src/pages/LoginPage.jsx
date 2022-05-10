@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom"
 import { HeaderFooter } from "../components/HeaderFooter"
 import { Loading } from "../components/Loading"
+import { GoogleButton } from "../components/GoogleSignInButton"
 import { api } from "../api/api"
 import image from "../static/sticky.png"
 
@@ -74,6 +75,8 @@ export const Login = () => {
                         <div className="errorText">{error}</div><br/>
                         <button className="buttonSignIn" onClick={handleSubmit}>Sign In</button>
                         <a href="/register">Need an account? Register</a>
+						{/* <p style={{ fontSize: 13, fontWeight: "regular", textAlign: "center" }}>or</p> */}
+						{/* <GoogleButton/> */}
                     </form>
                 </div>
             </div>}
