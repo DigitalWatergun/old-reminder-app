@@ -69,7 +69,7 @@ reminderQueue.on("global:completed", async (jobId) => {
 
 
 const listenForMessages = async () => {
-	const job = new cron.CronJob("*/1 * * * *", async () => {
+	const job = new cron.CronJob("*/30 * * * *", async () => {
 		consoleLogWithDateTime("Listening for messages. Current Job Queue: ")
 		console.log(await showAllRemindersInQueue(reminderQueue, "Current Job Queue"))
 	}, null, true, "Etc/UTC")
