@@ -1,4 +1,4 @@
-import React from "react"; 
+import React from "react";
 import { HeaderFooter } from "../components/HeaderFooter";
 
 export const Error = () => {
@@ -6,5 +6,5 @@ export const Error = () => {
         <HeaderFooter>
             <h2 className="pageHeading">404 Page not found</h2>
         </HeaderFooter>
-    )
-}
+    );
+};

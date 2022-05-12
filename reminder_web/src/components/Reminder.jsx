@@ -1,4 +1,4 @@
-import React, {useState, useCallback} from "react";
+import React, { useState, useCallback } from "react";
 import { ReminderDetails } from "./ReminderDetails";
 
 export const Reminder = (props) => {
@@ -7,20 +7,20 @@ export const Reminder = (props) => {
 
     const handleClick = useCallback(() => {
         if (expandState) {
-            setExpandState(false)
+            setExpandState(false);
             setExpand();
         } else {
             setExpandState(true);
-            setExpand(<ReminderDetails data={props.data}/>)
+            setExpand(<ReminderDetails data={props.data} />);
         }
-    }, [expandState, expand])
+    }, [expandState, expand]);
 
     return (
-        <div className="reminder" >
+        <div className="reminder">
             <div className="reminderExpand" onClick={handleClick}>
                 <p className="reminderTitle">{props.data.title}</p>
             </div>
             {expand}
         </div>
-    )
-}
+    );
+};

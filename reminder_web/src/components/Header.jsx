@@ -1,6 +1,6 @@
-import React, { useState, useEffect }from "react"; 
-import { Profile } from "./Profile"
-import image from "../static/sticky.png"
+import React, { useState, useEffect } from "react";
+import { Profile } from "./Profile";
+import image from "../static/sticky.png";
 
 export const Header = (props) => {
     const [userState] = useState(props.userState);
@@ -9,13 +9,13 @@ export const Header = (props) => {
 
     const renderProfile = () => {
         if (userState) {
-            setProfile(<Profile user={user}/>)
+            setProfile(<Profile user={user} />);
         } else {
-            setProfile(undefined)
+            setProfile(undefined);
         }
-    }
+    };
 
-    useEffect(renderProfile, [])
+    useEffect(renderProfile, []);
 
     return (
         <div className="header">
@@ -23,5 +23,5 @@ export const Header = (props) => {
             <p className="headerTitle">Mr. Reminder</p>
             {profile}
         </div>
-    )
-}
+    );
+};

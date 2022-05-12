@@ -1,6 +1,6 @@
 import dotenv from "dotenv";
 dotenv.config();
-import nodemailer from "nodemailer"; 
+import nodemailer from "nodemailer";
 import { google } from "googleapis";
 
 const OAuth2 = google.auth.OAuth2;
@@ -11,9 +11,7 @@ const createTransporter = async () => {
         process.env.CLIENT_SECRET
     );
 
-    oauth2Client.setCredentials(
-        {refresh_token: process.env.REFRESH_TOKEN}
-    );
+    oauth2Client.setCredentials({ refresh_token: process.env.REFRESH_TOKEN });
 
     const accessToken = oauth2Client.getAccessToken();
 
@@ -22,29 +20,27 @@ const createTransporter = async () => {
         auth: {
             type: "OAuth2",
             user: process.env.EMAIL,
-            accessToken: accessToken, 
+            accessToken: accessToken,
             clientId: process.env.CLIENT_ID,
             clientSecret: process.env.CLIENT_SECRET,
-            refreshToken: process.env.REFRESH_TOKEN
-        }
+            refreshToken: process.env.REFRESH_TOKEN,
+        },
     });
 
     return transporter;
 };
-
 
 const sendEmailReminder = async (reminder) => {
     const emailOptions = {
         subject: `REMINDER: ${reminder.title}`,
         text: `REMINDER FROM REMINDER APP\n${reminder.content}`,
         to: reminder.email,
-        bcc: process.env.EMAIL
+        bcc: process.env.EMAIL,
     };
-    
+
     let transporter = await createTransporter();
     await transporter.sendMail(emailOptions);
 };
-
 
 const sendRegistrationEmail = async (username, email, hash) => {
     const emailBody = `
@@ -59,19 +55,18 @@ const sendRegistrationEmail = async (username, email, hash) => {
 
     Thank you!
     - Mr. Reminder
-    `
+    `;
 
     const emailOptions = {
         subject: "Activate your account to use the Reminders App!",
         text: emailBody,
         to: email,
-        bcc: process.env.EMAIL
+        bcc: process.env.EMAIL,
     };
 
     let transporter = await createTransporter();
     await transporter.sendMail(emailOptions);
-}
-
+};
 
 const sendTempPassword = async (username, email, tempPass) => {
     const emailBody = `
@@ -86,18 +81,17 @@ const sendTempPassword = async (username, email, tempPass) => {
 
     Thank you!
     - Mr. Reminder
-    `
+    `;
 
     const emailOptions = {
         subject: "Temporary Password for the Reminders App!",
         text: emailBody,
         to: email,
-        bcc: process.env.EMAIL
+        bcc: process.env.EMAIL,
     };
 
     let transporter = await createTransporter();
     await transporter.sendMail(emailOptions);
-}
-
+};
 
 export { sendEmailReminder, sendRegistrationEmail, sendTempPassword };

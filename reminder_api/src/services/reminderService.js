@@ -1,36 +1,31 @@
 import { Reminder } from "../models/reminder.js";
 
-
 const queryAllRemindersByUserId = async (id) => {
-    const reminders = await Reminder.find({userId: id});
+    const reminders = await Reminder.find({ userId: id });
 
     return reminders;
 };
 
-
 const findReminderById = async (id) => {
-    const reminder = await Reminder.findOne({_id: id});
+    const reminder = await Reminder.findOne({ _id: id });
 
-    return reminder
-}
-
+    return reminder;
+};
 
 const filterReminders = async (filter) => {
     const reminders = await Reminder.find(filter);
 
-    return reminders; 
+    return reminders;
 };
-
 
 const updateReminder = async (data) => {
-	const filter = {
-		_id: data._id
-	}
-	const reminder = await Reminder.findOneAndUpdate(filter, data)
+    const filter = {
+        _id: data._id,
+    };
+    const reminder = await Reminder.findOneAndUpdate(filter, data);
 
-    return reminder; 
+    return reminder;
 };
-
 
 const createReminder = async (data) => {
     try {
@@ -43,61 +38,58 @@ const createReminder = async (data) => {
             timeEnable: data.timeEnable,
             timeZone: data.timeZone,
             time: data.time,
-			utcDateTime: data.utcDateTime,
+            utcDateTime: data.utcDateTime,
             minutes: data.minutes,
-            hour: data.hour, 
+            hour: data.hour,
             day: data.day,
             month: data.month,
             weekday: data.weekday,
-            status: data.status, 
-            email: data.email, 
-            mobile: data.mobile, 
+            status: data.status,
+            email: data.email,
+            mobile: data.mobile,
             repeatEnable: data.repeatEnable,
             repeat: data.repeat,
             enableSMS: data.enableSMS,
             enableEmail: data.enableEmail,
-            userId: data.userId
+            userId: data.userId,
         });
 
-        const reminder = await newReminder.save()
+        const reminder = await newReminder.save();
 
-        return reminder
-    } catch(err) {
+        return reminder;
+    } catch (err) {
         console.log(err);
         return err;
     }
 };
-
 
 const removeReminder = async (id) => {
     try {
-        await Reminder.deleteOne({_id: id})
+        await Reminder.deleteOne({ _id: id });
 
         return "Successfully deleted reminder.";
-    } catch(err) {
+    } catch (err) {
         console.log(err);
         return err;
     }
 };
 
-
 const removeReminderByUserId = async (userId) => {
     try {
-        await Reminder.deleteMany({userId: userId})
+        await Reminder.deleteMany({ userId: userId });
 
-        return `Successfully deleted all reminders for ${userId}`
+        return `Successfully deleted all reminders for ${userId}`;
     } catch (err) {
         return err;
     }
-}
+};
 
-
-export { 
+export {
     queryAllRemindersByUserId,
-    createReminder, 
+    createReminder,
     removeReminder,
     findReminderById,
     filterReminders,
     updateReminder,
-    removeReminderByUserId
-}; 
+    removeReminderByUserId,
+};

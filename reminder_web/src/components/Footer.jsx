@@ -5,5 +5,5 @@ export const Footer = () => {
         <div className="footer">
             <p>© Philip Duong</p>
         </div>
-    )
-}
+    );
+};

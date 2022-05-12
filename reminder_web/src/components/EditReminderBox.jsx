@@ -6,8 +6,12 @@ export const EditReminderPopup = (props) => {
         <div className="popup-box">
             <div className="box">
                 <h3>Editing: {props.content.title}</h3>
-                <ReminderForm data={props.content} editState={true} close={props.handleClose}/>
+                <ReminderForm
+                    data={props.content}
+                    editState={true}
+                    close={props.handleClose}
+                />
             </div>
         </div>
-    )
-}
+    );
+};
