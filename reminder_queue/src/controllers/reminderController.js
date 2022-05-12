@@ -9,7 +9,7 @@ const changeReminderStatus = async (reminder, status) => {
         return `Updated ${reminder.title} status to ${status}.`
     } else {
         return "Failed to change reminder status."   
-    };
+    }
 };
 
 export {
