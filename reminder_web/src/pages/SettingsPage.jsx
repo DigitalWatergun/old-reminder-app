@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom"
-import { HeaderFooter } from "../components/HeaderFooter";
+import { HeaderFooter } from "../components/HeaderFooter.jsx";
 import { api } from "../api/api"
 
 export const Settings = () => {

@@ -15,7 +15,10 @@ mongoose.connect(process.env.MONGO_URI);
 mongoose.connection.on("error", err => {
     console.log("err", err);
 });
-mongoose.connection.on("connected", (err, res) => {
+mongoose.connection.on("connected", (err) => {
+	if (err) {
+		console.log(err)
+	}
     console.log("Connected to MongoDB.");
 });
 

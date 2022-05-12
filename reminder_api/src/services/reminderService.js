@@ -65,7 +65,7 @@ const createReminder = async (data) => {
     } catch(err) {
         console.log(err);
         return err;
-    };
+    }
 };
 
 
@@ -77,7 +77,7 @@ const removeReminder = async (id) => {
     } catch(err) {
         console.log(err);
         return err;
-    };
+    }
 };
 
 

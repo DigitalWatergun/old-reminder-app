@@ -1,0 +1,17 @@
+{
+  "devDependencies": {
+    "eslint": "^8.15.0",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-react": "^7.29.4",
+    "husky": "^8.0.1",
+    "lint-staged": "^12.4.1"
+  },
+  "scripts": {
+    "prepare": "husky install",
+    "lint": "eslint . --ext .js",
+    "lint-fix": "eslint . --ext .js --ext .jsx --fix"
+  },
+  "lint-staged": {
+    "*.{js,jsx}": "eslint . --ext .js --ext .jsx"
+  }
+}

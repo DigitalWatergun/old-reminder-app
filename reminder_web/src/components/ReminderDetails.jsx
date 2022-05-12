@@ -4,7 +4,7 @@ import { EditReminderPopup } from "./EditReminderBox";
 import { api } from "../api/api";
 
 export const ReminderDetails = (props) => {
-    const [editPopup, setEditPopup] = useState(false)
+    const [editPopup] = useState(false)
     const navigate = useNavigate();
     
     const handleRunClick = async () => {
@@ -35,10 +35,13 @@ export const ReminderDetails = (props) => {
 
 
     const handleDeleteClick = async () => {
-       const response = await api.deleteReminder(props.data)
-	   if (response.response.status === 401 || response.response.status === 403) {
-		sessionStorage.clear()
-		navigate("/", { state: { message: "Session expired" }})
+		const response = await api.deleteReminder(props.data)
+		console.log(response)
+		if (response.status === 200) {
+			window.location.reload()
+		} else if (response.response.status === 401 || response.response.status === 403) {
+			sessionStorage.clear()
+			navigate("/", { state: { message: "Session expired" }})
 		} 
     }
 

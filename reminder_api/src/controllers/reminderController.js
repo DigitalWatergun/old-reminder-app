@@ -1,4 +1,3 @@
-import _ from "lodash"; 
 import {v4 as uuid} from "uuid";
 import { 
     queryAllRemindersByUserId,
@@ -87,7 +86,7 @@ const getReminderById = async (req, res) => {
         return res.send(reminder);
     } else {
         return res.send("No reminders found with that title.");
-    };
+    }
 };
 
 
@@ -107,7 +106,7 @@ const changeReminderStatus = async (reminder, status) => {
         return `Updated ${reminder.title} status to ${status}.`
     } else {
         return "Failed to change reminder status."   
-    };
+    }
 };
 
 
@@ -163,7 +162,7 @@ const runReminder = async (req, res) => {
         }
     } else {
         return res.send("No reminders found with that title.");
-    };
+    }
 };
 
 
@@ -178,7 +177,7 @@ const stopReminder = async (req, res) => {
     } else {
         console.log("No reminders found with that title")
         return res.send("No reminders found with that title.")
-    };
+    }
 };
 
 

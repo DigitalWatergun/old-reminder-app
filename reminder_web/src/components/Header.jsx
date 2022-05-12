@@ -3,8 +3,8 @@ import { Profile } from "./Profile"
 import image from "../static/sticky.png"
 
 export const Header = (props) => {
-    const [userState, setUserState] = useState(props.userState);
-    const [user, setUser] = useState(props.user);
+    const [userState] = useState(props.userState);
+    const [user] = useState(props.user);
     const [profile, setProfile] = useState();
 
     const renderProfile = () => {

@@ -14,6 +14,7 @@ RUN npm install
 
 # Bundle app source
 COPY . .
+RUN npm run build:prod
 
 # Command to start the app 
-CMD [ "npm", "start" ]
+CMD [ "npm", "run", "start:prod" ]

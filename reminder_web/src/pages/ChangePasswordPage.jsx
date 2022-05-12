@@ -6,7 +6,7 @@ import { api } from "../api/api"
 
 export const ChangePassword = () => {
     const state = useLocation()
-    const [changePassword, setChangePassword] = useState(() => {
+    const [changePassword] = useState(() => {
         if (state.state === null) {
             return undefined
         } else {

@@ -43,7 +43,7 @@ const RepeatInput = (props) => {
 
 
 export const ReminderForm = (props) => {
-    const [editState, setEditState] = useState(() => {
+    const [editState] = useState(() => {
         if (props.editState) {
             return props.editState
         } else {

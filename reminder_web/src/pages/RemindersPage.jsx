@@ -7,7 +7,7 @@ import { api } from "../api/api"
 
 export const RemindersPage = () => {
     const [reminders, setReminders] = useState([]);
-    const [user, setUser] = useState(JSON.parse(sessionStorage.getItem('user')))
+    const [user] = useState(JSON.parse(sessionStorage.getItem('user')))
     const navigate = useNavigate();
 
     

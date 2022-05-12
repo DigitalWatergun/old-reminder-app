@@ -15,7 +15,7 @@ import dotenv from "dotenv";
 dotenv.config();
 
 
-const main = () => {
+const main = async () => {
 	consoleLogWithDateTime("Connecting to Reminder Queue...")
 	const reminderQueue = new Queue("reminders", { redis: redisConfig })
 

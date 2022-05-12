@@ -1,5 +1,6 @@
 import React from "react"; 
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import PropTypes from "prop-types";
 import { Error } from "./pages/Error"
 import { Login } from "./pages/LoginPage"
 import { RemindersPage } from "./pages/RemindersPage"
@@ -9,6 +10,11 @@ import { Settings } from "./pages/SettingsPage"
 import { ChangePassword } from "./pages/ChangePasswordPage"
 import { Register } from "./pages/RegisterPage"
 import { ForgotPassword } from "./pages/ForgotPasswordPage";
+
+
+RequireAuth.propTypes = {
+	children: PropTypes.node.isRequired
+}
 
 
 const RequireAuth = ({children}) => {

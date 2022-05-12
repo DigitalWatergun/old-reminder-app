@@ -3,8 +3,8 @@ import { Header } from "./Header";
 import { Footer } from "./Footer"
 
 export const HeaderFooter = (props) => {
-    const [userState, setUserState] = useState(props.userState)
-    const [user, setUser] = useState(props.user)
+    const [userState] = useState(props.userState)
+    const [user] = useState(props.user)
 
 
     return (

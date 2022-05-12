@@ -24,7 +24,7 @@ const apiHelper = async (method, route, data) => {
 				return response
 			}
 		} else if (method === "delete") {
-			const response = await axiosInstance.delete(BASEURL + route, JSON.stringify(data))
+			const response = await axiosInstance.delete(BASEURL + route, {data: JSON.stringify(data)})
 			if (response) {
 				return response
 			}

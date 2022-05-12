@@ -32,11 +32,11 @@ export const GoogleButton = () => {
         script.onload = initializeGoogle;
         script.async = true;
         script.id = "google-client-script";
-        document.querySelector("body")?.appendChild(script);
+        document.querySelector("body").appendChild(script);
     
         return () => {
-            window.google?.accounts.id.cancel();
-            document.getElementById("google-client-script")?.remove();
+            window.google.accounts.id.cancel();
+            document.getElementById("google-client-script").remove();
         };
     }, [scriptLoaded, divRef.current, window]);
 
