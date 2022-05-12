@@ -5,11 +5,16 @@
   "main": "src/index.js",
   "scripts": {
     "lint": "eslint . --ext .js",
-	"pre-commit": "lint",
+    "pre-commit": "lint",
     "build:dev": "webpack-cli --env mode=development --config ./webpack.config.js",
     "build:prod": "webpack-cli --env mode=production --config ./webpack.config.js",
     "start:dev": "npm run build:dev && node ./dist/server.bundle.js",
     "start:prod": "node dist/server.bundle.js"
+  },
+  "husky": {
+	  "hooks": {
+		  "pre-commit": "npm run lint"
+	  }
   },
   "author": "",
   "license": "ISC",
@@ -31,6 +36,7 @@
     "babel-loader": "^8.2.5",
     "eslint": "^8.15.0",
     "eslint-plugin-import": "^2.26.0",
+    "husky": "^8.0.1",
     "nodemon": "^2.0.16",
     "nodemon-webpack-plugin": "^4.7.1",
     "webpack": "^5.72.1",
