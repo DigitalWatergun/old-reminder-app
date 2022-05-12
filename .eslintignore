@@ -1,3 +1,5 @@
 node_modules
 dist
 reminder_queue/dist
+reminder_web/dist
+reminder_api/dist
