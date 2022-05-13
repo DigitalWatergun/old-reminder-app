@@ -1,8 +1,6 @@
 const path = require("path");
 const nodeExternals = require("webpack-node-externals");
 const NodemonPlugin = require("nodemon-webpack-plugin");
-const dotenv = require("dotenv");
-dotenv.config();
 
 module.exports = (env) => {
     const config = {

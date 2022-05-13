@@ -114,4 +114,6 @@ The Reminder application is a custom built application that will allow you to in
 - [x] ~~Refactor emitter to account for UTC times and tested reminders~~
 - [x] ~~Added PubSub, Bull, and Mongoose to deployment project to run reminders from Redis~~
 - [x] ~~Added redirect to "/" if user session times out~~
-- [x] ~~Add Webpack, Babel, Eslint, and Husky configurations~~
+- [x] ~~Add Webpack to reminder_queue, Babel, Eslint, and Husky configurations~~
+- [x] ~~Add Prettier to Eslint~~ 
+- [x] ~~Add Webpack to reminder_api~~
