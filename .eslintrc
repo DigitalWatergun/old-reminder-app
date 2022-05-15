@@ -6,14 +6,14 @@
     },
 	"plugins": [
 		"import",
-		"react",
 		"prettier"
 	],
     "extends": [
         "eslint:recommended",
 		"plugin:import/recommended",
 		"plugin:react/recommended",
-		"plugin:prettier/recommended"
+		"plugin:prettier/recommended",
+        "react-app"
     ],
     "rules": {
 		"react/prop-types": 0,
@@ -25,9 +25,6 @@
 			  "extensions": [".js", ".jsx"],
 			  "moduleDirectory": ["node_modules", "src/"]
 			}
-		},
-		"react": {
-			"version": "detect"
 		}
 	}
 }
