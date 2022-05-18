@@ -7,7 +7,13 @@
     "build:dev": "webpack-cli --env mode=development --config ./webpack.config.js",
     "build:prod": "webpack-cli --env mode=production --config ./webpack.config.js",
     "start:dev": "npm run build:dev && node ./dist/server.bundle.js",
-    "start:prod": "node dist/server.bundle.js"
+    "start:prod": "node dist/server.bundle.js",
+    "prepare": "husky install",
+    "lint": "eslint . --ext .js",
+    "lint-fix": "eslint . --ext .js --ext .jsx --fix"
+  },
+  "lint-staged": {
+    "*.{js,jsx}": "eslint . --ext .js --ext .jsx"
   },
   "repository": {
     "type": "git",
@@ -39,6 +45,15 @@
     "nodemon-webpack-plugin": "^4.7.1",
     "webpack": "^5.72.1",
     "webpack-cli": "^4.9.2",
-    "webpack-node-externals": "^3.0.0"
+    "webpack-node-externals": "^3.0.0",
+    "eslint": "^8.15.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-config-react-app": "^7.0.1",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "eslint-plugin-react": "^7.29.4",
+    "husky": "^8.0.1",
+    "lint-staged": "^12.4.1",
+    "prettier": "^2.6.2"
   }
 }
